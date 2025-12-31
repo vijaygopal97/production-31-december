@@ -62,6 +62,13 @@ reference.wav
 *.recovered
 recovery-*/
 
+# Large backup files (exceed GitHub 100MB limit)
+**/survey_responses_backup*.json
+**/*backup*.json
+**/*backup*.csv
+**/*_backup_*.json
+**/*_backup_*.csv
+
 # Node modules in subdirectories (already covered but explicit)
 **/node_modules/
 
