@@ -1,0 +1,7 @@
+feat: Add Download Report button to ViewResponsesPage
+
+- Add 'Download Report' button between Normalised Data and CSV buttons
+- Use purple color scheme to distinguish from other download buttons
+- Include placeholder onClick handler with console.log for future development
+- Maintain consistent styling and responsive design with existing buttons
+- Button ready for future report download functionality implementation

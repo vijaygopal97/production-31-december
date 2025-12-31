@@ -1,0 +1,47 @@
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+
+// https://vite.dev/config/
+export default defineConfig({
+  plugins: [react()],
+  server: {
+    host: '0.0.0.0',
+    port: 3000,
+    allowedHosts: ['opine.exypnossolutions.com', '74.225.250.243', 'convo.convergentview.com', 'newprod.exypnossolutions.com', '65.2.183.213'],
+    headers: {
+      'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',
+      'Pragma': 'no-cache',
+      'Expires': '0'
+    },
+    hmr: {
+      // Suppress HMR errors for source files
+      overlay: false
+    }
+  },
+  // Suppress source file fetch errors in console
+  build: {
+    rollupOptions: {
+      onwarn(warning, warn) {
+        // Suppress warnings about source file fetches
+        if (warning.code === 'MODULE_LEVEL_DIRECTIVE' || warning.message?.includes('.jsx')) {
+          return;
+        }
+        warn(warning);
+      }
+    },
+    // Copy public assets to dist
+    copyPublicDir: true,
+    // Ensure JSON files are properly inlined in the bundle (set high limit to inline JSON)
+    assetsInlineLimit: 1000000, // 1MB - ensures JSON files are inlined, not fetched
+    // Ensure all JSON imports are inlined
+    commonjsOptions: {
+      transformMixedEsModules: true
+    }
+  },
+  // Optimize dependencies to ensure JSON is bundled
+  optimizeDeps: {
+    include: ['../data/assemblyConstituencies.json']
+  },
+  // Ensure public files are accessible
+  publicDir: 'public'
+})

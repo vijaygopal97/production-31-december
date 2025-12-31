@@ -1,0 +1,7 @@
+# Robots.txt for Opine India
+# This file blocks all search engines from indexing the site during development
+
+User-agent: *
+Disallow: /
+
+# Block all crawlers from all pages

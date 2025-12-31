@@ -1,0 +1,16 @@
+{
+  "timestamp": "2025-12-30T17:09:06.494Z",
+  "reportFile": "duplicate_responses_report_2025-12-30.json",
+  "summary": {
+    "totalGroups": 105,
+    "totalDuplicates": 519,
+    "totalProcessed": 519,
+    "totalMarkedAsAbandoned": 519,
+    "totalErrors": 0,
+    "successRate": "100.00%"
+  },
+  "originalResponsesCount": 105,
+  "abandonedResponsesCount": 519,
+  "errorsCount": 0,
+  "logFile": "duplicate_abandon_log_2025-12-30.json"
+}

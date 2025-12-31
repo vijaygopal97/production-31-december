@@ -1,0 +1,23 @@
+{
+  "timestamp": "2025-12-31T07:05:42.247Z",
+  "summary": {
+    "totalDuplicateGroups": 26,
+    "capiDuplicateGroups": 26,
+    "catiDuplicateGroups": 0,
+    "totalDuplicatesToMark": 36,
+    "totalOriginals": 26
+  },
+  "updateResults": {
+    "updated": 0,
+    "errors": []
+  },
+  "statistics": {
+    "totalProcessed": 928,
+    "capiProcessed": 909,
+    "catiProcessed": 19,
+    "capiDuplicatesFound": 36,
+    "catiDuplicatesFound": 0,
+    "totalDuplicatesMarked": 0,
+    "errors": []
+  }
+}

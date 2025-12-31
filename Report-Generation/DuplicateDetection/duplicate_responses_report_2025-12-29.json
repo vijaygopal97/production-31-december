@@ -1,0 +1,20 @@
+{
+  "totalResponses": 125373,
+  "validStatusResponses": 29966,
+  "excludedStatusResponses": 95407,
+  "validStatuses": [
+    "Approved",
+    "Pending_Approval",
+    "Rejected"
+  ],
+  "excludedStatuses": [
+    "abandoned",
+    "Terminated",
+    "completed"
+  ],
+  "duplicateSessionIds": 0,
+  "duplicateGroups": 0,
+  "totalDuplicates": 0,
+  "duplicateSessionIdDetails": [],
+  "groups": []
+}

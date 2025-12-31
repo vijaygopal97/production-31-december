@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audio Recording Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .controls {
+            margin: 20px 0;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .recording {
+            background-color: #ff4444;
+            color: white;
+        }
+        .status {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .success { background-color: #d4edda; color: #155724; }
+        .error { background-color: #f8d7da; color: #721c24; }
+        .info { background-color: #d1ecf1; color: #0c5460; }
+        audio {
+            width: 100%;
+            margin: 10px 0;
+        }
+        .log {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            max-height: 200px;
+            overflow-y: auto;
+            font-family: monospace;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Audio Recording Test</h1>
+    
+    <div class="controls">
+        <button id="startBtn">Start Recording</button>
+        <button id="stopBtn" disabled>Stop Recording</button>
+        <button id="playBtn" disabled>Play Recording</button>
+    </div>
+    
+    <div id="status" class="status info">Ready to record</div>
+    
+    <audio id="audioPlayer" controls style="display: none;"></audio>
+    
+    <div class="log" id="log"></div>
+    
+    <script>
+        let mediaRecorder;
+        let audioChunks = [];
+        let audioStream;
+        
+        const startBtn = document.getElementById('startBtn');
+        const stopBtn = document.getElementById('stopBtn');
+        const playBtn = document.getElementById('playBtn');
+        const status = document.getElementById('status');
+        const audioPlayer = document.getElementById('audioPlayer');
+        const log = document.getElementById('log');
+        
+        function logMessage(message) {
+            const timestamp = new Date().toLocaleTimeString();
+            log.innerHTML += `[${timestamp}] ${message}<br>`;
+            log.scrollTop = log.scrollHeight;
+            console.log(message);
+        }
+        
+        async function startRecording() {
+            try {
+                logMessage('Requesting microphone access...');
+                
+                // Request microphone access
+                audioStream = await navigator.mediaDevices.getUserMedia({ 
+                    audio: true
+                });
+                
+                logMessage('Microphone access granted');
+                logMessage('Audio tracks: ' + audioStream.getAudioTracks().length);
+                
+                // Check supported formats
+                const formats = [
+                    'audio/webm;codecs=opus',
+                    'audio/webm',
+                    'audio/mp4',
+                    'audio/wav'
+                ];
+                
+                let mimeType = '';
+                for (const format of formats) {
+                    if (MediaRecorder.isTypeSupported(format)) {
+                        mimeType = format;
+                        break;
+                    }
+                }
+                
+                logMessage('Using format: ' + (mimeType || 'default'));
+                
+                // Create MediaRecorder
+                mediaRecorder = new MediaRecorder(audioStream, {
+                    mimeType: mimeType,
+                    audioBitsPerSecond: 128000
+                });
+                
+                audioChunks = [];
+                
+                mediaRecorder.ondataavailable = (event) => {
+                    logMessage(`Audio data available: ${event.data.size} bytes`);
+                    if (event.data.size > 0) {
+                        audioChunks.push(event.data);
+                    }
+                };
+                
+                mediaRecorder.onstart = () => {
+                    logMessage('MediaRecorder started');
+                    status.textContent = 'Recording...';
+                    status.className = 'status recording';
+                    startBtn.disabled = true;
+                    stopBtn.disabled = false;
+                };
+                
+                mediaRecorder.onstop = () => {
+                    logMessage('MediaRecorder stopped');
+                    status.textContent = 'Recording stopped';
+                    status.className = 'status info';
+                    
+                    const audioBlob = new Blob(audioChunks, { type: mimeType || 'audio/webm' });
+                    logMessage(`Audio blob created: ${audioBlob.size} bytes`);
+                    
+                    const audioUrl = URL.createObjectURL(audioBlob);
+                    audioPlayer.src = audioUrl;
+                    audioPlayer.style.display = 'block';
+                    playBtn.disabled = false;
+                    
+                    // Stop all tracks
+                    audioStream.getTracks().forEach(track => track.stop());
+                };
+                
+                mediaRecorder.onerror = (event) => {
+                    logMessage('MediaRecorder error: ' + event.error);
+                    status.textContent = 'Recording error';
+                    status.className = 'status error';
+                };
+                
+                // Start recording
+                mediaRecorder.start(100); // Collect data every 100ms
+                logMessage('MediaRecorder.start() called');
+                
+            } catch (error) {
+                logMessage('Error: ' + error.message);
+                status.textContent = 'Error: ' + error.message;
+                status.className = 'status error';
+            }
+        }
+        
+        function stopRecording() {
+            if (mediaRecorder && mediaRecorder.state === 'recording') {
+                mediaRecorder.stop();
+                startBtn.disabled = false;
+                stopBtn.disabled = true;
+            }
+        }
+        
+        function playRecording() {
+            if (audioPlayer.src) {
+                audioPlayer.play();
+            }
+        }
+        
+        startBtn.addEventListener('click', startRecording);
+        stopBtn.addEventListener('click', stopRecording);
+        playBtn.addEventListener('click', playRecording);
+        
+        // Log browser capabilities
+        logMessage('Browser: ' + navigator.userAgent);
+        logMessage('MediaDevices supported: ' + !!navigator.mediaDevices);
+        logMessage('getUserMedia supported: ' + !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia));
+        logMessage('MediaRecorder supported: ' + !!window.MediaRecorder);
+        logMessage('Protocol: ' + location.protocol);
+        logMessage('Hostname: ' + location.hostname);
+    </script>
+</body>
+</html>

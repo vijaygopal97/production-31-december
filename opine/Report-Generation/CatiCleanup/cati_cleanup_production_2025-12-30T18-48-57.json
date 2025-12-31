@@ -1,0 +1,3144 @@
+{
+  "database": "production",
+  "timestamp": "2025-12-30T18:48:57.870Z",
+  "summary": {
+    "duplicatesMarked": 0,
+    "abandonedStatusFixed": 0,
+    "totalChanged": 0
+  },
+  "details": {
+    "duplicates": {
+      "found": [
+        {
+          "call_id": "null",
+          "original": "ce4ec3cf-4404-49fb-aea2-6ccb3a5b710c",
+          "originalMongoId": "69438b59db4f4607e313ebee",
+          "duplicates": [
+            {
+              "responseId": "b5917277-2f30-483d-b449-ebb3650dc827",
+              "mongoId": "69496808cd8bf82698cb25ff",
+              "status": "abandoned",
+              "createdAt": "2025-12-22T15:47:20.164Z"
+            },
+            {
+              "responseId": "0d81906e-308e-45e1-8cc3-8ef9e6491874",
+              "mongoId": "694a34e2db05ecc33642e4a0",
+              "status": "abandoned",
+              "createdAt": "2025-12-23T06:21:22.198Z"
+            },
+            {
+              "responseId": "ec18d45d-0969-4eb7-9db0-83f5da481209",
+              "mongoId": "694a36ab697d03a4d62448e7",
+              "status": "abandoned",
+              "createdAt": "2025-12-23T06:28:59.109Z"
+            },
+            {
+              "responseId": "a41f5532-63bf-4430-a240-e213665a1a25",
+              "mongoId": "694a372f3672e7915f88d3a4",
+              "status": "abandoned",
+              "createdAt": "2025-12-23T06:31:11.846Z"
+            },
+            {
+              "responseId": "9b2e405d-398f-42d0-9c3a-e039e0f2958f",
+              "mongoId": "694a37a31511532a9dc5dcfc",
+              "status": "abandoned",
+              "createdAt": "2025-12-23T06:33:07.912Z"
+            },
+            {
+              "responseId": "681b69de-81d6-4acd-8f41-196cf71e2aae",
+              "mongoId": "694a386c91d84621e9355524",
+              "status": "abandoned",
+              "createdAt": "2025-12-23T06:36:28.611Z"
+            },
+            {
+              "responseId": "3979b325-ba73-4aa8-926c-034c2ced1dee",
+              "mongoId": "694a388191d84621e9385028",
+              "status": "abandoned",
+              "createdAt": "2025-12-23T06:36:49.005Z"
+            },
+            {
+              "responseId": "d5abcdf3-4e4b-4912-bc1f-5ef125857488",
+              "mongoId": "694a3992554ca382cd40ac39",
+              "status": "abandoned",
+              "createdAt": "2025-12-23T06:41:22.845Z"
+            },
+            {
+              "responseId": "62430616-52b1-4849-b60f-97313e9e263d",
+              "mongoId": "694a3df52ed0ff12130df163",
+              "status": "abandoned",
+              "createdAt": "2025-12-23T07:00:05.014Z"
+            },
+            {
+              "responseId": "4881a089-8a37-4040-a12f-a2ba51dc81f2",
+              "mongoId": "694a402da060bc256a362ae4",
+              "status": "abandoned",
+              "createdAt": "2025-12-23T07:09:33.084Z"
+            },
+            {
+              "responseId": "b3037642-3ecd-415c-87f2-158290831bd6",
+              "mongoId": "694a409abf64e7a12f2f72a9",
+              "status": "abandoned",
+              "createdAt": "2025-12-23T07:11:22.462Z"
+            },
+            {
+              "responseId": "605d2790-cc9b-4a83-b7ea-decd3a84cc75",
+              "mongoId": "694a44318dbce058c9548dcb",
+              "status": "abandoned",
+              "createdAt": "2025-12-23T07:26:41.062Z"
+            },
+            {
+              "responseId": "afcc71b1-903c-437b-aaea-404bdeff2a9a",
+              "mongoId": "694a46f1171b3c670c94b963",
+              "status": "abandoned",
+              "createdAt": "2025-12-23T07:38:25.080Z"
+            },
+            {
+              "responseId": "c6e5aabf-e7ed-4c8f-bd9c-3346861a130e",
+              "mongoId": "694a47787b4ee9c8c9a36922",
+              "status": "abandoned",
+              "createdAt": "2025-12-23T07:40:40.855Z"
+            },
+            {
+              "responseId": "c74a1d1b-3a42-48ea-8e23-523b0e504f6a",
+              "mongoId": "694a48040ff6632cd760a675",
+              "status": "abandoned",
+              "createdAt": "2025-12-23T07:43:00.277Z"
+            },
+            {
+              "responseId": "06edb5b0-baf7-4325-a661-803c087c8503",
+              "mongoId": "694a48060ff6632cd760c55a",
+              "status": "abandoned",
+              "createdAt": "2025-12-23T07:43:02.002Z"
+            },
+            {
+              "responseId": "a44e7c55-542a-4ff4-90b3-bfe56e369fd5",
+              "mongoId": "694a491e7acf42c15798c1ec",
+              "status": "abandoned",
+              "createdAt": "2025-12-23T07:47:42.233Z"
+            },
+            {
+              "responseId": "95523c00-e246-4292-83d1-d3e59282fdd8",
+              "mongoId": "694a4967aac33ae78c377b92",
+              "status": "abandoned",
+              "createdAt": "2025-12-23T07:48:55.916Z"
+            },
+            {
+              "responseId": "e075df6c-6f86-432b-b081-af9923ce8361",
+              "mongoId": "694a4cede386895759ceca3c",
+              "status": "abandoned",
+              "createdAt": "2025-12-23T08:03:57.506Z"
+            },
+            {
+              "responseId": "f9b09242-db6b-4460-aa61-4e1f204e6994",
+              "mongoId": "694a4de861fc59e22650c95d",
+              "status": "abandoned",
+              "createdAt": "2025-12-23T08:08:08.846Z"
+            },
+            {
+              "responseId": "eff058c2-a410-446a-b5e8-d75f9338f90a",
+              "mongoId": "694a4e0ced7320a94b6a95d5",
+              "status": "abandoned",
+              "createdAt": "2025-12-23T08:08:44.413Z"
+            },
+            {
+              "responseId": "a52d6bc9-ee83-47d0-8600-c2467473130b",
+              "mongoId": "694a5577f4334f83a52e6f2a",
+              "status": "abandoned",
+              "createdAt": "2025-12-23T08:40:23.525Z"
+            },
+            {
+              "responseId": "0c6af173-b812-4e33-b41e-50002d443224",
+              "mongoId": "694a5cd7f7b6f917dc71e89f",
+              "status": "abandoned",
+              "createdAt": "2025-12-23T09:11:51.037Z"
+            },
+            {
+              "responseId": "fb2a4123-6c7f-44cf-a726-e63e9ed13429",
+              "mongoId": "694a5e44d68b80f0c79ec027",
+              "status": "abandoned",
+              "createdAt": "2025-12-23T09:17:56.582Z"
+            },
+            {
+              "responseId": "ad07ad78-aee9-425d-9c1f-e773020b21bb",
+              "mongoId": "694a5ee945f066ce21d96123",
+              "status": "abandoned",
+              "createdAt": "2025-12-23T09:20:41.115Z"
+            },
+            {
+              "responseId": "b1b3ac6e-96b0-4632-a31b-7a1aaad071e8",
+              "mongoId": "694ce3d13016b2fa51f607b0",
+              "status": "abandoned",
+              "createdAt": "2025-12-25T07:12:17.281Z"
+            },
+            {
+              "responseId": "328eba66-4330-4078-8e7d-07eaccef51a6",
+              "mongoId": "694e4aeae763631103e360f8",
+              "status": "abandoned",
+              "createdAt": "2025-12-26T08:44:26.169Z"
+            },
+            {
+              "responseId": "eee6c1a8-9b19-440b-b6cc-139bb819341c",
+              "mongoId": "694e744172fa61159c690474",
+              "status": "abandoned",
+              "createdAt": "2025-12-26T11:40:49.314Z"
+            },
+            {
+              "responseId": "aad50604-2dce-4b10-9b45-f09eb300e3d8",
+              "mongoId": "694f7b80d036539a05157930",
+              "status": "abandoned",
+              "createdAt": "2025-12-27T06:24:00.283Z"
+            },
+            {
+              "responseId": "0e7e513e-54fa-4f46-83ec-cce6465f0f55",
+              "mongoId": "694f817277c4232eee9e50ad",
+              "status": "abandoned",
+              "createdAt": "2025-12-27T06:49:22.172Z"
+            },
+            {
+              "responseId": "ef7799d0-6741-4a85-a120-0c4225fa58d2",
+              "mongoId": "694f890917bee3815f2aecfa",
+              "status": "abandoned",
+              "createdAt": "2025-12-27T07:21:45.721Z"
+            },
+            {
+              "responseId": "df333532-449d-4521-bc36-21565e538e26",
+              "mongoId": "694f893cf3f0ab2eedc96a29",
+              "status": "abandoned",
+              "createdAt": "2025-12-27T07:22:36.168Z"
+            },
+            {
+              "responseId": "08b08ac2-605e-45b8-9254-22e116c96a63",
+              "mongoId": "694f8aa49d29d81bd88cc6f2",
+              "status": "abandoned",
+              "createdAt": "2025-12-27T07:28:36.174Z"
+            },
+            {
+              "responseId": "43188a03-d2f8-4695-b592-8527cb190933",
+              "mongoId": "694f90acce45123f725bae90",
+              "status": "abandoned",
+              "createdAt": "2025-12-27T07:54:20.346Z"
+            },
+            {
+              "responseId": "84423ce7-7f8e-4523-9d5a-c57a72685fb1",
+              "mongoId": "694f9360f44d1d4add6b1501",
+              "status": "abandoned",
+              "createdAt": "2025-12-27T08:05:52.598Z"
+            },
+            {
+              "responseId": "1447bfd6-192e-4498-bf1d-6f332354b280",
+              "mongoId": "694f9495af195fb9b6d3bfb6",
+              "status": "abandoned",
+              "createdAt": "2025-12-27T08:11:01.346Z"
+            },
+            {
+              "responseId": "e82d6206-3819-41e7-8b49-232dc11670d9",
+              "mongoId": "694f968027efb03b87b14022",
+              "status": "abandoned",
+              "createdAt": "2025-12-27T08:19:12.056Z"
+            },
+            {
+              "responseId": "f23bdcca-a947-48e6-8e82-2125e654e7fa",
+              "mongoId": "694f9fb31ba379b58015f34b",
+              "status": "abandoned",
+              "createdAt": "2025-12-27T08:58:27.167Z"
+            },
+            {
+              "responseId": "c87bf728-258f-4f4b-9b8a-a5c755351950",
+              "mongoId": "694fa3d4bf2b7353346c71c9",
+              "status": "abandoned",
+              "createdAt": "2025-12-27T09:16:04.348Z"
+            },
+            {
+              "responseId": "c4698b17-2d3b-484e-ba7c-afbe67dee3c8",
+              "mongoId": "694fa953603fd92fd0fa121a",
+              "status": "abandoned",
+              "createdAt": "2025-12-27T09:39:31.869Z"
+            },
+            {
+              "responseId": "822d6489-b7c0-406a-8a96-96007500bdd8",
+              "mongoId": "694fa9b7e58914f01cb5f1cf",
+              "status": "abandoned",
+              "createdAt": "2025-12-27T09:41:11.736Z"
+            },
+            {
+              "responseId": "602b2b2e-d4ec-4e49-b4cc-74d07c1afbd2",
+              "mongoId": "694fad4d8c67782154031aa3",
+              "status": "abandoned",
+              "createdAt": "2025-12-27T09:56:29.633Z"
+            },
+            {
+              "responseId": "864d0032-0fd6-41c1-b783-1b7675e81211",
+              "mongoId": "694fd7c9eb82683a59e9f30e",
+              "status": "abandoned",
+              "createdAt": "2025-12-27T12:57:45.125Z"
+            },
+            {
+              "responseId": "e8f6f7d8-1dfa-4bcd-8b4d-d8c213541e64",
+              "mongoId": "694fed6a9d1497292f846e36",
+              "status": "abandoned",
+              "createdAt": "2025-12-27T14:30:02.223Z"
+            },
+            {
+              "responseId": "a012c823-5d00-489a-81ef-c0a1a4d58bfa",
+              "mongoId": "6950aaff7f600af18249a904",
+              "status": "abandoned",
+              "createdAt": "2025-12-28T03:58:55.873Z"
+            },
+            {
+              "responseId": "c4206260-7f0a-4587-af51-9613ebc444a3",
+              "mongoId": "6950acc267d6fba123cff694",
+              "status": "abandoned",
+              "createdAt": "2025-12-28T04:06:26.428Z"
+            },
+            {
+              "responseId": "51a94660-f1b3-4147-b3a7-f9ef2d86ac4b",
+              "mongoId": "6950b8e1da28ef6b047a97e6",
+              "status": "abandoned",
+              "createdAt": "2025-12-28T04:58:09.355Z"
+            },
+            {
+              "responseId": "a0fac8db-575d-4086-8789-b334bfa00c1e",
+              "mongoId": "6950d5cf8e4ef58461947409",
+              "status": "abandoned",
+              "createdAt": "2025-12-28T07:01:35.173Z"
+            },
+            {
+              "responseId": "d70faf58-a4e6-4b23-873d-4246bddfd2dc",
+              "mongoId": "6950e922553d2f5dcfa45a90",
+              "status": "abandoned",
+              "createdAt": "2025-12-28T08:24:02.336Z"
+            },
+            {
+              "responseId": "0d04edaf-d856-4778-85fb-7f396c648e36",
+              "mongoId": "6951033d53282537ed3f1b02",
+              "status": "abandoned",
+              "createdAt": "2025-12-28T10:15:25.316Z"
+            },
+            {
+              "responseId": "c6dc4a34-98cd-40e4-89a4-fa0197c60df3",
+              "mongoId": "6951035595bc0fc6694d0258",
+              "status": "abandoned",
+              "createdAt": "2025-12-28T10:15:49.419Z"
+            },
+            {
+              "responseId": "b4f4afc5-dd36-41c0-9c46-39d7e0f40dcb",
+              "mongoId": "69520a9aa762cb12407f9e21",
+              "status": "abandoned",
+              "createdAt": "2025-12-29T04:59:06.743Z"
+            },
+            {
+              "responseId": "842beead-3881-417e-8234-82429b678605",
+              "mongoId": "69521bb1983be2327b633048",
+              "status": "abandoned",
+              "createdAt": "2025-12-29T06:12:01.212Z"
+            },
+            {
+              "responseId": "195a449c-42af-4458-a0de-7df86abcedf6",
+              "mongoId": "69521f3258ed453f9409bc00",
+              "status": "abandoned",
+              "createdAt": "2025-12-29T06:26:58.184Z"
+            },
+            {
+              "responseId": "5e7141cb-c2b0-4fd0-8148-2deec4b0e7ab",
+              "mongoId": "69522f3ac27bac679eea5e49",
+              "status": "abandoned",
+              "createdAt": "2025-12-29T07:35:22.791Z"
+            },
+            {
+              "responseId": "22a9033c-2d57-4066-aad0-c3ddb385902a",
+              "mongoId": "695236847b0c2f0efda6360f",
+              "status": "abandoned",
+              "createdAt": "2025-12-29T08:06:28.121Z"
+            },
+            {
+              "responseId": "d2ebd381-1bbc-4808-a5c0-4285726a3d4e",
+              "mongoId": "695252b9e5c3ee178909ce63",
+              "status": "abandoned",
+              "createdAt": "2025-12-29T10:06:49.733Z"
+            },
+            {
+              "responseId": "5850406b-10b4-49db-8d7e-77c908b850d6",
+              "mongoId": "69525b9038790ec53c1febad",
+              "status": "abandoned",
+              "createdAt": "2025-12-29T10:44:32.851Z"
+            },
+            {
+              "responseId": "4e1105dc-5056-400c-b041-4540fb750531",
+              "mongoId": "695261068bd6ac0b45c43b37",
+              "status": "abandoned",
+              "createdAt": "2025-12-29T11:07:50.576Z"
+            },
+            {
+              "responseId": "feea9a7b-d565-4c46-8718-a41f99eb2c61",
+              "mongoId": "69534a0bd3b08244ff27a43e",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T03:42:03.704Z"
+            },
+            {
+              "responseId": "bb305f9f-32db-42a9-8cec-908ea89dd1eb",
+              "mongoId": "69534a0c51dd371d944efe22",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T03:42:04.973Z"
+            },
+            {
+              "responseId": "86f93c45-dd52-4e84-a73d-a98111da0684",
+              "mongoId": "69534aff633d45051d3337aa",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T03:46:07.966Z"
+            },
+            {
+              "responseId": "0336e1df-a61f-46e2-ac6a-137cab185bbc",
+              "mongoId": "69534ccd364c4a6801ed313c",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T03:53:49.234Z"
+            },
+            {
+              "responseId": "cea3bf99-ca86-48ba-8a41-081e67544d42",
+              "mongoId": "69534e090f122e0bbcaba570",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T03:59:05.315Z"
+            },
+            {
+              "responseId": "8fcf6597-c48e-4c06-b2c4-607157c78ffe",
+              "mongoId": "69534fb74a8c65dcf9d25d09",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T04:06:15.879Z"
+            },
+            {
+              "responseId": "bd8acc0c-3539-44f2-8a21-1e096a1554dd",
+              "mongoId": "6953572d5bf8d36f888e5c3d",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T04:38:05.546Z"
+            },
+            {
+              "responseId": "1874fa95-b421-4f00-84e8-2ee684671834",
+              "mongoId": "695359685dc1fe4c6253e790",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T04:47:36.470Z"
+            },
+            {
+              "responseId": "2a1ae755-fda6-447c-b9a0-b57b820cc2d7",
+              "mongoId": "69535979513a8d55d9feab98",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T04:47:53.250Z"
+            },
+            {
+              "responseId": "99c13845-1451-4ac9-b15b-95fe658ebcc8",
+              "mongoId": "69535ac81f707681322d2ba6",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T04:53:28.013Z"
+            },
+            {
+              "responseId": "741a3ece-a5c1-46f8-ae05-8fb8c28d459f",
+              "mongoId": "69535ae5fa9b60c029b5cbe7",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T04:53:57.020Z"
+            },
+            {
+              "responseId": "14321944-be00-40d1-a1aa-50b7fea952c2",
+              "mongoId": "69535edc0ba92e722bae556e",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T05:10:52.056Z"
+            },
+            {
+              "responseId": "b3fd705a-6d97-49dd-970a-9f20a13fc033",
+              "mongoId": "69535f93d6ee8cb274c0be08",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T05:13:55.332Z"
+            },
+            {
+              "responseId": "c9cec7f1-3090-4b72-be54-7355981edfd3",
+              "mongoId": "69535fcfbc3738ce607791a9",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T05:14:55.322Z"
+            },
+            {
+              "responseId": "21985db1-fa6a-43e3-accc-a4dde8158fc6",
+              "mongoId": "695360e9fb59c4f12e04e01e",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T05:19:37.658Z"
+            },
+            {
+              "responseId": "1db6074c-08f8-47ca-9d20-b8cad80f120d",
+              "mongoId": "6953610208c1d6ff5fd52d15",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T05:20:02.635Z"
+            },
+            {
+              "responseId": "73192d2c-1d22-429a-a9ab-8e2948b70ed8",
+              "mongoId": "695361dba5bb7e2dfe379f77",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T05:23:39.137Z"
+            },
+            {
+              "responseId": "55f91787-badd-4f47-8238-ac8cb5183040",
+              "mongoId": "6953621f3568b159db594184",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T05:24:47.673Z"
+            },
+            {
+              "responseId": "ce75a673-3a98-4ec8-9dbd-bfacced178f7",
+              "mongoId": "695362a3b6603be9b37616be",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T05:26:59.396Z"
+            },
+            {
+              "responseId": "0002b8ab-a881-4a5d-a9d9-c2005c1a796b",
+              "mongoId": "695362bc4dff38bd40f57f6b",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T05:27:24.721Z"
+            },
+            {
+              "responseId": "829795ca-90fa-4c4d-9463-ef859fed8563",
+              "mongoId": "695362d3c7f2ae21f987b00a",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T05:27:47.148Z"
+            },
+            {
+              "responseId": "3f79b4ff-89a3-47aa-be1b-635d80b47eb0",
+              "mongoId": "695362fc37c0694d9db6b5d6",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T05:28:28.019Z"
+            },
+            {
+              "responseId": "14c6d891-ac18-43db-b176-8fe372f77e90",
+              "mongoId": "69536327a5e7af6320dbe12a",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T05:29:11.314Z"
+            },
+            {
+              "responseId": "bcd2a8fc-2d06-43ad-98c3-69adbdf872d5",
+              "mongoId": "69536347e7fe6d80c138ee7d",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T05:29:43.978Z"
+            },
+            {
+              "responseId": "970e4a16-6db4-4f96-b956-61bdafc634d9",
+              "mongoId": "695363a8b42148597aef3f23",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T05:31:20.107Z"
+            },
+            {
+              "responseId": "2b1f1513-7e4b-460a-b284-f9254241a2b9",
+              "mongoId": "695363e3560d9382a51e6c4c",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T05:32:19.504Z"
+            },
+            {
+              "responseId": "96bccd83-b0c4-4613-aaa6-3ec98ec1a171",
+              "mongoId": "69536474f7ac0873a0e86300",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T05:34:44.794Z"
+            },
+            {
+              "responseId": "12279014-3ba7-4512-9767-3880fe139ff7",
+              "mongoId": "695365b1ee376d6d7d828c50",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T05:40:01.315Z"
+            },
+            {
+              "responseId": "0e63d42e-341b-46b9-9fd9-b420976706fb",
+              "mongoId": "695365c66f0b09ad131341bc",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T05:40:22.171Z"
+            },
+            {
+              "responseId": "3eddc13d-72ad-4f7e-b332-650b18c7a8f8",
+              "mongoId": "69536614495910e56bd231d8",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T05:41:40.479Z"
+            },
+            {
+              "responseId": "73275883-c228-41ef-8a2d-3d70ee742c9e",
+              "mongoId": "6953665a27e3042dfe569dc3",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T05:42:50.424Z"
+            },
+            {
+              "responseId": "e58cc16d-4716-4778-abdf-1fa9fd6a504d",
+              "mongoId": "6953670b7ad9f1d8e10d5c62",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T05:45:47.886Z"
+            },
+            {
+              "responseId": "5f521ab4-0535-4322-9e8e-7a07a5a6e15c",
+              "mongoId": "69536a1cfa154e27a03e72bb",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T05:58:52.207Z"
+            },
+            {
+              "responseId": "3f0af889-5a33-471e-b5b9-7cb7aa8e22ba",
+              "mongoId": "69536b230f660e699be3831b",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T06:03:15.633Z"
+            },
+            {
+              "responseId": "f0b5ea92-aae0-427a-876c-d21ae4f82caa",
+              "mongoId": "69536b9dd6c5c3a4835f4747",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T06:05:17.898Z"
+            },
+            {
+              "responseId": "5390bb17-f6d9-492f-85af-984b479423e7",
+              "mongoId": "69536ca710f87233002b8f74",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T06:09:43.209Z"
+            },
+            {
+              "responseId": "cf71347e-616d-498a-be3e-d6acecd597b0",
+              "mongoId": "69536d78499f84c3c9e6dc89",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T06:13:12.506Z"
+            },
+            {
+              "responseId": "905c0092-0adb-459e-a03d-c36d5e5ca3ba",
+              "mongoId": "69536df4e71f30393efa4444",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T06:15:16.283Z"
+            },
+            {
+              "responseId": "005f8423-2dd9-40c3-819b-b575dcefce28",
+              "mongoId": "69536e9af09fe700552d322f",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T06:18:02.100Z"
+            },
+            {
+              "responseId": "a94ddf2b-16ff-441d-9a42-8c3e3453497f",
+              "mongoId": "69536ed2534c9cd29307a6e6",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T06:18:58.169Z"
+            },
+            {
+              "responseId": "96de16db-25c2-43f7-9584-b53a267b223c",
+              "mongoId": "69536ee4b0d9d5811a1908f8",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T06:19:16.589Z"
+            },
+            {
+              "responseId": "6113adf1-2836-4275-a394-b46444141db4",
+              "mongoId": "69536f2bd635c681ec9f3c88",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T06:20:27.969Z"
+            },
+            {
+              "responseId": "fec9a44d-ebc9-411d-871e-59deae8c1caf",
+              "mongoId": "69536f4a6650dbf13f76b5f9",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T06:20:58.382Z"
+            },
+            {
+              "responseId": "454873c1-0461-4148-bfb4-56e68b8c51cf",
+              "mongoId": "695370d583a37be07277cc6d",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T06:27:33.688Z"
+            },
+            {
+              "responseId": "f43f46be-0aa6-4b9d-9c02-ea3291f2a2ba",
+              "mongoId": "6953711acfe0cc48855a5278",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T06:28:42.762Z"
+            },
+            {
+              "responseId": "2f202443-87ca-4a9e-aef9-df6fe51425ec",
+              "mongoId": "6953716927901a1bf8148827",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T06:30:01.819Z"
+            },
+            {
+              "responseId": "3b6ef732-02a9-4d39-8113-31b0e53dec8b",
+              "mongoId": "6953717727901a1bf814a70b",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T06:30:15.823Z"
+            },
+            {
+              "responseId": "57c331ed-635c-484f-9b4c-ff603fe509ad",
+              "mongoId": "695371e7a71005acbd9e4442",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T06:32:07.356Z"
+            },
+            {
+              "responseId": "3d31454b-4c3a-4527-8ca2-e73e60443d02",
+              "mongoId": "69537205ff7406f875470bac",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T06:32:38.016Z"
+            },
+            {
+              "responseId": "83bc21da-0bc8-4e6e-a21c-d26d87198c01",
+              "mongoId": "695372139bbb6c9d3853cf68",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T06:32:51.256Z"
+            },
+            {
+              "responseId": "8eeeed8d-cdb0-434d-9ded-6cee11d732d0",
+              "mongoId": "695372b270a6e6a918ce955c",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T06:35:30.224Z"
+            },
+            {
+              "responseId": "f3a15a2b-535f-49c8-b790-2725be4619df",
+              "mongoId": "695372b8cc415f46a78a5cac",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T06:35:36.439Z"
+            },
+            {
+              "responseId": "eb7f825c-347b-4dba-b03c-30d1daf6f63f",
+              "mongoId": "695372f4bf7dcb6d3c24467c",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T06:36:36.918Z"
+            },
+            {
+              "responseId": "e781cc3d-fa71-4dc9-9163-e3317c45e456",
+              "mongoId": "69537330ea249ffae0c98a3a",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T06:37:36.345Z"
+            },
+            {
+              "responseId": "c4962f45-903b-4201-a607-747c4162cab5",
+              "mongoId": "695373fa5adb7fa6635007e3",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T06:40:58.578Z"
+            },
+            {
+              "responseId": "310c258d-6751-4003-9f2a-08a80be76c6a",
+              "mongoId": "6953742a0086694cf6ff3a7a",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T06:41:46.481Z"
+            },
+            {
+              "responseId": "b9ad14b3-3122-4e7f-966e-b595cd4fb0d1",
+              "mongoId": "69537462b62d54002f0613eb",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T06:42:42.606Z"
+            },
+            {
+              "responseId": "2541076c-322c-4c87-8729-7e084255f5bb",
+              "mongoId": "695375211de421a5faf3f996",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T06:45:53.677Z"
+            },
+            {
+              "responseId": "d287fb78-f00d-4d65-be3a-f5014edc78eb",
+              "mongoId": "6953752e5f8c88062013a377",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T06:46:06.662Z"
+            },
+            {
+              "responseId": "9a163729-69b3-4038-b8be-bfb4f8ecb4fc",
+              "mongoId": "695375455f8c88062013c26d",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T06:46:29.041Z"
+            },
+            {
+              "responseId": "3ac82eab-861b-4c5d-b45d-c9e73f4b4e1f",
+              "mongoId": "69537582d62953d11ccafbd8",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T06:47:30.355Z"
+            },
+            {
+              "responseId": "e3f4793c-7a18-4e0e-a403-f23f5ab75fc1",
+              "mongoId": "695375d818eeb23a0666bf40",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T06:48:56.628Z"
+            },
+            {
+              "responseId": "39d8d8d4-2090-403b-ac3f-e42d95864a4b",
+              "mongoId": "6953766813a0f3c25a6e2958",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T06:51:20.710Z"
+            },
+            {
+              "responseId": "dadf86d4-3de3-49d9-9fee-3e5772a02a58",
+              "mongoId": "695377bbe2b68af1592eb790",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T06:56:59.651Z"
+            },
+            {
+              "responseId": "920fb376-6d30-486e-9414-eaf27fb76b14",
+              "mongoId": "695378398f2c7b55bfe97763",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T06:59:05.828Z"
+            },
+            {
+              "responseId": "0bb154e0-0665-4df6-a881-cf0bebead55e",
+              "mongoId": "6953786e4f8d338d8f35154f",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T06:59:58.325Z"
+            },
+            {
+              "responseId": "3c6f1a07-908d-4863-8ded-492db0aefe66",
+              "mongoId": "69537953f708b49758bad55e",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T07:03:47.754Z"
+            },
+            {
+              "responseId": "cd880c14-cbc2-4691-9d21-f9aa9559cc97",
+              "mongoId": "695379d37091be702c53c900",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T07:05:55.187Z"
+            },
+            {
+              "responseId": "bd2bd292-4f05-47d5-b620-e9e53e801d49",
+              "mongoId": "69537a596abcff565ba8aea9",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T07:08:09.741Z"
+            },
+            {
+              "responseId": "e300ca1b-d98e-4fd4-8511-35cb1374603d",
+              "mongoId": "69537ae167d994f245aa6780",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T07:10:25.040Z"
+            },
+            {
+              "responseId": "c0f70dc0-2d5d-4ffd-b5ed-8443e4937143",
+              "mongoId": "69537b42afb465a2deec489e",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T07:12:02.621Z"
+            },
+            {
+              "responseId": "9a9fcc8c-e36d-4776-8d34-a472b36c0e72",
+              "mongoId": "69537d139828bae6b7408f71",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T07:19:47.902Z"
+            },
+            {
+              "responseId": "3d0eab69-970a-452c-9697-1bd65463f430",
+              "mongoId": "69537df9c0b40bc2ca1e99d0",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T07:23:37.612Z"
+            },
+            {
+              "responseId": "598b6923-63db-4107-ad34-62c8dbd0b79c",
+              "mongoId": "69537e301b05c61b1d2a70bb",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T07:24:32.868Z"
+            },
+            {
+              "responseId": "84df24d8-a122-4e24-a2bf-1382f5ba0702",
+              "mongoId": "69537e91d20330d97c8f648c",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T07:26:09.066Z"
+            },
+            {
+              "responseId": "970bfa30-76ca-4f8c-a224-9bed1b49fed4",
+              "mongoId": "69537eb2d20330d97c8fa88e",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T07:26:42.254Z"
+            },
+            {
+              "responseId": "397d1062-4d50-47f4-9047-d93501ef975a",
+              "mongoId": "69537ef074420c792948505e",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T07:27:44.410Z"
+            },
+            {
+              "responseId": "ee4856b9-841e-4106-a956-a5f2627fd3a9",
+              "mongoId": "69537efc39c6402684d50fad",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T07:27:56.476Z"
+            },
+            {
+              "responseId": "a12a32f1-290b-4fdb-b27d-edaca42457a8",
+              "mongoId": "69537f84221141fc061d6a20",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T07:30:12.629Z"
+            },
+            {
+              "responseId": "f2ec1cca-032d-438b-b55a-0f146d44323c",
+              "mongoId": "69537fa6400e3ccdd47dc446",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T07:30:46.431Z"
+            },
+            {
+              "responseId": "5bf47237-016c-4180-aa86-6dd1ff772d62",
+              "mongoId": "69538064f76caf0a08ca21db",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T07:33:56.969Z"
+            },
+            {
+              "responseId": "b97e4e72-7b0a-4b88-a2d3-abe83d90f4d2",
+              "mongoId": "69538205b3710488b64d2bd2",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T07:40:53.527Z"
+            },
+            {
+              "responseId": "a0d3d3de-5c30-4459-8a3c-ab00fa18a245",
+              "mongoId": "695382bb0e8c4bc129591fde",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T07:43:55.734Z"
+            },
+            {
+              "responseId": "224ac697-a8e9-414f-8ac0-4d9cd995cffd",
+              "mongoId": "695382d40e8c4bc129596dcf",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T07:44:20.205Z"
+            },
+            {
+              "responseId": "d3610839-d900-43d0-a710-44805be54a67",
+              "mongoId": "6953831bf9cdd096fb571918",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T07:45:31.568Z"
+            },
+            {
+              "responseId": "cee6091f-7e77-47e5-9faf-16dbd961ff62",
+              "mongoId": "6953852ca73ee693f288dc07",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T07:54:20.876Z"
+            },
+            {
+              "responseId": "cf4041cf-353f-40f9-bf01-f83d251a0ef6",
+              "mongoId": "6953858b4a99cce766be0d7f",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T07:55:55.202Z"
+            },
+            {
+              "responseId": "120d3d53-5770-44eb-a079-9b078683dbf7",
+              "mongoId": "695385a689640d75f7d4f848",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T07:56:22.663Z"
+            },
+            {
+              "responseId": "66c74988-b2be-41c0-b4eb-96a16f65c8d1",
+              "mongoId": "695385e71f11763e59fc7f1a",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T07:57:27.495Z"
+            },
+            {
+              "responseId": "6b644a70-bc8f-475a-9dbb-5661d18a784e",
+              "mongoId": "69538716b35c37d75b90f9bc",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T08:02:30.964Z"
+            },
+            {
+              "responseId": "9b1015ff-68d2-4323-b132-40f60ec25500",
+              "mongoId": "69538735cf9316ca62a02e35",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T08:03:01.983Z"
+            },
+            {
+              "responseId": "88599543-3c57-4d7b-a820-2aa3e03b8744",
+              "mongoId": "695387403ed3a1e5885ecca9",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T08:03:12.675Z"
+            },
+            {
+              "responseId": "82bdbcc0-7981-43a4-be61-9b6930a28d99",
+              "mongoId": "6953876e7a284c12423d10ce",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T08:03:58.271Z"
+            },
+            {
+              "responseId": "0e2c1dd3-4311-492a-bfaa-a5fe30f9c538",
+              "mongoId": "6953883c7fef17c25b59f6b6",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T08:07:24.229Z"
+            },
+            {
+              "responseId": "f737bb9b-e789-4a73-acf8-cbf7215dd5bf",
+              "mongoId": "69538875e92cb571e1e862f5",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T08:08:21.960Z"
+            },
+            {
+              "responseId": "06dd9973-a665-4481-b482-9a50ddba5f4d",
+              "mongoId": "695388c1fdac8a16e05571ae",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T08:09:37.660Z"
+            },
+            {
+              "responseId": "b9b0bad7-3d08-4e22-a423-515e418a1eb0",
+              "mongoId": "6953accc4206ba397e3586d3",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T10:43:24.361Z"
+            },
+            {
+              "responseId": "4ea9972c-b884-48c2-903c-797b26fc0e58",
+              "mongoId": "6953b281f6d7910f268b58ab",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T11:07:45.792Z"
+            },
+            {
+              "responseId": "ea142a40-2c35-4a6c-b372-6a7d7892ee99",
+              "mongoId": "6953b2eb5fe7d6fca8f2be6b",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T11:09:31.912Z"
+            },
+            {
+              "responseId": "91957bb2-4eb6-4545-95d5-509ca2f9adb5",
+              "mongoId": "6953b484aebe5fa7e95fe35c",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T11:16:20.377Z"
+            },
+            {
+              "responseId": "2722903b-deb3-4373-af2a-dead23dfb5df",
+              "mongoId": "6953b48e76d0a462c45a1353",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T11:16:30.443Z"
+            },
+            {
+              "responseId": "93dd6f4a-6798-4bee-9d98-7f5509988035",
+              "mongoId": "6953b4d9b75c863f2f802d10",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T11:17:45.199Z"
+            },
+            {
+              "responseId": "539a4162-7827-4b6a-8ff7-1fe1bad8fb1b",
+              "mongoId": "6953b5e6ddffd46289e15440",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T11:22:14.773Z"
+            },
+            {
+              "responseId": "7b3a30c2-5f67-47fc-9d41-5edce874b18f",
+              "mongoId": "6953b6638da65dabc6fae70f",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T11:24:20.000Z"
+            },
+            {
+              "responseId": "2ec198a8-0a29-414f-8921-1419f52b01a2",
+              "mongoId": "6953b6bd3942fc07dd0789b7",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T11:25:49.757Z"
+            },
+            {
+              "responseId": "9bd9ba13-7190-4855-9865-5cc4080ff15b",
+              "mongoId": "6953b6be5be8c6e751bc41f7",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T11:25:50.942Z"
+            },
+            {
+              "responseId": "6d12edc0-29f6-4736-8744-9b14e59e148d",
+              "mongoId": "6953b83445d913a7da28b2d0",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T11:32:04.848Z"
+            },
+            {
+              "responseId": "0adffed8-713d-4aee-9012-617433a3de3b",
+              "mongoId": "6953b91814df4ec35e5dfeb0",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T11:35:52.394Z"
+            },
+            {
+              "responseId": "77c7d946-19fa-4759-a824-3ef71cea302e",
+              "mongoId": "6953ba0e6dff999bc129e35c",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T11:39:58.589Z"
+            },
+            {
+              "responseId": "2d171973-47be-4c34-b7d2-e250ece621da",
+              "mongoId": "6953ba2462c81482edb572e0",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T11:40:20.941Z"
+            },
+            {
+              "responseId": "b06cdf7c-35a8-4b9a-b7e8-b67630cd83a4",
+              "mongoId": "6953ba55787d5118d279900e",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T11:41:09.743Z"
+            },
+            {
+              "responseId": "ce216c28-decc-4fa1-ad75-58bef75d6c07",
+              "mongoId": "6953badc900aa1cba33372d1",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T11:43:24.983Z"
+            },
+            {
+              "responseId": "9cad0101-2084-4799-9128-ef7bd8186547",
+              "mongoId": "6953bbac46e89e2eb59b19cb",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T11:46:52.662Z"
+            },
+            {
+              "responseId": "8cd24a0b-a3b5-4728-a6af-c33edef89f31",
+              "mongoId": "6953bbd446e89e2eb59b8a46",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T11:47:32.201Z"
+            },
+            {
+              "responseId": "085628f8-666b-435f-95ac-bb57c8745006",
+              "mongoId": "6953bc6b63c3eb97f9612f86",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T11:50:03.389Z"
+            },
+            {
+              "responseId": "f6e22bae-1c3c-48dd-81b5-114f18811374",
+              "mongoId": "6953bdf78eee41e20b5e4b65",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T11:56:39.016Z"
+            },
+            {
+              "responseId": "11fdb058-e94c-491f-a8f1-b21428635b2f",
+              "mongoId": "6953be75ced609346ce6c86f",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T11:58:45.568Z"
+            },
+            {
+              "responseId": "1cabea01-7c50-4526-882a-6d12026a8ccf",
+              "mongoId": "6953c16ceb2831e765f02eee",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T12:11:24.977Z"
+            },
+            {
+              "responseId": "104322dc-6ad3-4c68-bc7d-59f63d933a83",
+              "mongoId": "6953c72a44624ef07ca1832d",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T12:35:54.917Z"
+            },
+            {
+              "responseId": "2cb4f79d-167c-4fe7-887a-71c533a00a7b",
+              "mongoId": "6953c814dcb4b417d96f8bbd",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T12:39:48.010Z"
+            },
+            {
+              "responseId": "477d28ae-45cb-4a24-a1d5-9f81b4e426f3",
+              "mongoId": "6953c82d3b8054f5bce82503",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T12:40:13.341Z"
+            },
+            {
+              "responseId": "380ee4f1-f0a3-40af-8ce5-427a01bb11d2",
+              "mongoId": "6953c9753dafd8aa9cf3274f",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T12:45:41.876Z"
+            },
+            {
+              "responseId": "9c073d4e-4fbb-4e7d-8c4a-23a92c9a2923",
+              "mongoId": "6953c9b82bac2f1bab02e082",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T12:46:48.701Z"
+            },
+            {
+              "responseId": "183675cf-1a5c-44f2-9df2-760ef9988a8a",
+              "mongoId": "6953c9ef389ec08019be5dc3",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T12:47:43.858Z"
+            },
+            {
+              "responseId": "155eb906-b517-4f8f-a7ab-68b1667eda2a",
+              "mongoId": "6953cbf8c40aa39eda9cf8f7",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T12:56:24.673Z"
+            },
+            {
+              "responseId": "ed8ebc3e-3f58-40c7-9c32-7e2f84e80a72",
+              "mongoId": "6953ce2acc0a1587ff780b2e",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T13:05:46.789Z"
+            },
+            {
+              "responseId": "2ff3a8ce-53d0-428d-83ff-249247d6c8d8",
+              "mongoId": "6953d501d8883798d0a07e7c",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T13:34:57.538Z"
+            },
+            {
+              "responseId": "358d459b-7fbb-4ab1-86c9-1960986a60c6",
+              "mongoId": "6953d56e2b991029008d075e",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T13:36:46.384Z"
+            },
+            {
+              "responseId": "c34e0602-af21-4945-9882-e42cef96ee83",
+              "mongoId": "6953d5bb34eaa986f172eafe",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T13:38:03.371Z"
+            },
+            {
+              "responseId": "01661063-332b-46bf-b575-192a3dc45508",
+              "mongoId": "6953d9d918496ec77d577669",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T13:55:37.441Z"
+            },
+            {
+              "responseId": "663cfb65-7810-456d-b370-5ce00a2bee12",
+              "mongoId": "6953db489cc69e3a16e4b820",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T14:01:44.752Z"
+            },
+            {
+              "responseId": "ce1e5a2f-6169-4959-8c31-4115e61da1b6",
+              "mongoId": "6953dcd8d995412a8796bdd1",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T14:08:24.434Z"
+            },
+            {
+              "responseId": "0fc799e9-4178-4bd5-9701-a9a6b2fab23d",
+              "mongoId": "6953dcf34b870c6d5d92efa0",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T14:08:51.674Z"
+            },
+            {
+              "responseId": "c1a0c24f-ed31-45ee-8b59-16a98bd4dc61",
+              "mongoId": "6953dda3d8a8fcb7029ede53",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T14:11:47.977Z"
+            },
+            {
+              "responseId": "8b63c73d-56a3-4264-9935-8955678f44e1",
+              "mongoId": "6953ddada00d53ee189d487e",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T14:11:57.320Z"
+            },
+            {
+              "responseId": "ee02d7c8-0fc7-436a-b360-2942e41bb670",
+              "mongoId": "6953ddeed04ef4c9268b9a30",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T14:13:02.653Z"
+            },
+            {
+              "responseId": "cb43c8e3-1892-4d0a-aca6-b79e2d04d28f",
+              "mongoId": "6953ddfcd04ef4c9268bb33b",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T14:13:16.024Z"
+            },
+            {
+              "responseId": "24498a43-e602-45b5-a572-55c9f1e0286f",
+              "mongoId": "6953e01c681fb7cb5f228338",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T14:22:20.877Z"
+            },
+            {
+              "responseId": "d43fcfaa-8974-44f2-a393-92f4e58d0e69",
+              "mongoId": "6953e079c9d731d6f5696142",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T14:23:53.032Z"
+            },
+            {
+              "responseId": "2a19ce01-b97e-477b-8cb6-5ccb46a85b74",
+              "mongoId": "6953e1323c17d06276579916",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T14:26:58.113Z"
+            },
+            {
+              "responseId": "00e3f932-8deb-4545-89b2-cfcdfc5db7b7",
+              "mongoId": "6953e217a84b45299c8cf558",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T14:30:47.991Z"
+            },
+            {
+              "responseId": "99fe888e-4301-42e4-a9f9-66e2a4f1dd47",
+              "mongoId": "6953e740d86707b1dd626864",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T14:52:48.789Z"
+            },
+            {
+              "responseId": "280d17ee-74e7-4b60-839e-46346498b4e7",
+              "mongoId": "6953e9a80b87d03e20c6e307",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T15:03:04.347Z"
+            },
+            {
+              "responseId": "9c9ac978-b276-4d22-8aa3-c865cd4ea6ca",
+              "mongoId": "6953ea6b4889c8f3ad10293c",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T15:06:19.242Z"
+            },
+            {
+              "responseId": "01a74698-b17c-4f4f-8878-5fc5349b29ae",
+              "mongoId": "6953ec2132f841e93a0c22ca",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T15:13:37.714Z"
+            },
+            {
+              "responseId": "aaa0d523-0d6c-408d-ab71-de29f40a2bf6",
+              "mongoId": "6953f1462e8800f2c15f4460",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T15:35:34.434Z"
+            },
+            {
+              "responseId": "484186bd-9b04-4219-9e11-f726d17c2e7c",
+              "mongoId": "6953f18346b7a491e0b9b7de",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T15:36:35.551Z"
+            },
+            {
+              "responseId": "cca36c11-6458-4498-be2c-8a3e7c4e6ed1",
+              "mongoId": "6953f9e05bcdf4066716aeb0",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T16:12:16.348Z"
+            },
+            {
+              "responseId": "a812c5d0-2960-4749-909e-6dcf40661d66",
+              "mongoId": "695407f79f1fa5faba97e70e",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T17:12:23.171Z"
+            },
+            {
+              "responseId": "246493b9-f394-4339-b8bd-3da5fbd13dc6",
+              "mongoId": "695407fc687e952e2a1109bb",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T17:12:28.537Z"
+            },
+            {
+              "responseId": "6aca584d-76cc-4943-abfe-c8c6ba3375b0",
+              "mongoId": "69540800687e952e2a111025",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T17:12:32.921Z"
+            },
+            {
+              "responseId": "040b2411-7cf5-404b-8b58-9d03f037c240",
+              "mongoId": "69540831be7db232886729e8",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T17:13:21.169Z"
+            },
+            {
+              "responseId": "9e9f8015-95ae-4e30-ab18-ac7f50c26d69",
+              "mongoId": "695408329f1fa5faba981421",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T17:13:22.103Z"
+            },
+            {
+              "responseId": "dfa9ce21-4ab6-4477-894e-03b06ecf1630",
+              "mongoId": "695408347db9e2711a10f279",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T17:13:24.209Z"
+            },
+            {
+              "responseId": "2c9693f4-f92a-4cb4-9016-d2a3d39d05c6",
+              "mongoId": "69540836be7db23288673058",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T17:13:26.480Z"
+            },
+            {
+              "responseId": "01b16771-2271-472c-b14f-e350f5cffc28",
+              "mongoId": "69540837aabb295fb1714704",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T17:13:27.373Z"
+            },
+            {
+              "responseId": "098b70fa-86e3-4f86-9fa6-54527ad33621",
+              "mongoId": "69540838fa0451a1349e012b",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T17:13:28.931Z"
+            },
+            {
+              "responseId": "9b6481ab-a0b8-4fe8-88c8-8e84cc3b4e0b",
+              "mongoId": "6954083a7db9e2711a10f8e8",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T17:13:30.967Z"
+            },
+            {
+              "responseId": "ea087791-0afa-4bc5-b6f4-56cded5d77a6",
+              "mongoId": "69540b2d9ccae0b380f8c972",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T17:26:05.726Z"
+            },
+            {
+              "responseId": "33b0b802-e84b-4002-865f-befb92be0bcc",
+              "mongoId": "69540d43e6e33945f6aecf8b",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T17:34:59.906Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjrtq8ol176706640887492383",
+          "original": "65669046-af24-47de-bca9-acf6b40b941d",
+          "originalMongoId": "69534b570f773cbb324ff936",
+          "duplicates": [
+            {
+              "responseId": "ab13dce7-d90d-4531-a832-169b942f3cd1",
+              "mongoId": "69534b84d4122c5c5802b829",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T03:48:20.022Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjrzhu6k176706657741377499",
+          "original": "5483a79a-75ac-4e1d-ba6c-1ad5e1bbe6e8",
+          "originalMongoId": "69534bffef2e10def21d64c1",
+          "duplicates": [
+            {
+              "responseId": "8b3fe1bd-4a07-40af-9a42-377ff59b042a",
+              "mongoId": "69534cc495188b2bc327d07d",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T03:53:40.807Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjrvh1pj176706723514882644",
+          "original": "0f505f78-214f-4841-8b4e-e8b985a4312c",
+          "originalMongoId": "69534e9a4df4a5afd3bf33a3",
+          "duplicates": [
+            {
+              "responseId": "3987a504-c762-4761-bdee-0ad1f751ed64",
+              "mongoId": "69534f3ff035e2fcdd27a8cd",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T04:04:15.789Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjs24056176706746244976233",
+          "original": "7f32faf7-6f9f-4b7f-b177-76de54c483c9",
+          "originalMongoId": "69534f20fa047193fa1a001d",
+          "duplicates": [
+            {
+              "responseId": "77edf01a-dc0d-4b91-9126-fb55326bbbbe",
+              "mongoId": "69534fe9c875f90867409f56",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T04:07:05.342Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjrtq8ol176706940222436635",
+          "original": "3efb8a33-9ccb-45eb-9ba3-45709840d20d",
+          "originalMongoId": "695356f8a7dea30b95717f7b",
+          "duplicates": [
+            {
+              "responseId": "b9db3ec7-54c5-4472-a228-d1ae3bebed10",
+              "mongoId": "69535750813059b95bc240ab",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T04:38:40.452Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjru3yj6176707032732582013",
+          "original": "02194b5d-5699-46c3-8632-a410738410e0",
+          "originalMongoId": "69535b00eaa30b6368ad64d8",
+          "duplicates": [
+            {
+              "responseId": "031aac2f-a62b-4962-941e-9a7dc59feb9b",
+              "mongoId": "695407ec738aa565c404096f",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T17:12:12.505Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjru3yj6176707156684325316",
+          "original": "74073985-65fa-4f62-a7b2-f077d043a327",
+          "originalMongoId": "69535f6b25aae4d0864b9938",
+          "duplicates": [
+            {
+              "responseId": "7c915c67-9494-4fc9-9862-6a5bbbd05a98",
+              "mongoId": "69535f90b8334649af5db03b",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T05:13:52.524Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjruij91176707165536199296",
+          "original": "eff7bc87-dd40-42a8-b4c0-7fe01b9cb81d",
+          "originalMongoId": "69535fb74eb3fa571bc62306",
+          "duplicates": [
+            {
+              "responseId": "a9dec42c-d324-43c3-98e7-7aa04b86e92a",
+              "mongoId": "695360146cfcca3492c49c56",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T05:16:04.447Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjrydqb1176707178285967188",
+          "original": "6247e695-6bac-457c-bd9e-2eb48fb3482f",
+          "originalMongoId": "695360596c09be5115735ca6",
+          "duplicates": [
+            {
+              "responseId": "3dc6b782-d443-4dc4-a3b9-dfa4de5bb3a2",
+              "mongoId": "695360c5d4ff60e4a1444c43",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T05:19:01.261Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjrzhu6k176707193129343706",
+          "original": "c5ed72cc-2846-4d79-8c88-aea313dc7ac1",
+          "originalMongoId": "695360e10cd09817633a506c",
+          "duplicates": [
+            {
+              "responseId": "9a613f0a-5215-4617-b919-abc8b330c703",
+              "mongoId": "6953612c7fc666dcc3f1a7eb",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T05:20:44.466Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjrydqb1176707243642957967",
+          "original": "1a4a9639-a791-47df-a10e-ec0654fd44dd",
+          "originalMongoId": "695362c9fa9c0f848d7ccdce",
+          "duplicates": [
+            {
+              "responseId": "497276cc-ccf5-433c-af29-bf49c559b45e",
+              "mongoId": "695362e7fa9c0f848d7ce1e1",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T05:28:07.365Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjrustpv176707292929095394",
+          "original": "f83d7fda-8e55-4fe5-9dc9-99397da4d71e",
+          "originalMongoId": "695364d2b07058a3ef631744",
+          "duplicates": [
+            {
+              "responseId": "64a0962b-ece9-4d58-87c3-b3d3996aaffd",
+              "mongoId": "6953657238cd26270be958b7",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T05:38:58.583Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjrtq8ol176707299593235760",
+          "original": "211e74b1-9fe5-44e4-8616-4e5660b36ef6",
+          "originalMongoId": "695365052547429b57b29e98",
+          "duplicates": [
+            {
+              "responseId": "59837b21-0729-459e-aebd-1b959956a0e8",
+              "mongoId": "6953655f0b496262e99bb7fc",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T05:38:39.815Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjrzhu6k176707317400837855",
+          "original": "d6fa816e-e741-428d-b011-fdb98c32e8cd",
+          "originalMongoId": "695365f7b2e1a29b27528463",
+          "duplicates": [
+            {
+              "responseId": "ae865b9d-81d5-4d9c-940a-918e2804eee4",
+              "mongoId": "69536653c546157594ab58ff",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T05:42:43.847Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjs24056176707321482438719",
+          "original": "064d2409-a0c2-43b1-86a2-0f7f55cac7e8",
+          "originalMongoId": "6953667ec546157594aba9e5",
+          "duplicates": [
+            {
+              "responseId": "6e1cf791-e964-4933-8608-4996a0bbb1eb",
+              "mongoId": "695367775e38b92ade0688f5",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T05:47:35.180Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjru3yj6176707370189911796",
+          "original": "fe7f3189-1799-4a27-9b57-e5ff0122945b",
+          "originalMongoId": "695367e181ac6edd67dd416f",
+          "duplicates": [
+            {
+              "responseId": "1645187a-01b2-4ce5-a922-1f191a916ba4",
+              "mongoId": "6953682a4370f2e62356ef0c",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T05:50:34.898Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjrtq8ol176707015014428748",
+          "original": "df479419-1cbb-492c-b9bb-312ad867bcf9",
+          "originalMongoId": "695368b92a50c3c2495c8077",
+          "duplicates": [
+            {
+              "responseId": "210496a7-4cd5-4a09-992b-46d427033405",
+              "mongoId": "69536932d2793d92e699a01a",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T05:54:58.734Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjrzhu6k176707393628937977",
+          "original": "8caf5b43-7533-4e73-87bf-7e2e228ddf96",
+          "originalMongoId": "695368ce09244ad7ae67a465",
+          "duplicates": [
+            {
+              "responseId": "268b6909-29b9-4734-a2c2-f7e739d6d766",
+              "mongoId": "69540ae1a907e5dd276a10ad",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T17:24:49.138Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjrzhu6k176707410186690351",
+          "original": "35fd1acc-b536-4e62-a6c0-6cf9499c888e",
+          "originalMongoId": "69536969d2793d92e699f253",
+          "duplicates": [
+            {
+              "responseId": "f2071f49-7768-459e-9195-102cea747bec",
+              "mongoId": "69540b9793612df72acebdaa",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T17:27:51.246Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjrustpv176707449108689751",
+          "original": "610d615d-f710-4416-a16a-7d35dc72227f",
+          "originalMongoId": "69536a78e76f249a6d42aab0",
+          "duplicates": [
+            {
+              "responseId": "ef4579a3-8dea-43bd-99ce-f73fa40b2ed9",
+              "mongoId": "695407fa9f1fa5faba97f391",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T17:12:26.772Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjru3yj6176707450872485851",
+          "original": "8cb1b4f8-477b-45a6-a2c6-ac4da82881cb",
+          "originalMongoId": "69536add74e25a7b2851ea00",
+          "duplicates": [
+            {
+              "responseId": "4f777981-f5e9-490f-ac27-17a5aa868066",
+              "mongoId": "69540cac32f654a923226670",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T17:32:28.476Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjrydqb1176707470928468084",
+          "original": "47643438-a587-4179-9cec-f52e090d1e3e",
+          "originalMongoId": "69536bc134fe59f873114777",
+          "duplicates": [
+            {
+              "responseId": "e3a383cc-9bfb-44fb-8e73-890b6d59a665",
+              "mongoId": "69536bf26d7ab0d5be9d2dc4",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T06:06:42.516Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjrzf9p3176707476509074404",
+          "original": "b49a230a-dfa4-4c87-a993-9244473b3bb0",
+          "originalMongoId": "69536c097875123d6dc65414",
+          "duplicates": [
+            {
+              "responseId": "9c68e870-7303-4be9-9624-28ad3ccb6981",
+              "mongoId": "695407f3fa0451a1349dc7e6",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T17:12:19.570Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjrydqb1176707495728674768",
+          "original": "ef8c88f8-c780-4c37-83e2-be219cf316d8",
+          "originalMongoId": "69536cd7eaf1355a542a3c8f",
+          "duplicates": [
+            {
+              "responseId": "ad413644-9b00-4d9e-8c44-bea04ac37f1f",
+              "mongoId": "69536d0ca76aa6ceaa7ba70e",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T06:11:24.545Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjrvh1pj176707504111191129",
+          "original": "0b808ac3-df49-494b-a2f0-b15dbe23f8be",
+          "originalMongoId": "69536d0b89b369fef9e56f55",
+          "duplicates": [
+            {
+              "responseId": "86df84a5-4406-467e-917e-fabbd9dacbfc",
+              "mongoId": "69536dc2b11809b089eae347",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T06:14:26.717Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjs6q7pn176707501108384172",
+          "original": "91560629-820d-435f-99fe-a12425fb3d1e",
+          "originalMongoId": "69536d11896ad8e9b0d69a52",
+          "duplicates": [
+            {
+              "responseId": "f9e0d6e6-ce04-4068-b869-2b24d274f68d",
+              "mongoId": "69536d41027baf2701ed183c",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T06:12:17.438Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjrvh1pj176707530588619237",
+          "original": "72753d2d-a174-4ccd-bead-1e2ea56bffe5",
+          "originalMongoId": "69536d65cdc2be6829393c8b",
+          "duplicates": [
+            {
+              "responseId": "19312d73-4ed3-4148-a4c8-91dfc1c8ee62",
+              "mongoId": "69536e3cbb03ec6b3e4ee6e1",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T06:16:28.671Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjs71d0e176707548793698121",
+          "original": "52be2c29-11f4-4110-b705-c8798604d2b8",
+          "originalMongoId": "69536edc44d6643357f19746",
+          "duplicates": [
+            {
+              "responseId": "85261703-f4b0-4d1f-9949-fb69b7ba41d7",
+              "mongoId": "69536f3363423c7eae6973d6",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T06:20:35.936Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjs71d0e176707554415363172",
+          "original": "c73662eb-0a55-45b9-8e49-16abfd9be10d",
+          "originalMongoId": "69536f02931c6dc9d5bfdf1a",
+          "duplicates": [
+            {
+              "responseId": "f6dd7f3e-41fb-4b0e-8912-a7b5a9bcd486",
+              "mongoId": "69536fc97d45d62ba8362f18",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T06:23:05.982Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjs6q7pn176707615109533439",
+          "original": "8cf4c374-d735-43d9-81b2-d50899b1a8bc",
+          "originalMongoId": "69536f05931c6dc9d5bfeb81",
+          "duplicates": [
+            {
+              "responseId": "234645cc-ee53-41d6-9d64-5ff2e3c56cf6",
+              "mongoId": "6953715709b0d77c68618966",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T06:29:43.334Z"
+            },
+            {
+              "responseId": "95e04a8f-62cf-4635-9b1e-9e4674a25982",
+              "mongoId": "69540b98db99e4ef58e4286a",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T17:27:52.712Z"
+            },
+            {
+              "responseId": "85046ec8-92ef-437a-a4fb-ed3817bcb471",
+              "mongoId": "69540d798a244de20ef3c0ae",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T17:35:53.473Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjryi88e176707556221389293",
+          "original": "ad21e937-b660-4d6e-be0e-f43cea68397d",
+          "originalMongoId": "69536f50076f0738b8129411",
+          "duplicates": [
+            {
+              "responseId": "ef933d93-d33e-4b77-9cc1-ed9c8916a508",
+              "mongoId": "69536fbc71bd2832503f7644",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T06:22:52.924Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjryi88e176707553577582952",
+          "original": "d0f43faf-951d-4665-82df-280bbe2e931b",
+          "originalMongoId": "69536f813b245bad71f2c2b8",
+          "duplicates": [
+            {
+              "responseId": "3b9bd264-e43b-4cea-bd3e-6cb398b12016",
+              "mongoId": "69537060670088df1f6e954a",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T06:25:36.109Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjru3yj6176707355747337023",
+          "original": "0480ce5d-5edf-4009-b8ed-c4f8d292f2b1",
+          "originalMongoId": "6953700736276f7159f7d200",
+          "duplicates": [
+            {
+              "responseId": "09a6270a-ad73-433f-a870-1a136af55ae5",
+              "mongoId": "69540b91e95b2eb204140205",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T17:27:45.792Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjryi88e176707588662274012",
+          "original": "798c85a0-a249-461a-9c6b-71dc102e428b",
+          "originalMongoId": "6953706d05c523a372bf927f",
+          "duplicates": [
+            {
+              "responseId": "4d9cecc0-de48-4042-9153-8f3e37761287",
+              "mongoId": "69537368f55b1121386a03cd",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T06:38:32.311Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjrzf9p3176707652523791651",
+          "original": "af7a62e0-94e4-423c-99e6-e2e98213b06c",
+          "originalMongoId": "695370792111f99f3c043f4e",
+          "duplicates": [
+            {
+              "responseId": "744bbd69-6acb-40d9-945d-cb2c73370003",
+              "mongoId": "695372ebd8597b8b8d9ce22f",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T06:36:27.274Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjs71d0e176707594946620184",
+          "original": "7132bbee-7273-4fb6-9e02-6e657174f559",
+          "originalMongoId": "69537098b3f6770c206a1bcc",
+          "duplicates": [
+            {
+              "responseId": "58bad02c-f105-4e61-943c-14d2220e0d1c",
+              "mongoId": "695371149ed016c6893547a1",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T06:28:36.267Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjrzhu6k176707615693768147",
+          "original": "dd51cea6-8c9b-49ef-83dc-06d123e07c94",
+          "originalMongoId": "6953716f09b0d77c6861bb40",
+          "duplicates": [
+            {
+              "responseId": "95f8e96b-57a3-4a82-8552-25d57aa79309",
+              "mongoId": "695371c5089eb8816a97c240",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T06:31:33.280Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjrydqb1176707618897864909",
+          "original": "583d483d-d710-4067-b599-de885c3874b3",
+          "originalMongoId": "6953718b3a8bd11122bee77c",
+          "duplicates": [
+            {
+              "responseId": "009f4518-5fb7-450b-b7a2-1bfb99f7243a",
+              "mongoId": "69537272b1a793d94a048459",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T06:34:26.294Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjrzhu6k176707625383535117",
+          "original": "c0b114b2-bc7f-4711-b78d-69dfe21dbbaf",
+          "originalMongoId": "695371e3089eb8816a980cf1",
+          "duplicates": [
+            {
+              "responseId": "6b693165-2116-4cff-9da6-23b63fd48179",
+              "mongoId": "69537252df22dde26be7f4f6",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T06:33:54.685Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjryi88e176707651586617463",
+          "original": "edfd2cef-2f0b-4d57-ba20-86036f1d5985",
+          "originalMongoId": "695372ecbf7dcb6d3c24074e",
+          "duplicates": [
+            {
+              "responseId": "a617d414-6ad7-4fb1-b864-a6546e9a3080",
+              "mongoId": "695373f55adb7fa6634fed87",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T06:40:53.768Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjryi88e176707656150491632",
+          "original": "aebbeb1b-6ffd-4927-bf7d-f62dd627f11c",
+          "originalMongoId": "69537313fc6bcf0fde61ed03",
+          "duplicates": [
+            {
+              "responseId": "b4359014-57b7-4b88-b3a8-74964b385e8e",
+              "mongoId": "695373ab594f6d4fb2581b9b",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T06:39:39.428Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjrvh1pj176707664876026887",
+          "original": "a2f7edec-4d29-472e-b0af-06560a2fcf28",
+          "originalMongoId": "6953735c9f85d78f741b5d6c",
+          "duplicates": [
+            {
+              "responseId": "24ab8489-c30e-4666-93f2-2ed9b5a6d517",
+              "mongoId": "695374a605518753ae9850a1",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T06:43:50.700Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjryi88e176707661342927239",
+          "original": "7de26dfa-60ac-4bb4-b4a1-93cb3cb84f36",
+          "originalMongoId": "6953737feb8dde2e2e5078f5",
+          "duplicates": [
+            {
+              "responseId": "fcd4917a-c30f-4209-82a3-9608df532bf2",
+              "mongoId": "6953743ca204c102bab648e4",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T06:42:04.926Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjrydqb1176707681637131488",
+          "original": "542d0d8a-c25f-4da2-8906-8173ec08c6da",
+          "originalMongoId": "695373bf594f6d4fb2584978",
+          "duplicates": [
+            {
+              "responseId": "54366e5f-feb8-4f76-87b5-b82fc0e012b9",
+              "mongoId": "6953757984e925d9010e353d",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T06:47:21.900Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjs7iic6176707728315194187",
+          "original": "501a911a-2588-44ab-a916-882afb1bf81e",
+          "originalMongoId": "6953758dd2afd273ea2090c0",
+          "duplicates": [
+            {
+              "responseId": "feb1005b-1967-43fa-80a3-bf14c5f250a4",
+              "mongoId": "6953767244aca1bd395f5507",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T06:51:30.947Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjs24056176707852991927582",
+          "original": "070398cf-74e4-41c9-82d9-0e5d39bdcb68",
+          "originalMongoId": "695375c2f066569a7db5d3b1",
+          "duplicates": [
+            {
+              "responseId": "aef92797-3a80-4f7b-a338-f14c0f5e6c19",
+              "mongoId": "69537c02c211de18503b0991",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T07:15:14.380Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjrzf9p3176707730622990980",
+          "original": "a1323f38-7816-4498-9962-0b74767d34c6",
+          "originalMongoId": "695375e7227202b7e577eb99",
+          "duplicates": [
+            {
+              "responseId": "d4cc969d-842b-4c11-917d-872e7a653a7b",
+              "mongoId": "695376550795d67287b45679",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T06:51:01.952Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjs24056176707691637857158",
+          "original": "f27f4595-71d9-4c44-a545-932afe1f237b",
+          "originalMongoId": "6953762adbe38d0f5bf227a4",
+          "duplicates": [
+            {
+              "responseId": "95fd94be-f085-45d5-9944-1e4b228ea620",
+              "mongoId": "695377153224e9628367d429",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T06:54:13.836Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjs7iic6176707731998730232",
+          "original": "9129f6e5-52d5-43f7-b8e5-4e497557cc64",
+          "originalMongoId": "695376928e95865059f8edb7",
+          "duplicates": [
+            {
+              "responseId": "a4bb779e-6c3f-4a48-aad0-3b16d48780d8",
+              "mongoId": "69540b041f96a89bb692dc93",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T17:25:24.036Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjs24056176707753821968105",
+          "original": "b464b1ef-d216-4343-b80d-a52d255076ae",
+          "originalMongoId": "695376c5080092a37d10cc51",
+          "duplicates": [
+            {
+              "responseId": "ca8e5a38-9edf-48ee-b740-90b8108ec146",
+              "mongoId": "695376fa73f0b210a72e34b6",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T06:53:46.732Z"
+            },
+            {
+              "responseId": "b44aba1e-f7ea-4d2d-bdcf-fd5d108b873d",
+              "mongoId": "695377bc4a3a84e857f2cdde",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T06:57:00.545Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjs7q846176707788826242720",
+          "original": "dd6df279-b8d5-4e46-ba6c-63c9d9406c67",
+          "originalMongoId": "695378155e7776d7cd10a208",
+          "duplicates": [
+            {
+              "responseId": "078c2e21-64b3-4ba2-9682-be67e9fc8427",
+              "mongoId": "695378ea76f69f272ce8c0e5",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T07:02:02.422Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjs7q846176707802197573799",
+          "original": "39d1921c-650c-4dd7-9856-3bd88b5c5b1c",
+          "originalMongoId": "695378d02314424cbd322f68",
+          "duplicates": [
+            {
+              "responseId": "10bcd30a-909c-4bed-9119-f44b4a5c3ff0",
+              "mongoId": "69537924a327b9182590017a",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T07:03:00.016Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjs6q7pn176707786259055985",
+          "original": "488b6871-b23e-48db-b35c-56a4f393fe4e",
+          "originalMongoId": "695379207e16390a390dd995",
+          "duplicates": [
+            {
+              "responseId": "380d7de1-4390-4fe7-a9f4-44973b392c76",
+              "mongoId": "69537974a59416cb04c91f53",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T07:04:20.588Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjrydqb1176707820886843943",
+          "original": "1cbc399a-d133-48fd-9ae4-e6560df59a38",
+          "originalMongoId": "69537956a2a81c1233982a80",
+          "duplicates": [
+            {
+              "responseId": "59cf967b-1ebf-4b83-b861-8224ad070e7a",
+              "mongoId": "6953798f64a0654590fb579c",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T07:04:47.366Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjrzf9p3176707767141448285",
+          "original": "a249fe3b-95bb-442f-9354-06b628209ec0",
+          "originalMongoId": "695379f90debbd24ee47a34b",
+          "duplicates": [
+            {
+              "responseId": "6975b413-033d-461a-8c4c-8f123fe32baa",
+              "mongoId": "69537a48aaff6317986a6dcd",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T07:07:52.573Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjrydqb1176707832495545932",
+          "original": "7067626a-108e-4a94-bbb9-f624116619d0",
+          "originalMongoId": "69537a458a66207992e07e85",
+          "duplicates": [
+            {
+              "responseId": "a10f1e32-8c29-466d-adf4-25ff95806306",
+              "mongoId": "69537b29f4bc3e6a1f1bbc30",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T07:11:37.387Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjrydqb1176707795472119362",
+          "original": "e17ff141-7da5-4f80-b36d-5179bd774981",
+          "originalMongoId": "69537bc65fba8e882cffc81f",
+          "duplicates": [
+            {
+              "responseId": "c08bbdf9-0aef-4224-a468-8c112a4871b3",
+              "mongoId": "69537c1558ee4114666604c2",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T07:15:33.578Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjryi88e176707894893225361",
+          "original": "1da29416-da4b-4bca-910d-e4dcd4d6cbfb",
+          "originalMongoId": "69537c8b8231b9cf5d9e2650",
+          "duplicates": [
+            {
+              "responseId": "af560afb-eeeb-4b3e-b1e9-a58006284771",
+              "mongoId": "695407fe9f1fa5faba97f9d3",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T17:12:30.737Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjryi88e176707895934274543",
+          "original": "93eb0246-575c-4f29-8a53-2e29976eba12",
+          "originalMongoId": "69537c8be94d480c10237922",
+          "duplicates": [
+            {
+              "responseId": "1f3b87d1-1427-4b49-932e-7bdeddf0f2e4",
+              "mongoId": "69537cc9e6feaafba5dc340e",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T07:18:33.663Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjs24056176707900453930322",
+          "original": "1104c19b-eec9-4071-a5e5-a05eba27b0ee",
+          "originalMongoId": "69537cb8318fd86274943f11",
+          "duplicates": [
+            {
+              "responseId": "4e935330-ca79-41f8-8ad4-638e4c2b8268",
+              "mongoId": "69537d96326ccedec5905535",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T07:21:58.180Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjrzhu6k176707908370180541",
+          "original": "2a6e003b-150a-4e05-b009-9dff3ae37bb1",
+          "originalMongoId": "69537d0219807317fee21d61",
+          "duplicates": [
+            {
+              "responseId": "d4c834cb-15e7-41fe-8ad6-d4ac4911b2ed",
+              "mongoId": "69537d869db5ea1891cab001",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T07:21:42.928Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjs6q7pn176707918422561704",
+          "original": "89aaf478-8dfa-46c7-ac57-5e98a0fefc6f",
+          "originalMongoId": "69537d3c4a6e09aac1cdf18b",
+          "duplicates": [
+            {
+              "responseId": "c687eac9-3ec2-41bf-a943-c01aed520d72",
+              "mongoId": "69537de2185db98f31ceae44",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T07:23:14.957Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjs7iic6176707919814349187",
+          "original": "9b259740-f0dc-416b-bbed-5880b3faeb8b",
+          "originalMongoId": "69537d601bf708b8c7fc2455",
+          "duplicates": [
+            {
+              "responseId": "8e150171-4fb4-4a7a-a4e7-a09198d0fe60",
+              "mongoId": "6953830cabbc029061b67523",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T07:45:16.813Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjs7q846176707923785271467",
+          "original": "8ccf826f-53b4-4088-9fc8-83a660e60f51",
+          "originalMongoId": "69537da01bf708b8c7fca264",
+          "duplicates": [
+            {
+              "responseId": "0b66d942-428d-448b-9297-be1acdc49d89",
+              "mongoId": "69537e2626f7ea152c71d0a8",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T07:24:22.489Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjs7q846176707971835880168",
+          "original": "16da025d-2dcd-410c-bfaf-e552bdaa4a8a",
+          "originalMongoId": "69537f5e89314eb9fd1ac8d7",
+          "duplicates": [
+            {
+              "responseId": "5ed839f6-abe1-4756-a47e-b4b10eb1cc63",
+              "mongoId": "6953831ff9cdd096fb572bd1",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T07:45:35.314Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjryi88e176708002277757652",
+          "original": "99df8de9-be32-445a-b264-84b2e0284bf0",
+          "originalMongoId": "695380f52e784dd3a6a4b895",
+          "duplicates": [
+            {
+              "responseId": "6e1894ad-f585-41e4-ae27-762777161505",
+              "mongoId": "6953819fc948ae20c5dfabac",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T07:39:11.117Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjryi88e176708030780671294",
+          "original": "ecc11249-4896-4d89-afa8-822b41b14d6f",
+          "originalMongoId": "695381ad029ee2e65cf1e4ac",
+          "duplicates": [
+            {
+              "responseId": "2c2bc99a-57ef-48f7-9aa7-c32b22d3122d",
+              "mongoId": "6953820a869521496e053c65",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T07:40:58.006Z"
+            },
+            {
+              "responseId": "7a49f37e-4a72-4731-92c8-8f6b4fc25d01",
+              "mongoId": "695383050e45d3cb937f2420",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T07:45:09.263Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjs7iic6176708035909339842",
+          "original": "7e6ec8d6-6615-4a6a-b977-490db8ebbf4d",
+          "originalMongoId": "69538245c4432e3ce4c83e59",
+          "duplicates": [
+            {
+              "responseId": "1f5bda2d-8be9-4a42-aa71-aace6e3e1b8c",
+              "mongoId": "695383570486ee0223b2942b",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T07:46:31.861Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjs71d0e176708092309536177",
+          "original": "79ca9ab5-0805-44ec-bab6-fdf39746a9e3",
+          "originalMongoId": "6953843aeed2166be1c294e7",
+          "duplicates": [
+            {
+              "responseId": "443c76a6-23f1-47c2-910d-5e27f2bc8699",
+              "mongoId": "6953850ca73ee693f28849ed",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T07:53:48.202Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjs7q846176707945597823141",
+          "original": "0bb0c2ea-6850-4491-bb41-7e10875829dd",
+          "originalMongoId": "6953843e956087a32f26ebeb",
+          "duplicates": [
+            {
+              "responseId": "3e004662-e90c-4a4d-ab61-bc75c39d0f1d",
+              "mongoId": "695384a5acae199abd5e0668",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T07:52:05.948Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjs71d0e176708057747310438",
+          "original": "1d033509-1e81-4805-a8a7-b726970ea1b2",
+          "originalMongoId": "6953844cefcf66397c1b4036",
+          "duplicates": [
+            {
+              "responseId": "613dc0ff-deea-4b53-bff8-5cee139b4060",
+              "mongoId": "695385473baed345b0e116e2",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T07:54:47.418Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjs7q846176708105143054692",
+          "original": "dbee9700-6532-49ca-a979-c6e2d5dc0ef6",
+          "originalMongoId": "695384d0098b1067a9ba8d81",
+          "duplicates": [
+            {
+              "responseId": "a79172ba-8470-45e4-ae17-a34dc3621952",
+              "mongoId": "6953855b3bfeeb069fee2c98",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T07:55:07.622Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjs7iic6176708118330648534",
+          "original": "70740b72-a97c-4b58-acba-62906a0d5123",
+          "originalMongoId": "69538539a73ee693f288f4cf",
+          "duplicates": [
+            {
+              "responseId": "aec3272c-7e6f-45c1-8b77-1754ec8686a3",
+              "mongoId": "6953859acf7c262fec9eeefe",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T07:56:10.200Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjs7iic6176709117197569959",
+          "original": "c1f3ccc2-dcbd-4c3e-a833-f283caf5f51a",
+          "originalMongoId": "695386560da6141f1b0a6f7d",
+          "duplicates": [
+            {
+              "responseId": "66148551-d8a1-42c2-b604-cc1c507ea688",
+              "mongoId": "6953ac66d3c614c073df6b37",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T10:41:42.414Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjryi88e176708154014194055",
+          "original": "f62abe43-43f4-4118-8255-9cfe2da32332",
+          "originalMongoId": "69538693e59298f79c5cb210",
+          "duplicates": [
+            {
+              "responseId": "ded9d816-5b80-4bf9-990e-d4fbc5cde528",
+              "mongoId": "69538737061ccc84d6e5e5bd",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T08:03:03.868Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjs24056176708160755973144",
+          "original": "902af890-97fa-4a90-88bb-e6eedeb2bc54",
+          "originalMongoId": "695386bb94f68096cb380f9b",
+          "duplicates": [
+            {
+              "responseId": "50e4b86c-f383-4b01-8f28-e0f5f0a66b24",
+              "mongoId": "6953877e4eab065db17dcb9f",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T08:04:14.693Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjs8l3fv176708161873065408",
+          "original": "728f2558-a9dc-4434-b175-20ec1fcd7df5",
+          "originalMongoId": "695386f8c1ca30a21ca2944e",
+          "duplicates": [
+            {
+              "responseId": "fc00a6ec-bcf1-46be-abe8-14239c15296c",
+              "mongoId": "6953876cbd1021222429ffe7",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T08:03:56.862Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjs71d0e176708190367639344",
+          "original": "6ae90deb-3c1e-44e3-a29c-c4956205c3d6",
+          "originalMongoId": "69538800340fd2622efadd00",
+          "duplicates": [
+            {
+              "responseId": "39858923-69bf-48d6-ba52-e25f50996434",
+              "mongoId": "69538864e92cb571e1e84399",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T08:08:04.334Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjrzhu6k176708201964730946",
+          "original": "5b76e2d7-8d5b-42bb-b607-4f3c93978439",
+          "originalMongoId": "69538806340fd2622efae970",
+          "duplicates": [
+            {
+              "responseId": "95a7fa3c-0394-4bd3-8b5e-1a92f9fc1a27",
+              "mongoId": "69540808fa0451a1349de7d2",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T17:12:40.415Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjrzhu6k176708173542786446",
+          "original": "fd7faf4e-78ed-417a-b917-07448d07ea7c",
+          "originalMongoId": "6953884a2c25cf94c622461d",
+          "duplicates": [
+            {
+              "responseId": "19f8303d-eb07-43eb-9158-6f8c7fda2212",
+              "mongoId": "695389979ebb8584d6a9f093",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T08:13:11.625Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjrzhu6k176708205311031411",
+          "original": "33c59fb2-5626-4b06-aa25-c0049ccd8881",
+          "originalMongoId": "69538878560fbd005cb77555",
+          "duplicates": [
+            {
+              "responseId": "a7041029-1be7-4bab-8538-8f48e9f23caa",
+              "mongoId": "69540807aabb295fb1713a3a",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T17:12:39.461Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjs6q7pn176709107271256830",
+          "original": "6a96ce51-93f2-4649-a6a1-4235e2388e35",
+          "originalMongoId": "69538989fd5f7ee4df6b4866",
+          "duplicates": [
+            {
+              "responseId": "1845f373-3374-42bd-b97c-cca5c71e7005",
+              "mongoId": "6953ababa0c651ca6253b44e",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T10:38:35.232Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjs8l3fv176709140499479540",
+          "original": "e117bb97-4cf7-4c6a-8423-a225587a795a",
+          "originalMongoId": "6953ace77f2f34bb50814f4e",
+          "duplicates": [
+            {
+              "responseId": "73940de3-6cd2-44eb-981b-da256a510327",
+              "mongoId": "6953ad9fc04ee3dee366b861",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T10:46:55.458Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjsco10c176709173544215215",
+          "original": "10c493ad-59e0-405a-af23-dd623260642f",
+          "originalMongoId": "6953ae50ddb731eba96826c9",
+          "duplicates": [
+            {
+              "responseId": "9b256697-9ab0-414c-9d9f-6d1fc76b34e0",
+              "mongoId": "6953b1319c5f338bafaf2d74",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T11:02:09.905Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjs8l3fv176709255998528052",
+          "original": "91807f8d-9dc0-49e9-8459-333259e38894",
+          "originalMongoId": "6953b18d8aecb0803153461c",
+          "duplicates": [
+            {
+              "responseId": "83ef0dc1-116e-49ad-bf58-634c58e5bff2",
+              "mongoId": "6953b2a6e8cd00b1572ac08e",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T11:08:22.455Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjs7q846176709270619014230",
+          "original": "087df7e0-ddcf-4b20-be54-21c0273180cd",
+          "originalMongoId": "6953b1ce4e27571defca476e",
+          "duplicates": [
+            {
+              "responseId": "49ccec21-4ade-428b-bcdf-e45fb2e3e67d",
+              "mongoId": "6953b285f6d7910f268b8411",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T11:07:49.351Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjrzhu6k176708237575654291",
+          "original": "1f46f2dd-ebbb-4d56-9f2e-4bcb9406f2ad",
+          "originalMongoId": "6953b2157746ae9393437f0d",
+          "duplicates": [
+            {
+              "responseId": "ffd12e24-ec27-475c-bf88-3a0c48d7c788",
+              "mongoId": "6953b24504861a5adcb2b04f",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T11:06:45.573Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjsbhra3176709323729750832",
+          "original": "a9d451ca-bbb0-43a1-bfef-bdf928aec1f8",
+          "originalMongoId": "6953b43ee62bb8ec6396583e",
+          "duplicates": [
+            {
+              "responseId": "d26ac57b-5ebc-4724-8a7f-0d97f064eeab",
+              "mongoId": "69540df8c0175ce172fc3401",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T17:38:00.638Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjs7q846176709325891981315",
+          "original": "ec7027c5-90eb-4894-b748-f790c00140ac",
+          "originalMongoId": "6953b441daf9f4e758d14adc",
+          "duplicates": [
+            {
+              "responseId": "55bf7470-5983-4949-b3da-65c4f2b1d08f",
+              "mongoId": "69540b9b93612df72acec3ee",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T17:27:55.179Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjs8l3fv176709332834128645",
+          "original": "0482193d-f9a5-4f06-ae5e-a78f760202ab",
+          "originalMongoId": "6953b48f76d0a462c45a1363",
+          "duplicates": [
+            {
+              "responseId": "d9da1ee3-e673-4a10-8b92-b3451a454019",
+              "mongoId": "6953b52f1f3c8b0f0a2a19ad",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T11:19:11.274Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjs8l3fv176709378015595090",
+          "original": "1483b252-e007-4f83-b905-6c4c1d7f1f0d",
+          "originalMongoId": "6953b64e2c2a41ad7fb94eae",
+          "duplicates": [
+            {
+              "responseId": "eb75b6d7-706d-40d3-9243-a4a8dd0c44ed",
+              "mongoId": "6953b6ae3942fc07dd07370c",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T11:25:34.625Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjs71d0e176709381438273193",
+          "original": "5b84c057-68db-4c53-b6af-8780483bb0b9",
+          "originalMongoId": "6953b6a2787b127dabb4d60e",
+          "duplicates": [
+            {
+              "responseId": "c236b876-4eb4-48b1-b633-e33510cd7e93",
+              "mongoId": "6953b76d5f08866baec317f8",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T11:28:45.529Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjs7q846176709411427584040",
+          "original": "c5bfe2bc-6f3c-4403-945e-1330bf0d6728",
+          "originalMongoId": "6953b7c0b882dde8fef57873",
+          "duplicates": [
+            {
+              "responseId": "c89344c3-7d35-4fd6-89e4-9b4e5122949f",
+              "mongoId": "6953b836ea4fa4ed123fb399",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T11:32:06.804Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjsf0yo8176709431374827074",
+          "original": "a747f606-1559-41d3-a85d-bd24d61ed61c",
+          "originalMongoId": "6953b843c0d16fc6a6f982e1",
+          "duplicates": [
+            {
+              "responseId": "dd1e24ec-81c4-433d-8544-30305781931b",
+              "mongoId": "6953b87f9fa8177df19a6df1",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T11:33:19.860Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjs71d0e176709423489483461",
+          "original": "3a1841ce-98c4-4c78-a8d7-c083b9fb22e0",
+          "originalMongoId": "6953b85d0c0aaa99d7c12747",
+          "duplicates": [
+            {
+              "responseId": "58434706-d212-4f7d-95ad-b9c6a097bac2",
+              "mongoId": "6953b89890f73e6e1e766305",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T11:33:44.611Z"
+            },
+            {
+              "responseId": "38ff3cc9-5bfd-41ca-8abd-932dc889644c",
+              "mongoId": "6953b8f28338c1138786728d",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T11:35:14.859Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjs7q846176709431172764438",
+          "original": "0e607fce-912c-4700-bd2d-2f8330037549",
+          "originalMongoId": "6953b87c9fa8177df19a35a1",
+          "duplicates": [
+            {
+              "responseId": "bcc5f451-4138-4210-9aa6-d10123ea3bd6",
+              "mongoId": "6953b8c28c8447170e786911",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T11:34:26.498Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjs7q846176709428801354017",
+          "original": "3a1b27c9-5ade-4cc9-a037-69e5298917d0",
+          "originalMongoId": "6953b8ce55a8d3e286c7fa49",
+          "duplicates": [
+            {
+              "responseId": "661a6c81-ea7e-40a8-aee1-5c3337ede13d",
+              "mongoId": "69540b25a39e765f9d58950f",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T17:25:57.835Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjsbnskp176709479223164230",
+          "original": "07ca60ce-8a43-4df8-bfc6-b1fac97e3f86",
+          "originalMongoId": "6953ba2befcbdd93094f16c0",
+          "duplicates": [
+            {
+              "responseId": "27127a54-7fcf-4bf5-b41c-5687d63a0caf",
+              "mongoId": "69540b289ccae0b380f8c309",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T17:26:00.044Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjs7q846176709488943269095",
+          "original": "5e784dbf-4325-4f2f-b13c-4373384b021e",
+          "originalMongoId": "6953bab9cd298f6b564ab2eb",
+          "duplicates": [
+            {
+              "responseId": "df5695d1-6e81-40fd-96c0-3afc5ccec9a2",
+              "mongoId": "6953bb6cc91555387538d48a",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T11:45:48.052Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjs8l3fv176709527276221172",
+          "original": "a167c0fc-2e65-4f49-bafc-4040acd0a484",
+          "originalMongoId": "6953bc04a13d0e0b14944a2f",
+          "duplicates": [
+            {
+              "responseId": "15ed032e-48d3-4fd9-b512-da7e855df7bd",
+              "mongoId": "6953bc0bb1368c0f9f085524",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T11:48:27.140Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjscfgt4176709542409229356",
+          "original": "4ff2329e-71e3-40f2-bf75-1383b69df9c8",
+          "originalMongoId": "6953bcab5d038fc6cd991bb7",
+          "duplicates": [
+            {
+              "responseId": "778b5c5f-c8a3-4541-980d-110491fb4092",
+              "mongoId": "69540b9f54d4575312e3b801",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T17:27:59.372Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjs7q846176709536463621747",
+          "original": "6f2d9aca-94e4-4967-87ee-b239d9f6c9fb",
+          "originalMongoId": "6953bcc665974a75eb6f7a17",
+          "duplicates": [
+            {
+              "responseId": "de48adb7-8d05-4215-ae64-226d7eab0107",
+              "mongoId": "6953bd9a3f39abaa26609dbe",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T11:55:06.293Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjs7iic6176709561468084493",
+          "original": "ddaa9d90-c88f-4a79-a83b-04f113b80064",
+          "originalMongoId": "6953bd7acb475a5fddc49e69",
+          "duplicates": [
+            {
+              "responseId": "c02c438c-e55d-43e6-acd1-2c1bf8e62476",
+              "mongoId": "69540b9e93612df72aceca35",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T17:27:58.086Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjsbhra3176709579970765649",
+          "original": "8fb1873e-6e46-4de3-a889-940a8852ddea",
+          "originalMongoId": "6953be271dfe0c514b22a2cd",
+          "duplicates": [
+            {
+              "responseId": "60d057aa-dc22-4e6b-824d-ca7b0985dc12",
+              "mongoId": "6953be64e8552d0792a96e06",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T11:58:28.472Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjsco10c176709588789069593",
+          "original": "0559742c-800c-4d82-9652-54fba75f438a",
+          "originalMongoId": "6953be8cd6301013c019e247",
+          "duplicates": [
+            {
+              "responseId": "51987330-4f6c-4fba-a0d5-063092a7bbec",
+              "mongoId": "6954075b9f1fa5faba97a7c0",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T17:09:47.808Z"
+            },
+            {
+              "responseId": "235c877d-9c4f-4efe-bd29-b962822a4b81",
+              "mongoId": "69540ba354d4575312e3be5b",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T17:28:03.957Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjs8l3fv176709591009963236",
+          "original": "3d4c9961-2418-4fee-85e4-c1191afde627",
+          "originalMongoId": "6953be8dd6301013c019e876",
+          "duplicates": [
+            {
+              "responseId": "aae66d35-7c8c-491f-b978-be0e4465fe54",
+              "mongoId": "6953be9b8fd5fbbd49d60275",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T11:59:23.902Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjs8l3fv176709604569796689",
+          "original": "6f08611b-9a60-49e0-914b-93a23446ce92",
+          "originalMongoId": "6953bf0c6f56d40a59375500",
+          "duplicates": [
+            {
+              "responseId": "e8835c5c-3ebc-459e-85a4-ca40f60c8f3c",
+              "mongoId": "6953bf338c54ccd7976f9419",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T12:01:55.248Z"
+            },
+            {
+              "responseId": "dde4b0c8-6bac-4b78-9775-396d762077be",
+              "mongoId": "69540758bf9be539092752b8",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T17:09:44.964Z"
+            },
+            {
+              "responseId": "168b316d-7d1a-4288-8d52-b1aa917b6eec",
+              "mongoId": "69540b35434500c99dcd4c5d",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T17:26:13.734Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjsf0yo8176709593400922820",
+          "original": "fbd3ca6e-fbd2-49b2-9fe7-04e1cb4e0218",
+          "originalMongoId": "6953bf1277ecfd6814460faa",
+          "duplicates": [
+            {
+              "responseId": "ea88cab0-c831-4719-889b-262e760723a2",
+              "mongoId": "69540ba5d05c3b82f2fd1230",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T17:28:05.623Z"
+            },
+            {
+              "responseId": "33dd9a3c-5c1e-4799-9839-31ca778e5b63",
+              "mongoId": "69540d84564752a8d3543b9f",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T17:36:04.863Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjs8l3fv176709580872548721",
+          "original": "19f8b84b-2091-43a0-85d9-1d1125e7b78c",
+          "originalMongoId": "6953bf14ee993ae1f06b8f22",
+          "duplicates": [
+            {
+              "responseId": "f3222fd8-d173-44f0-9105-f813fcbf0e5b",
+              "mongoId": "69540ba2db99e4ef58e42eb9",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T17:28:02.699Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjs7q846176709596918881349",
+          "original": "c7f41826-95a3-4269-bfa4-4752b702df45",
+          "originalMongoId": "6953bf1577ecfd6814461c29",
+          "duplicates": [
+            {
+              "responseId": "501397aa-34ed-4b27-a62d-ce73746300e1",
+              "mongoId": "69540756fc9d3df496d481fc",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T17:09:42.752Z"
+            },
+            {
+              "responseId": "383b104e-6116-483e-8e1b-f59d95ddc702",
+              "mongoId": "69540b32434500c99dcd45f4",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T17:26:10.623Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjsbhra3176709591842284486",
+          "original": "686210c9-15a0-4f9e-8708-cb53bc0e05b0",
+          "originalMongoId": "6953bf16ee993ae1f06ba2fb",
+          "duplicates": [
+            {
+              "responseId": "7b73919d-4a87-489a-9553-44354ce132b7",
+              "mongoId": "69540b3be95b2eb20413d5a5",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T17:26:19.824Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjs71d0e176709603969724557",
+          "original": "3ad94e6c-535e-4401-8e55-949e968471a8",
+          "originalMongoId": "6953bf32ee993ae1f06c1fbe",
+          "duplicates": [
+            {
+              "responseId": "bc4c2078-93ea-4624-8c4d-a0ec50a51f39",
+              "mongoId": "69540ba72ffa1f9c39cbf6fa",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T17:28:07.609Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjs71d0e176709608547984594",
+          "original": "284f6bd2-22dc-40c0-a967-1266d21cc809",
+          "originalMongoId": "6953bfc8a6ffcc552602cd7e",
+          "duplicates": [
+            {
+              "responseId": "6b978f3f-2e95-406e-a405-4451fcde004d",
+              "mongoId": "69540b38a39e765f9d58a1a6",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T17:26:16.267Z"
+            },
+            {
+              "responseId": "8c22cb3a-b55e-4999-81a6-70fa42fc4faf",
+              "mongoId": "69540b39434500c99dcd58ec",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T17:26:17.912Z"
+            },
+            {
+              "responseId": "685f657d-de08-4a86-b541-5cb6d8627cad",
+              "mongoId": "69540ba8db99e4ef58e43502",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T17:28:08.798Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjsbnskp176709596176924659",
+          "original": "af697818-6994-459b-9efc-f5932422de7c",
+          "originalMongoId": "6953c026088c47aaa294b8fd",
+          "duplicates": [
+            {
+              "responseId": "8d464a0d-8251-4a43-98ff-20f36d7cf87b",
+              "mongoId": "695405ebc3f1a8b7bb7fc69d",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T17:03:39.696Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjsbhra3176709660965040881",
+          "original": "12e7c4d9-9d33-4843-98ce-9c4f9811f0d9",
+          "originalMongoId": "6953c1bc3577a4f57fb549d6",
+          "duplicates": [
+            {
+              "responseId": "ae5d89a6-7c83-4147-a7ec-d9f18cec82a4",
+              "mongoId": "6953c20fc3ea40cd965810ba",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T12:14:07.471Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjsf0yo8176709850353241883",
+          "original": "b1e06bb2-510c-46c4-a84f-42b10aa3f888",
+          "originalMongoId": "6953c74384bba2beb52e813a",
+          "duplicates": [
+            {
+              "responseId": "9963ddd4-bf2c-472f-a7af-2041d4fe7637",
+              "mongoId": "6953c95121bead9bce4da0be",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T12:45:05.740Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjsbnskp176709845061241563",
+          "original": "93b3b3d4-8df9-481e-8635-53ee8706eca8",
+          "originalMongoId": "6953c825191e3c5cbd65b207",
+          "duplicates": [
+            {
+              "responseId": "9acd4e2e-cbf7-466e-a46a-d1ceb611dd6d",
+              "mongoId": "6953c8b37aeb988556b1ae73",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T12:42:27.130Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjscfgt4176709872286912554",
+          "original": "7da8afda-eb53-4c88-af1d-4b2eae09fbf1",
+          "originalMongoId": "6953c9f35324a4ebd13c5e88",
+          "duplicates": [
+            {
+              "responseId": "d50fe8d8-5583-4070-af02-3db72991f5b3",
+              "mongoId": "6953ca65808eb69bd28028f5",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T12:49:41.636Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjsk466j176709878968185117",
+          "original": "6d86c5fd-236e-4360-90c5-17f2317e0d02",
+          "originalMongoId": "6953c9fd5324a4ebd13c9c7d",
+          "duplicates": [
+            {
+              "responseId": "52436bb8-9aa6-4744-a3d5-f9eae09e84a4",
+              "mongoId": "6953cb4214d2bf7c095008d8",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T12:53:22.917Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjsbnskp176709968117069657",
+          "original": "fccaa3a4-cb1e-486a-a1f0-df8fd9574c33",
+          "originalMongoId": "6953cdd4c3d885adf6639fa8",
+          "duplicates": [
+            {
+              "responseId": "bb556840-6103-49f7-9659-964b5991c468",
+              "mongoId": "6953cf98a5d1f964c0fb63bb",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T13:11:52.280Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjskkpbu176710026417264602",
+          "original": "0e323a19-894d-4e6e-b35a-15bfe3d0eeea",
+          "originalMongoId": "6953cf888f421a859e40c70a",
+          "duplicates": [
+            {
+              "responseId": "61e183d9-ebd8-4f9e-af71-dc02b2ba66fd",
+              "mongoId": "6953cfd35efd6b767e119e79",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T13:12:51.520Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjsbnskp176710203853989234",
+          "original": "0d88da34-ac87-4827-b62d-5db643ee11bc",
+          "originalMongoId": "6953d43fd442ecfcce77880b",
+          "duplicates": [
+            {
+              "responseId": "3db5437d-1565-4621-acef-ebe4372e05e8",
+              "mongoId": "6953d6e64073c92117275186",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T13:43:02.797Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjsbnskp176710171132894556",
+          "original": "9a703bc3-ac9a-4bdd-843f-fae3bbe694a8",
+          "originalMongoId": "6953d52245cd193874d5bd15",
+          "duplicates": [
+            {
+              "responseId": "3cafa9ad-f0b4-4602-81aa-ae9467171f6d",
+              "mongoId": "69540b5db05213e81641d56a",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T17:26:53.949Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjsco10c176710208380188135",
+          "original": "65b32f20-d73a-4029-8886-5e36df74f1e5",
+          "originalMongoId": "6953d52645cd193874d5c35a",
+          "duplicates": [
+            {
+              "responseId": "24656b16-ccba-4dcb-9af4-ed6ba2bde8b9",
+              "mongoId": "6953d7227c08e9e56c68ee3b",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T13:44:02.865Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjsbhra3176710168217732331",
+          "original": "dacb7407-9525-4a31-94a2-41d20501b8bd",
+          "originalMongoId": "6953d5429e0bdee6b27d2ebc",
+          "duplicates": [
+            {
+              "responseId": "3c307b6c-9b1a-42fd-998b-4cd9919c4f17",
+              "mongoId": "6953d623c5818cc04fa34e21",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T13:39:47.564Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjsbnskp176710156884690240",
+          "original": "f858444f-6223-4444-856f-69e8e093b17a",
+          "originalMongoId": "6953d55645cd193874d631c5",
+          "duplicates": [
+            {
+              "responseId": "0a7324a0-6d5a-4555-ad54-3fc6729bb380",
+              "mongoId": "69540b66e95b2eb20413e85c",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T17:27:02.735Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjsk3qj1176710169339694678",
+          "original": "8a45d1b5-b801-4efc-ad30-9a37ffa12793",
+          "originalMongoId": "6953d5cb34eaa986f1731cbe",
+          "duplicates": [
+            {
+              "responseId": "f11036ce-d7d1-46c5-a0b5-ef60531ed669",
+              "mongoId": "69540b35a39e765f9d589b5c",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T17:26:13.022Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjsk3qj1176710365276364589",
+          "original": "89fb6ac8-fac2-4317-94c5-b136e7876735",
+          "originalMongoId": "6953dcba909b43c4702fdea7",
+          "duplicates": [
+            {
+              "responseId": "d6723e7a-8c98-4097-9e6d-2b1af0afa9be",
+              "mongoId": "69540bee2e2e7ea6094bd50c",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T17:29:18.876Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjsf0yo8176710394589119573",
+          "original": "ceda1495-00a3-49a6-b516-e648864edb04",
+          "originalMongoId": "6953de1c6cef62816542aa7d",
+          "duplicates": [
+            {
+              "responseId": "1e4fad02-fbee-4270-a4fc-979ef58fb603",
+              "mongoId": "69540b109ccae0b380f8a9ad",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T17:25:36.489Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjsbnskp176710430021450483",
+          "original": "f43824e6-90b4-4e64-a278-98480b50a492",
+          "originalMongoId": "6953df72533448b9607e2e78",
+          "duplicates": [
+            {
+              "responseId": "3fb80b79-cec1-431e-b4c0-f0dcee600404",
+              "mongoId": "6953dfad856b31ce83da3a42",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T14:20:29.839Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjskkpbu176710427458071088",
+          "original": "f49db7cb-3f9a-4f88-91dd-5bd67976e27e",
+          "originalMongoId": "6953df730968d5ef2ead64a3",
+          "duplicates": [
+            {
+              "responseId": "4fd3bdc8-6f2e-43f9-a529-8b4588e83746",
+              "mongoId": "6953dfcbc87dfc0b8da6624d",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T14:20:59.048Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjsf0yo8176710470985973917",
+          "original": "5174a0e0-ad33-4652-997c-40785ac7e5b8",
+          "originalMongoId": "6953e0dee48820e6fc029e90",
+          "duplicates": [
+            {
+              "responseId": "cb6e438d-7ac4-4ff1-84a1-255c5437dcf7",
+              "mongoId": "6953e19c3ee8009c6bc907b6",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T14:28:44.619Z"
+            }
+          ]
+        },
+        {
+          "call_id": "2mjskkpbu176710543559868625",
+          "original": "6e1559b5-f9c7-48be-b438-d82f409cc1dd",
+          "originalMongoId": "6953e3e3aa9251b3928353c4",
+          "duplicates": [
+            {
+              "responseId": "90b26018-a387-4e33-a3ef-0d990d10dbea",
+              "mongoId": "6953e4e8df5db9b7bcb3c230",
+              "status": "abandoned",
+              "createdAt": "2025-12-30T14:42:48.710Z"
+            }
+          ]
+        }
+      ],
+      "marked": [],
+      "responseIds": []
+    },
+    "abandonedStatus": {
+      "found": [],
+      "fixed": [],
+      "responseIds": []
+    }
+  }
+}

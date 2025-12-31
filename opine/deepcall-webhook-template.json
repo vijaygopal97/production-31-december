@@ -1,0 +1,15 @@
+{
+  "callId": "{{%%callId%%}}",
+  "status": "{{%%callStatus%%}}",
+  "duration": "{{%%talkDuration%%}}",
+  "recordingUrl": "{{%%recordings%%}}",
+  "startTime": "{{%%firstAnswerTime%%}}",
+  "endTime": "{{%%lastHangupTime%%}}",
+  "fromNumber": "{{%%masterNumCTC%%}}",
+  "toNumber": "{{%%cNumber%%}}",
+  "hangupCause": "{{%%exitCode%%}}",
+  "talkDuration": "{{%%talkDuration%%}}",
+  "custAnswerDuration": "{{%%custAnswerDuration%%}}",
+  "totalCreditsUsed": "{{%%totalCreditsUsed%%}}"
+}
+

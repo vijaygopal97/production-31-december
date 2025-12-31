@@ -1,0 +1,33 @@
+
+SURVEY RESPONSES BACKUP SUMMARY
+================================
+
+Survey ID: 68fd1915d41841da463f0d46
+Backup Date: 2025-12-29T20:23:18.177Z
+Backup File: /var/www/Report-Generation/IncorrectStatusCorrection/survey_responses_backup_2025-12-29.json
+
+Total Responses Backed Up: 34671
+
+Status Breakdown:
+-----------------
+Approved: 2763
+Pending_Approval: 27010
+Rejected: 4898
+
+Mode Breakdown:
+---------------
+CAPI: 19430
+CATI: 15241
+Online: 0
+Unknown: 0
+
+Backup includes:
+- _id
+- responseId
+- status
+- interviewMode
+- responses (full array)
+- createdAt
+- updatedAt
+
+This backup was created before updating incorrect status responses to "abandoned".

@@ -1,0 +1,61 @@
+# Dependencies
+node_modules/
+package-lock.json
+
+# Build outputs
+dist/
+build/
+.next/
+.vercel/
+
+# Environment files (IMPORTANT: Don't commit configs)
+.env
+.env.local
+.env.production
+.env.development
+backend/.env
+frontend/.env
+*.env.backup.*
+backend/.env.backup.*
+
+# Logs
+*.log
+logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pm2.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Temporary files
+*.tmp
+temp/
+uploads/temp/
+*.bak
+
+# Scripts (temporary)
+backend/*_mock_audio*.js
+backend/check_*.js
+backend/fix_*.js
+backend/restore_*.js
+backend/find_*.js
+backend/updateDatabaseToS3.js
+backend/migrateToS3.js
+backend/delete_*.js
+backend/cleanup-*.js
+
+# Database backups (too large for GitHub)
+backend/database_backups/
+backend/temp_prod_dump/
+*.bson
+*.metadata.json
+backend/.env.backup

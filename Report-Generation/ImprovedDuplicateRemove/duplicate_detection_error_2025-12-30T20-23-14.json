@@ -1,0 +1,14 @@
+{
+  "timestamp": "2025-12-30T20:23:15.598Z",
+  "error": "Schema hasn't been registered for model \"User\".\nUse mongoose.model(name, schema)",
+  "stack": "MissingSchemaError: Schema hasn't been registered for model \"User\".\nUse mongoose.model(name, schema)\n    at NativeConnection.model (/var/www/opine/backend/node_modules/mongoose/lib/connection.js:1493:13)\n    at _getModelFromConn (/var/www/opine/backend/node_modules/mongoose/lib/helpers/populate/getModelsMapForPopulate.js:579:15)\n    at addModelNamesToMap (/var/www/opine/backend/node_modules/mongoose/lib/helpers/populate/getModelsMapForPopulate.js:507:17)\n    at getModelsMapForPopulate (/var/www/opine/backend/node_modules/mongoose/lib/helpers/populate/getModelsMapForPopulate.js:208:7)\n    at _populatePath (/var/www/opine/backend/node_modules/mongoose/lib/model.js:4466:21)\n    at Function.populate (/var/www/opine/backend/node_modules/mongoose/lib/model.js:4433:21)\n    at model.Query._find (/var/www/opine/backend/node_modules/mongoose/lib/query.js:2452:23)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async model.Query.exec (/var/www/opine/backend/node_modules/mongoose/lib/query.js:4627:63)\n    at async processCAPIDuplicates (/var/www/Report-Generation/ImprovedDuplicateRemove/findAndMarkDuplicates.js:310:19)",
+  "statistics": {
+    "totalProcessed": 0,
+    "capiProcessed": 0,
+    "catiProcessed": 0,
+    "capiDuplicatesFound": 0,
+    "catiDuplicatesFound": 0,
+    "totalDuplicatesMarked": 0,
+    "errors": []
+  }
+}

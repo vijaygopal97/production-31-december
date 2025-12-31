@@ -1,0 +1,914 @@
+{
+  "surveyId": "68fd1915d41841da463f0d46",
+  "timestamp": "2025-12-24T08:12:36.373Z",
+  "summary": {
+    "totalEntries": 310075,
+    "uniquePhones": 303396,
+    "duplicateCount": 5120,
+    "kept": 303396,
+    "deleted": 6679
+  },
+  "duplicates": [
+    {
+      "phone": "8981595676",
+      "count": 2,
+      "keptEntry": {
+        "_id": "694b9e429cf18db6a892bc0d",
+        "name": "Jhantu",
+        "createdAt": "2025-12-24T08:03:14.943Z"
+      }
+    },
+    {
+      "phone": "9933256464",
+      "count": 3,
+      "keptEntry": {
+        "_id": "694b9e429cf18db6a892bc11",
+        "name": "Rupali",
+        "createdAt": "2025-12-24T08:03:14.944Z"
+      }
+    },
+    {
+      "phone": "9143642571",
+      "count": 2,
+      "keptEntry": {
+        "_id": "694b9e429cf18db6a892bc37",
+        "name": "Sutapa",
+        "createdAt": "2025-12-24T08:03:14.952Z"
+      }
+    },
+    {
+      "phone": "9088913383",
+      "count": 2,
+      "keptEntry": {
+        "_id": "694b9e429cf18db6a892bc8f",
+        "name": "Sarbani",
+        "createdAt": "2025-12-24T08:03:14.978Z"
+      }
+    },
+    {
+      "phone": "9748767297",
+      "count": 2,
+      "keptEntry": {
+        "_id": "694b9e429cf18db6a892bcb0",
+        "name": "Mahadeb",
+        "createdAt": "2025-12-24T08:03:14.985Z"
+      }
+    },
+    {
+      "phone": "9432680913",
+      "count": 2,
+      "keptEntry": {
+        "_id": "694b9e429cf18db6a892bcbe",
+        "name": "Pushpal Kumar",
+        "createdAt": "2025-12-24T08:03:14.988Z"
+      }
+    },
+    {
+      "phone": "8420745362",
+      "count": 2,
+      "keptEntry": {
+        "_id": "694b9e429cf18db6a892bcc2",
+        "name": "Arun",
+        "createdAt": "2025-12-24T08:03:14.989Z"
+      }
+    },
+    {
+      "phone": "9903351604",
+      "count": 6,
+      "keptEntry": {
+        "_id": "694b9e429cf18db6a892bcc7",
+        "name": "Subhajit",
+        "createdAt": "2025-12-24T08:03:14.990Z"
+      }
+    },
+    {
+      "phone": "9748034068",
+      "count": 3,
+      "keptEntry": {
+        "_id": "694b9e429cf18db6a892bcd9",
+        "name": "Nimai",
+        "createdAt": "2025-12-24T08:03:14.994Z"
+      }
+    },
+    {
+      "phone": "9007578300",
+      "count": 3,
+      "keptEntry": {
+        "_id": "694b9e429cf18db6a892bca7",
+        "name": "Biswajit",
+        "createdAt": "2025-12-24T08:03:14.983Z"
+      }
+    },
+    {
+      "phone": "9836628924",
+      "count": 2,
+      "keptEntry": {
+        "_id": "694b9e429cf18db6a892bcdf",
+        "name": "CHINTA",
+        "createdAt": "2025-12-24T08:03:14.995Z"
+      }
+    },
+    {
+      "phone": "8240921608",
+      "count": 2,
+      "keptEntry": {
+        "_id": "694b9e439cf18db6a892bd0a",
+        "name": "Sohini",
+        "createdAt": "2025-12-24T08:03:15.004Z"
+      }
+    },
+    {
+      "phone": "9612158297",
+      "count": 2,
+      "keptEntry": {
+        "_id": "694b9e439cf18db6a892bcfd",
+        "name": "Dipankar",
+        "createdAt": "2025-12-24T08:03:15.002Z"
+      }
+    },
+    {
+      "phone": "9477521632",
+      "count": 2,
+      "keptEntry": {
+        "_id": "694b9e439cf18db6a892bd08",
+        "name": "KABITA",
+        "createdAt": "2025-12-24T08:03:15.004Z"
+      }
+    },
+    {
+      "phone": "9432373529",
+      "count": 3,
+      "keptEntry": {
+        "_id": "694b9e439cf18db6a892bd26",
+        "name": "Suparna",
+        "createdAt": "2025-12-24T08:03:15.010Z"
+      }
+    },
+    {
+      "phone": "9903340596",
+      "count": 3,
+      "keptEntry": {
+        "_id": "694b9e439cf18db6a892bd24",
+        "name": "Sukla",
+        "createdAt": "2025-12-24T08:03:15.010Z"
+      }
+    },
+    {
+      "phone": "9903233750",
+      "count": 2,
+      "keptEntry": {
+        "_id": "694b9e439cf18db6a892bd31",
+        "name": "Mithu",
+        "createdAt": "2025-12-24T08:03:15.013Z"
+      }
+    },
+    {
+      "phone": "9123709355",
+      "count": 2,
+      "keptEntry": {
+        "_id": "694b9e439cf18db6a892bd9c",
+        "name": "ASHOK",
+        "createdAt": "2025-12-24T08:03:15.034Z"
+      }
+    },
+    {
+      "phone": "9903977071",
+      "count": 2,
+      "keptEntry": {
+        "_id": "694b9e439cf18db6a892bd99",
+        "name": "SANKAR",
+        "createdAt": "2025-12-24T08:03:15.033Z"
+      }
+    },
+    {
+      "phone": "8777681080",
+      "count": 2,
+      "keptEntry": {
+        "_id": "694b9e439cf18db6a892bda7",
+        "name": "SONTU",
+        "createdAt": "2025-12-24T08:03:15.036Z"
+      }
+    },
+    {
+      "phone": "9831101085",
+      "count": 4,
+      "keptEntry": {
+        "_id": "694b9e439cf18db6a892bdc6",
+        "name": "DHAWANI",
+        "createdAt": "2025-12-24T08:03:15.041Z"
+      }
+    },
+    {
+      "phone": "9330610418",
+      "count": 2,
+      "keptEntry": {
+        "_id": "694b9e439cf18db6a892bdb7",
+        "name": "RITA",
+        "createdAt": "2025-12-24T08:03:15.039Z"
+      }
+    },
+    {
+      "phone": "9330364212",
+      "count": 4,
+      "keptEntry": {
+        "_id": "694b9e439cf18db6a892bd84",
+        "name": "RAHUL",
+        "createdAt": "2025-12-24T08:03:15.029Z"
+      }
+    },
+    {
+      "phone": "8700695479",
+      "count": 4,
+      "keptEntry": {
+        "_id": "694b9e439cf18db6a892bde4",
+        "name": "INDRANI",
+        "createdAt": "2025-12-24T08:03:15.050Z"
+      }
+    },
+    {
+      "phone": "9430118400",
+      "count": 2,
+      "keptEntry": {
+        "_id": "694b9e429cf18db6a892bbca",
+        "name": "SWAPAN KUMAR",
+        "createdAt": "2025-12-24T08:03:14.928Z"
+      }
+    },
+    {
+      "phone": "9831451643",
+      "count": 3,
+      "keptEntry": {
+        "_id": "694b9e429cf18db6a892bbe4",
+        "name": "DIPTEN",
+        "createdAt": "2025-12-24T08:03:14.934Z"
+      }
+    },
+    {
+      "phone": "8420191353",
+      "count": 2,
+      "keptEntry": {
+        "_id": "694b9e439cf18db6a892bdf7",
+        "name": "KHUSI",
+        "createdAt": "2025-12-24T08:03:15.053Z"
+      }
+    },
+    {
+      "phone": "9674291124",
+      "count": 2,
+      "keptEntry": {
+        "_id": "694b9e439cf18db6a892be00",
+        "name": "Piyali",
+        "createdAt": "2025-12-24T08:03:15.055Z"
+      }
+    },
+    {
+      "phone": "9874206239",
+      "count": 2,
+      "keptEntry": {
+        "_id": "694b9e439cf18db6a892be4a",
+        "name": "RUPANJALI",
+        "createdAt": "2025-12-24T08:03:15.067Z"
+      }
+    },
+    {
+      "phone": "8981088993",
+      "count": 2,
+      "keptEntry": {
+        "_id": "694b9e429cf18db6a892bc22",
+        "name": "MONIKA",
+        "createdAt": "2025-12-24T08:03:14.948Z"
+      }
+    },
+    {
+      "phone": "9830701205",
+      "count": 2,
+      "keptEntry": {
+        "_id": "694b9e429cf18db6a892bcab",
+        "name": "Manoranjan",
+        "createdAt": "2025-12-24T08:03:14.984Z"
+      }
+    },
+    {
+      "phone": "9830048465",
+      "count": 4,
+      "keptEntry": {
+        "_id": "694b9e439cf18db6a892bec6",
+        "name": "RINKI",
+        "createdAt": "2025-12-24T08:03:15.088Z"
+      }
+    },
+    {
+      "phone": "8900621530",
+      "count": 2,
+      "keptEntry": {
+        "_id": "694b9e439cf18db6a892c00a",
+        "name": "Madhuri",
+        "createdAt": "2025-12-24T08:03:15.235Z"
+      }
+    },
+    {
+      "phone": "9674685791",
+      "count": 2,
+      "keptEntry": {
+        "_id": "694b9e439cf18db6a892c030",
+        "name": "Debashis",
+        "createdAt": "2025-12-24T08:03:15.242Z"
+      }
+    },
+    {
+      "phone": "9932383120",
+      "count": 3,
+      "keptEntry": {
+        "_id": "694b9e439cf18db6a892c036",
+        "name": "Surajit",
+        "createdAt": "2025-12-24T08:03:15.243Z"
+      }
+    },
+    {
+      "phone": "9903970378",
+      "count": 2,
+      "keptEntry": {
+        "_id": "694b9e439cf18db6a892c03b",
+        "name": "Sonali",
+        "createdAt": "2025-12-24T08:03:15.244Z"
+      }
+    },
+    {
+      "phone": "9330641133",
+      "count": 2,
+      "keptEntry": {
+        "_id": "694b9e439cf18db6a892c099",
+        "name": "Lalit Kumar",
+        "createdAt": "2025-12-24T08:03:15.262Z"
+      }
+    },
+    {
+      "phone": "7980824959",
+      "count": 3,
+      "keptEntry": {
+        "_id": "694b9e439cf18db6a892c0d8",
+        "name": "INDRANI",
+        "createdAt": "2025-12-24T08:03:15.273Z"
+      }
+    },
+    {
+      "phone": "9239035658",
+      "count": 4,
+      "keptEntry": {
+        "_id": "694b9e439cf18db6a892c0d9",
+        "name": "Phani Bhushan",
+        "createdAt": "2025-12-24T08:03:15.273Z"
+      }
+    },
+    {
+      "phone": "9051296177",
+      "count": 2,
+      "keptEntry": {
+        "_id": "694b9e439cf18db6a892c1c2",
+        "name": "Chumki",
+        "createdAt": "2025-12-24T08:03:15.315Z"
+      }
+    },
+    {
+      "phone": "9804445051",
+      "count": 2,
+      "keptEntry": {
+        "_id": "694b9e439cf18db6a892c1c7",
+        "name": "Nirmala",
+        "createdAt": "2025-12-24T08:03:15.316Z"
+      }
+    },
+    {
+      "phone": "8697577846",
+      "count": 2,
+      "keptEntry": {
+        "_id": "694b9e439cf18db6a892c1fe",
+        "name": "Anjali",
+        "createdAt": "2025-12-24T08:03:15.326Z"
+      }
+    },
+    {
+      "phone": "8450849071",
+      "count": 2,
+      "keptEntry": {
+        "_id": "694b9e439cf18db6a892c20b",
+        "name": "Bela",
+        "createdAt": "2025-12-24T08:03:15.328Z"
+      }
+    },
+    {
+      "phone": "8584961957",
+      "count": 2,
+      "keptEntry": {
+        "_id": "694b9e439cf18db6a892c215",
+        "name": "Dilip Kumar",
+        "createdAt": "2025-12-24T08:03:15.329Z"
+      }
+    },
+    {
+      "phone": "9477145378",
+      "count": 2,
+      "keptEntry": {
+        "_id": "694b9e439cf18db6a892c219",
+        "name": "Anju",
+        "createdAt": "2025-12-24T08:03:15.330Z"
+      }
+    },
+    {
+      "phone": "9007726467",
+      "count": 2,
+      "keptEntry": {
+        "_id": "694b9e439cf18db6a892c237",
+        "name": "Maya",
+        "createdAt": "2025-12-24T08:03:15.335Z"
+      }
+    },
+    {
+      "phone": "9830673366",
+      "count": 3,
+      "keptEntry": {
+        "_id": "694b9e439cf18db6a892c23a",
+        "name": "Arundhati",
+        "createdAt": "2025-12-24T08:03:15.336Z"
+      }
+    },
+    {
+      "phone": "9051867069",
+      "count": 2,
+      "keptEntry": {
+        "_id": "694b9e439cf18db6a892c23c",
+        "name": "Nirmal Kanti",
+        "createdAt": "2025-12-24T08:03:15.336Z"
+      }
+    },
+    {
+      "phone": "9153507155",
+      "count": 2,
+      "keptEntry": {
+        "_id": "694b9e439cf18db6a892c24c",
+        "name": "Ranendra",
+        "createdAt": "2025-12-24T08:03:15.339Z"
+      }
+    },
+    {
+      "phone": "9748000373",
+      "count": 4,
+      "keptEntry": {
+        "_id": "694b9e439cf18db6a892c251",
+        "name": "Sandhya",
+        "createdAt": "2025-12-24T08:03:15.340Z"
+      }
+    },
+    {
+      "phone": "9775537557",
+      "count": 3,
+      "keptEntry": {
+        "_id": "694b9e439cf18db6a892c254",
+        "name": "Sadhana",
+        "createdAt": "2025-12-24T08:03:15.340Z"
+      }
+    },
+    {
+      "phone": "9937222085",
+      "count": 2,
+      "keptEntry": {
+        "_id": "694b9e439cf18db6a892c0e0",
+        "name": "Dipa",
+        "createdAt": "2025-12-24T08:03:15.274Z"
+      }
+    },
+    {
+      "phone": "9874731314",
+      "count": 3,
+      "keptEntry": {
+        "_id": "694b9e439cf18db6a892c283",
+        "name": "Dipti",
+        "createdAt": "2025-12-24T08:03:15.348Z"
+      }
+    },
+    {
+      "phone": "9836580115",
+      "count": 6,
+      "keptEntry": {
+        "_id": "694b9e439cf18db6a892c286",
+        "name": "Santosh",
+        "createdAt": "2025-12-24T08:03:15.348Z"
+      }
+    },
+    {
+      "phone": "9836912799",
+      "count": 3,
+      "keptEntry": {
+        "_id": "694b9e429cf18db6a892bc66",
+        "name": "Saurav Kumar",
+        "createdAt": "2025-12-24T08:03:14.962Z"
+      }
+    },
+    {
+      "phone": "8981280897",
+      "count": 2,
+      "keptEntry": {
+        "_id": "694b9e439cf18db6a892c2aa",
+        "name": "Tapan",
+        "createdAt": "2025-12-24T08:03:15.354Z"
+      }
+    },
+    {
+      "phone": "9239620169",
+      "count": 2,
+      "keptEntry": {
+        "_id": "694b9e439cf18db6a892c2ac",
+        "name": "Chandana",
+        "createdAt": "2025-12-24T08:03:15.355Z"
+      }
+    },
+    {
+      "phone": "9051644176",
+      "count": 3,
+      "keptEntry": {
+        "_id": "694b9e439cf18db6a892c2b9",
+        "name": "Pradip Kumar",
+        "createdAt": "2025-12-24T08:03:15.357Z"
+      }
+    },
+    {
+      "phone": "9836443551",
+      "count": 2,
+      "keptEntry": {
+        "_id": "694b9e439cf18db6a892c2bb",
+        "name": "Reba",
+        "createdAt": "2025-12-24T08:03:15.357Z"
+      }
+    },
+    {
+      "phone": "9831200117",
+      "count": 4,
+      "keptEntry": {
+        "_id": "694b9e439cf18db6a892c2c5",
+        "name": "Samir",
+        "createdAt": "2025-12-24T08:03:15.359Z"
+      }
+    },
+    {
+      "phone": "9477599336",
+      "count": 2,
+      "keptEntry": {
+        "_id": "694b9e439cf18db6a892c2d1",
+        "name": "Enos",
+        "createdAt": "2025-12-24T08:03:15.361Z"
+      }
+    },
+    {
+      "phone": "8420571834",
+      "count": 2,
+      "keptEntry": {
+        "_id": "694b9e439cf18db6a892c2d4",
+        "name": "Madhusudan",
+        "createdAt": "2025-12-24T08:03:15.361Z"
+      }
+    },
+    {
+      "phone": "9088842516",
+      "count": 2,
+      "keptEntry": {
+        "_id": "694b9e439cf18db6a892c2e4",
+        "name": "Somnath",
+        "createdAt": "2025-12-24T08:03:15.364Z"
+      }
+    },
+    {
+      "phone": "8981275900",
+      "count": 2,
+      "keptEntry": {
+        "_id": "694b9e439cf18db6a892c2ef",
+        "name": "Trilochan Singh",
+        "createdAt": "2025-12-24T08:03:15.366Z"
+      }
+    },
+    {
+      "phone": "9903110582",
+      "count": 2,
+      "keptEntry": {
+        "_id": "694b9e439cf18db6a892c2f2",
+        "name": "Ardhendu",
+        "createdAt": "2025-12-24T08:03:15.367Z"
+      }
+    },
+    {
+      "phone": "9831540521",
+      "count": 2,
+      "keptEntry": {
+        "_id": "694b9e439cf18db6a892c2fb",
+        "name": "Arindam",
+        "createdAt": "2025-12-24T08:03:15.368Z"
+      }
+    },
+    {
+      "phone": "9038396773",
+      "count": 3,
+      "keptEntry": {
+        "_id": "694b9e439cf18db6a892c032",
+        "name": "Rina",
+        "createdAt": "2025-12-24T08:03:15.243Z"
+      }
+    },
+    {
+      "phone": "8478906658",
+      "count": 9,
+      "keptEntry": {
+        "_id": "694b9e439cf18db6a892c372",
+        "name": "BABY",
+        "createdAt": "2025-12-24T08:03:15.459Z"
+      }
+    },
+    {
+      "phone": "9231858484",
+      "count": 2,
+      "keptEntry": {
+        "_id": "694b9e439cf18db6a892c08f",
+        "name": "DIPTI",
+        "createdAt": "2025-12-24T08:03:15.260Z"
+      }
+    },
+    {
+      "phone": "9431075515",
+      "count": 2,
+      "keptEntry": {
+        "_id": "694b9e439cf18db6a892c382",
+        "name": "Shukla",
+        "createdAt": "2025-12-24T08:03:15.462Z"
+      }
+    },
+    {
+      "phone": "9830651966",
+      "count": 2,
+      "keptEntry": {
+        "_id": "694b9e439cf18db6a892c354",
+        "name": "Pompa",
+        "createdAt": "2025-12-24T08:03:15.386Z"
+      }
+    },
+    {
+      "phone": "8420095917",
+      "count": 2,
+      "keptEntry": {
+        "_id": "694b9e429cf18db6a892bbad",
+        "name": "SHILPA",
+        "createdAt": "2025-12-24T08:03:14.922Z"
+      }
+    },
+    {
+      "phone": "7003192276",
+      "count": 3,
+      "keptEntry": {
+        "_id": "694b9e439cf18db6a892c119",
+        "name": "SUMAN",
+        "createdAt": "2025-12-24T08:03:15.284Z"
+      }
+    },
+    {
+      "phone": "9433342843",
+      "count": 2,
+      "keptEntry": {
+        "_id": "694b9e439cf18db6a892c414",
+        "name": "KEYA",
+        "createdAt": "2025-12-24T08:03:15.487Z"
+      }
+    },
+    {
+      "phone": "8777827373",
+      "count": 2,
+      "keptEntry": {
+        "_id": "694b9e439cf18db6a892c454",
+        "name": "RINA",
+        "createdAt": "2025-12-24T08:03:15.498Z"
+      }
+    },
+    {
+      "phone": "7005136623",
+      "count": 2,
+      "keptEntry": {
+        "_id": "694b9e439cf18db6a892c465",
+        "name": "DEBABRATA",
+        "createdAt": "2025-12-24T08:03:15.500Z"
+      }
+    },
+    {
+      "phone": "9874231738",
+      "count": 3,
+      "keptEntry": {
+        "_id": "694b9e439cf18db6a892c467",
+        "name": "JUDHISTHIR",
+        "createdAt": "2025-12-24T08:03:15.501Z"
+      }
+    },
+    {
+      "phone": "9434243740",
+      "count": 2,
+      "keptEntry": {
+        "_id": "694b9e439cf18db6a892c4b7",
+        "name": "RAM PRASAD",
+        "createdAt": "2025-12-24T08:03:15.517Z"
+      }
+    },
+    {
+      "phone": "9681477224",
+      "count": 2,
+      "keptEntry": {
+        "_id": "694b9e439cf18db6a892c500",
+        "name": "Shyamal",
+        "createdAt": "2025-12-24T08:03:15.529Z"
+      }
+    },
+    {
+      "phone": "9433111440",
+      "count": 2,
+      "keptEntry": {
+        "_id": "694b9e439cf18db6a892c4fb",
+        "name": "LIPIKA",
+        "createdAt": "2025-12-24T08:03:15.528Z"
+      }
+    },
+    {
+      "phone": "9830722193",
+      "count": 2,
+      "keptEntry": {
+        "_id": "694b9e439cf18db6a892c50b",
+        "name": "SABITA",
+        "createdAt": "2025-12-24T08:03:15.531Z"
+      }
+    },
+    {
+      "phone": "9831075156",
+      "count": 3,
+      "keptEntry": {
+        "_id": "694b9e439cf18db6a892c4e8",
+        "name": "Priyanka",
+        "createdAt": "2025-12-24T08:03:15.525Z"
+      }
+    },
+    {
+      "phone": "9088157167",
+      "count": 2,
+      "keptEntry": {
+        "_id": "694b9e439cf18db6a892bd36",
+        "name": "RUBI",
+        "createdAt": "2025-12-24T08:03:15.014Z"
+      }
+    },
+    {
+      "phone": "9339737949",
+      "count": 2,
+      "keptEntry": {
+        "_id": "694b9e439cf18db6a892c53e",
+        "name": "Raju",
+        "createdAt": "2025-12-24T08:03:15.539Z"
+      }
+    },
+    {
+      "phone": "9007022797",
+      "count": 3,
+      "keptEntry": {
+        "_id": "694b9e439cf18db6a892c54a",
+        "name": "Ferhin Siddique",
+        "createdAt": "2025-12-24T08:03:15.541Z"
+      }
+    },
+    {
+      "phone": "9331093730",
+      "count": 2,
+      "keptEntry": {
+        "_id": "694b9e439cf18db6a892c54c",
+        "name": "Chandrabati",
+        "createdAt": "2025-12-24T08:03:15.542Z"
+      }
+    },
+    {
+      "phone": "8820505378",
+      "count": 2,
+      "keptEntry": {
+        "_id": "694b9e439cf18db6a892c557",
+        "name": "Shibani",
+        "createdAt": "2025-12-24T08:03:15.543Z"
+      }
+    },
+    {
+      "phone": "9830119119",
+      "count": 2,
+      "keptEntry": {
+        "_id": "694b9e439cf18db6a892c584",
+        "name": "Sandip Kumar",
+        "createdAt": "2025-12-24T08:03:15.551Z"
+      }
+    },
+    {
+      "phone": "9830128449",
+      "count": 2,
+      "keptEntry": {
+        "_id": "694b9e439cf18db6a892c5d6",
+        "name": "Bijay Kumar",
+        "createdAt": "2025-12-24T08:03:15.565Z"
+      }
+    },
+    {
+      "phone": "9830278571",
+      "count": 4,
+      "keptEntry": {
+        "_id": "694b9e439cf18db6a892be92",
+        "name": "BABITA",
+        "createdAt": "2025-12-24T08:03:15.079Z"
+      }
+    },
+    {
+      "phone": "9910346898",
+      "count": 4,
+      "keptEntry": {
+        "_id": "694b9e439cf18db6a892c085",
+        "name": "DEBABRATA",
+        "createdAt": "2025-12-24T08:03:15.259Z"
+      }
+    },
+    {
+      "phone": "9674350764",
+      "count": 2,
+      "keptEntry": {
+        "_id": "694b9e439cf18db6a892be42",
+        "name": "SUNANDA",
+        "createdAt": "2025-12-24T08:03:15.066Z"
+      }
+    },
+    {
+      "phone": "8622895998",
+      "count": 2,
+      "keptEntry": {
+        "_id": "694b9e429cf18db6a892bb9e",
+        "name": "RAHUL",
+        "createdAt": "2025-12-24T08:03:14.918Z"
+      }
+    },
+    {
+      "phone": "9836260537",
+      "count": 2,
+      "keptEntry": {
+        "_id": "694b9e439cf18db6a892c634",
+        "name": "Pramod Kumar",
+        "createdAt": "2025-12-24T08:03:15.583Z"
+      }
+    },
+    {
+      "phone": "9474834164",
+      "count": 3,
+      "keptEntry": {
+        "_id": "694b9e439cf18db6a892bf00",
+        "name": "Bimal CHANDRA",
+        "createdAt": "2025-12-24T08:03:15.098Z"
+      }
+    },
+    {
+      "phone": "9748946240",
+      "count": 2,
+      "keptEntry": {
+        "_id": "694b9e439cf18db6a892c536",
+        "name": "JYOTI  PRABHA",
+        "createdAt": "2025-12-24T08:03:15.538Z"
+      }
+    },
+    {
+      "phone": "8697466514",
+      "count": 2,
+      "keptEntry": {
+        "_id": "694b9e439cf18db6a892c6f1",
+        "name": "Paresh Chandra",
+        "createdAt": "2025-12-24T08:03:15.615Z"
+      }
+    },
+    {
+      "phone": "9051393557",
+      "count": 3,
+      "keptEntry": {
+        "_id": "694b9e439cf18db6a892c6f4",
+        "name": "Mahadeb",
+        "createdAt": "2025-12-24T08:03:15.616Z"
+      }
+    },
+    {
+      "phone": "9007572005",
+      "count": 2,
+      "keptEntry": {
+        "_id": "694b9e439cf18db6a892c6f6",
+        "name": "Biswanath",
+        "createdAt": "2025-12-24T08:03:15.616Z"
+      }
+    },
+    {
+      "phone": "9732136636",
+      "count": 3,
+      "keptEntry": {
+        "_id": "694b9e439cf18db6a892c6fa",
+        "name": "Arati",
+        "createdAt": "2025-12-24T08:03:15.617Z"
+      }
+    }
+  ],
+  "totalDuplicatesFound": 5120
+}

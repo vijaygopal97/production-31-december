@@ -1,0 +1,8 @@
+# Production Robots.txt for Opine India
+# This file allows search engines to index the site
+
+User-agent: *
+Allow: /
+
+# Sitemap location (update when you have a sitemap)
+# Sitemap: https://opineindia.com/sitemap.xml

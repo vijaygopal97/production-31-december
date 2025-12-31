@@ -1,0 +1,45 @@
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+
+// https://vite.dev/config/
+export default defineConfig({
+  plugins: [react()],
+  base: '/',
+  server: {
+    host: '0.0.0.0',
+    port: 3000,
+    allowedHosts: ['opine.exypnossolutions.com', '74.225.250.243', 'convo.convergentview.com', 'newprod.exypnossolutions.com', '65.2.183.213', 'localhost', '127.0.0.1'],
+    headers: {
+      'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',
+      'Pragma': 'no-cache',
+      'Expires': '0'
+    },
+    hmr: {
+      // For HTTPS development server via Nginx proxy
+      overlay: false,
+      protocol: 'wss',
+      host: 'opine.exypnossolutions.com',
+      clientPort: 443,
+      port: 3000
+    }
+  },
+  build: {
+    rollupOptions: {
+      onwarn(warning, warn) {
+        if (warning.code === 'MODULE_LEVEL_DIRECTIVE' || warning.message?.includes('.jsx')) {
+          return;
+        }
+        warn(warning);
+      }
+    },
+    copyPublicDir: true,
+    assetsInlineLimit: 1000000,
+    commonjsOptions: {
+      transformMixedEsModules: true
+    }
+  },
+  optimizeDeps: {
+    include: ['../data/assemblyConstituencies.json']
+  },
+  publicDir: 'public'
+})

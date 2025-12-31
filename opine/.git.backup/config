@@ -1,0 +1,38 @@
+[core]
+	repositoryformatversion = 0
+	filemode = true
+	bare = false
+	logallrefupdates = true
+[remote "origin"]
+	url = https://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@github.com/vijaygopal97/opine-india.git
+	fetch = +refs/heads/*:refs/remotes/origin/*
+[branch "main"]
+	remote = origin
+	merge = refs/heads/main
+	vscode-merge-base = origin/main
+[branch "Upgraded_Prod"]
+	remote = origin
+	merge = refs/heads/Upgraded_Prod
+	vscode-merge-base = origin/Upgraded_Prod
+[branch "Upgraded_Prod_Development"]
+	vscode-merge-base = origin/Upgraded_Prod
+	remote = origin
+	merge = refs/heads/Upgraded_Prod_Development
+[branch "Question_Builder_Dev"]
+	vscode-merge-base = origin/Upgraded_Prod_Development
+[branch "Upgraded_Prod_Vijay"]
+	vscode-merge-base = origin/main
+	remote = origin
+	merge = refs/heads/Upgraded_Prod_Vijay
+[branch "8-oct-25"]
+	vscode-merge-base = origin/Upgraded_Prod
+	remote = origin
+	merge = refs/heads/8-oct-25
+[branch "Interviewer-interface"]
+	vscode-merge-base = origin/8-oct-25
+	remote = origin
+	merge = refs/heads/Interviewer-interface
+[branch "LocationService"]
+	vscode-merge-base = origin/Interviewer-interface
+	remote = origin
+	merge = refs/heads/LocationService

@@ -1,0 +1,340 @@
+{
+  "timestamp": "2025-12-30T21:37:22.168Z",
+  "operation": "Auto-Reject Short CATI Responses",
+  "surveyId": "68fd1915d41841da463f0d46",
+  "surveyName": "West Bengal Opinion Poll (2025 - 2026)",
+  "dateRange": {
+    "ist": {
+      "start": "2025-12-29T18:30:00.000Z",
+      "end": "2025-12-30T18:29:59.000Z"
+    },
+    "utc": {
+      "start": "2025-12-29T18:30:00.000Z",
+      "end": "2025-12-30T18:29:59.000Z"
+    }
+  },
+  "criteria": {
+    "interviewMode": "cati",
+    "oldStatus": "Pending_Approval",
+    "minDurationSeconds": 90,
+    "condition": "duration < 90 seconds",
+    "newStatus": "Rejected",
+    "autoRejected": true
+  },
+  "summary": {
+    "totalPendingApproval": 748,
+    "totalShortResponses": 17,
+    "totalAutoRejected": 17,
+    "totalSkipped": 0,
+    "totalErrors": 0,
+    "success": true
+  },
+  "updates": [
+    {
+      "responseId": "5681b34d-361c-4b4f-8c4d-a4b96919e291",
+      "mongoId": "69540644c3f1a8b7bb7fd99e",
+      "sessionId": "3a66b400-83d6-4792-a506-e1ffee2be2f5",
+      "oldStatus": "Pending_Approval",
+      "newStatus": "Rejected",
+      "duration": 25,
+      "rejectionReasons": [
+        {
+          "reason": "Interview Too Short",
+          "condition": "duration"
+        }
+      ],
+      "rejectionFeedback": "Interview Too Short",
+      "autoRejected": true,
+      "createdAt": "2025-12-30T17:05:08.755Z",
+      "updatedAt": "2025-12-30T21:37:21.879Z"
+    },
+    {
+      "responseId": "28609fcf-2dbe-438a-88c8-e2811a002aae",
+      "mongoId": "695400712a365c796f77c116",
+      "sessionId": "4109a3d8-4688-4138-b870-645803f29a31",
+      "oldStatus": "Pending_Approval",
+      "newStatus": "Rejected",
+      "duration": 26,
+      "rejectionReasons": [
+        {
+          "reason": "Interview Too Short",
+          "condition": "duration"
+        }
+      ],
+      "rejectionFeedback": "Interview Too Short",
+      "autoRejected": true,
+      "createdAt": "2025-12-30T16:40:17.383Z",
+      "updatedAt": "2025-12-30T21:37:21.902Z"
+    },
+    {
+      "responseId": "50abf695-9054-4c55-a49c-5978378ec699",
+      "mongoId": "6953f2ac98e11d4b56ad0999",
+      "sessionId": "8b2f50da-f764-4146-926e-e1415f4c7c76",
+      "oldStatus": "Pending_Approval",
+      "newStatus": "Rejected",
+      "duration": 87,
+      "rejectionReasons": [
+        {
+          "reason": "Interview Too Short",
+          "condition": "duration"
+        }
+      ],
+      "rejectionFeedback": "Interview Too Short",
+      "autoRejected": true,
+      "createdAt": "2025-12-30T15:41:32.353Z",
+      "updatedAt": "2025-12-30T21:37:21.928Z"
+    },
+    {
+      "responseId": "3852690b-2059-4fef-86f2-f57925558580",
+      "mongoId": "6953f281e157fb4eea44bcf4",
+      "sessionId": "93ffe53d-bff0-4a32-94d6-df52580f57c1",
+      "oldStatus": "Pending_Approval",
+      "newStatus": "Rejected",
+      "duration": 79,
+      "rejectionReasons": [
+        {
+          "reason": "Interview Too Short",
+          "condition": "duration"
+        }
+      ],
+      "rejectionFeedback": "Interview Too Short",
+      "autoRejected": true,
+      "createdAt": "2025-12-30T15:40:49.569Z",
+      "updatedAt": "2025-12-30T21:37:21.951Z"
+    },
+    {
+      "responseId": "ae043d9c-30d0-45f3-a4c7-0d1c61574222",
+      "mongoId": "6953f06c0e70127bb3ef5543",
+      "sessionId": "f18c883a-b949-4ccd-8c49-bea4a0a2b63b",
+      "oldStatus": "Pending_Approval",
+      "newStatus": "Rejected",
+      "duration": 87,
+      "rejectionReasons": [
+        {
+          "reason": "Interview Too Short",
+          "condition": "duration"
+        }
+      ],
+      "rejectionFeedback": "Interview Too Short",
+      "autoRejected": true,
+      "createdAt": "2025-12-30T15:31:56.337Z",
+      "updatedAt": "2025-12-30T21:37:21.974Z"
+    },
+    {
+      "responseId": "cdd1c9ab-d8d7-40c6-8616-662d5618a7eb",
+      "mongoId": "6953ed504746ddc954638df0",
+      "sessionId": "de5c56a8-5a07-46d9-912c-168e42cc8128",
+      "oldStatus": "Pending_Approval",
+      "newStatus": "Rejected",
+      "duration": 85,
+      "rejectionReasons": [
+        {
+          "reason": "Interview Too Short",
+          "condition": "duration"
+        }
+      ],
+      "rejectionFeedback": "Interview Too Short",
+      "autoRejected": true,
+      "createdAt": "2025-12-30T15:18:40.583Z",
+      "updatedAt": "2025-12-30T21:37:21.994Z"
+    },
+    {
+      "responseId": "209a882c-941f-4759-b21a-c8909b774a2a",
+      "mongoId": "6953e780518800d3e24b165a",
+      "sessionId": "9c0d1ca6-dff4-4e60-a99c-4146c2d6a1ea",
+      "oldStatus": "Pending_Approval",
+      "newStatus": "Rejected",
+      "duration": 86,
+      "rejectionReasons": [
+        {
+          "reason": "Interview Too Short",
+          "condition": "duration"
+        }
+      ],
+      "rejectionFeedback": "Interview Too Short",
+      "autoRejected": true,
+      "createdAt": "2025-12-30T14:53:52.810Z",
+      "updatedAt": "2025-12-30T21:37:22.013Z"
+    },
+    {
+      "responseId": "08a75ead-4bb7-4197-8958-3443d99ea0d7",
+      "mongoId": "6953e1bf12bd8d9d80741dfe",
+      "sessionId": "2a9966ba-f90f-4b48-bcb1-121784ae4c4d",
+      "oldStatus": "Pending_Approval",
+      "newStatus": "Rejected",
+      "duration": 83,
+      "rejectionReasons": [
+        {
+          "reason": "Interview Too Short",
+          "condition": "duration"
+        }
+      ],
+      "rejectionFeedback": "Interview Too Short",
+      "autoRejected": true,
+      "createdAt": "2025-12-30T14:29:19.554Z",
+      "updatedAt": "2025-12-30T21:37:22.029Z"
+    },
+    {
+      "responseId": "dfd935e7-40df-4f40-a258-14be7bd505e6",
+      "mongoId": "6953cc9b31f17bca886e8a7c",
+      "sessionId": "b5ec13ed-e262-41f2-b564-7d497bb94ba1",
+      "oldStatus": "Pending_Approval",
+      "newStatus": "Rejected",
+      "duration": 52,
+      "rejectionReasons": [
+        {
+          "reason": "Interview Too Short",
+          "condition": "duration"
+        }
+      ],
+      "rejectionFeedback": "Interview Too Short",
+      "autoRejected": true,
+      "createdAt": "2025-12-30T12:59:07.349Z",
+      "updatedAt": "2025-12-30T21:37:22.046Z"
+    },
+    {
+      "responseId": "815a46e5-4878-455a-a54f-b50e959e124b",
+      "mongoId": "6953c9fa188307a71b30b266",
+      "sessionId": "d2b7dacb-d1fe-40d6-b0f9-d9d99279510b",
+      "oldStatus": "Pending_Approval",
+      "newStatus": "Rejected",
+      "duration": 80,
+      "rejectionReasons": [
+        {
+          "reason": "Interview Too Short",
+          "condition": "duration"
+        }
+      ],
+      "rejectionFeedback": "Interview Too Short",
+      "autoRejected": true,
+      "createdAt": "2025-12-30T12:47:54.543Z",
+      "updatedAt": "2025-12-30T21:37:22.061Z"
+    },
+    {
+      "responseId": "ff4e0966-de8f-4940-a066-dce1f10cbcda",
+      "mongoId": "6953c3ec03248e01f9540e21",
+      "sessionId": "5abcad3d-aaca-4bed-ad6f-d293d0666a43",
+      "oldStatus": "Pending_Approval",
+      "newStatus": "Rejected",
+      "duration": 73,
+      "rejectionReasons": [
+        {
+          "reason": "Interview Too Short",
+          "condition": "duration"
+        }
+      ],
+      "rejectionFeedback": "Interview Too Short",
+      "autoRejected": true,
+      "createdAt": "2025-12-30T12:22:04.239Z",
+      "updatedAt": "2025-12-30T21:37:22.074Z"
+    },
+    {
+      "responseId": "76f6be9f-f45b-434b-9fc8-0c735206297a",
+      "mongoId": "6953c2c5e96d7334cba2f1ae",
+      "sessionId": "86759b26-5423-49dc-b807-3016f90c5d5a",
+      "oldStatus": "Pending_Approval",
+      "newStatus": "Rejected",
+      "duration": 89,
+      "rejectionReasons": [
+        {
+          "reason": "Interview Too Short",
+          "condition": "duration"
+        }
+      ],
+      "rejectionFeedback": "Interview Too Short",
+      "autoRejected": true,
+      "createdAt": "2025-12-30T12:17:09.176Z",
+      "updatedAt": "2025-12-30T21:37:22.087Z"
+    },
+    {
+      "responseId": "ceb38114-cf34-4806-a4b6-2605f1bc1b84",
+      "mongoId": "6953c1933577a4f57fb4f218",
+      "sessionId": "56c97b14-f896-4d97-baa4-2fa388c6441b",
+      "oldStatus": "Pending_Approval",
+      "newStatus": "Rejected",
+      "duration": 76,
+      "rejectionReasons": [
+        {
+          "reason": "Interview Too Short",
+          "condition": "duration"
+        }
+      ],
+      "rejectionFeedback": "Interview Too Short",
+      "autoRejected": true,
+      "createdAt": "2025-12-30T12:12:03.174Z",
+      "updatedAt": "2025-12-30T21:37:22.101Z"
+    },
+    {
+      "responseId": "df58a3ee-69ba-4395-bf69-178e6ad011d7",
+      "mongoId": "6953c1366575f1d44cd75b99",
+      "sessionId": "fb3644cf-adda-49ff-8aca-58812e565256",
+      "oldStatus": "Pending_Approval",
+      "newStatus": "Rejected",
+      "duration": 56,
+      "rejectionReasons": [
+        {
+          "reason": "Interview Too Short",
+          "condition": "duration"
+        }
+      ],
+      "rejectionFeedback": "Interview Too Short",
+      "autoRejected": true,
+      "createdAt": "2025-12-30T12:10:30.256Z",
+      "updatedAt": "2025-12-30T21:37:22.116Z"
+    },
+    {
+      "responseId": "184384b1-140f-43ee-80c2-925d7cc1552e",
+      "mongoId": "6953c0a4d89ec606f29ff492",
+      "sessionId": "cf5db372-6b47-4b1d-8f32-216528dad675",
+      "oldStatus": "Pending_Approval",
+      "newStatus": "Rejected",
+      "duration": 87,
+      "rejectionReasons": [
+        {
+          "reason": "Interview Too Short",
+          "condition": "duration"
+        }
+      ],
+      "rejectionFeedback": "Interview Too Short",
+      "autoRejected": true,
+      "createdAt": "2025-12-30T12:08:04.565Z",
+      "updatedAt": "2025-12-30T21:37:22.131Z"
+    },
+    {
+      "responseId": "6dc57994-a3c2-42c0-9262-088cf43a5a21",
+      "mongoId": "6953b1b4c68a0ef35ab963b1",
+      "sessionId": "8aee024c-2ff6-4abe-9b6b-2ea256a4aad9",
+      "oldStatus": "Pending_Approval",
+      "newStatus": "Rejected",
+      "duration": 76,
+      "rejectionReasons": [
+        {
+          "reason": "Interview Too Short",
+          "condition": "duration"
+        }
+      ],
+      "rejectionFeedback": "Interview Too Short",
+      "autoRejected": true,
+      "createdAt": "2025-12-30T11:04:20.484Z",
+      "updatedAt": "2025-12-30T21:37:22.149Z"
+    },
+    {
+      "responseId": "64eabdfc-2fd9-4036-8a5b-09d830ab9ae0",
+      "mongoId": "69537903ae5b7ebb52a72673",
+      "sessionId": "349b6d88-d956-464f-8db0-7c0febbc376a",
+      "oldStatus": "Pending_Approval",
+      "newStatus": "Rejected",
+      "duration": 1,
+      "rejectionReasons": [
+        {
+          "reason": "Interview Too Short",
+          "condition": "duration"
+        }
+      ],
+      "rejectionFeedback": "Interview Too Short",
+      "autoRejected": true,
+      "createdAt": "2025-12-30T07:02:27.417Z",
+      "updatedAt": "2025-12-30T21:37:22.167Z"
+    }
+  ]
+}
