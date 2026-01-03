@@ -624,7 +624,7 @@ class OfflineStorageService {
             : 'Audio file not found. It may have been deleted or was not recorded.'
         },
         exportedAt: new Date().toISOString(),
-        appVersion: '12'
+        appVersion: '13'
       };
 
       const interviewDataJson = JSON.stringify(exportData, null, 2);
