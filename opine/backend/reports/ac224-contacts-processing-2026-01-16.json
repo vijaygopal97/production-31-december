@@ -1,0 +1,18 @@
+{
+  "generatedAt": "2026-01-16T19:27:31.777Z",
+  "excelFile": "/var/www/Report-Generation/ac224_output.xlsx",
+  "surveyId": "68fd1915d41841da463f0d46",
+  "targetACName": "Kharagpur Sadar",
+  "totalRowsInExcel": 5002,
+  "filteredRows": 5001,
+  "validContacts": 5000,
+  "errors": [
+    "Row 1664: Invalid phone number format. Phone must be 10-15 digits (got 9 digits)"
+  ],
+  "existingInJSON": 247528,
+  "newContactsAdded": 0,
+  "duplicatesSkipped": 5000,
+  "queueEntriesCreated": 4880,
+  "pendingKharagpurCount": 4881,
+  "totalPendingInQueue": 514485
+}

@@ -1,0 +1,15 @@
+{
+  "generatedAt": "2026-01-14T17:53:29.693Z",
+  "summary": {
+    "totalDuplicateGroups": 0,
+    "totalDuplicateResponses": 0,
+    "totalResponsesInDuplicateGroups": 0,
+    "totalOriginalResponses": 0,
+    "dateRange": {
+      "firstDuplicateGroup": null,
+      "lastDuplicateGroup": null
+    }
+  },
+  "dateWiseBreakdown": [],
+  "duplicateGroups": []
+}

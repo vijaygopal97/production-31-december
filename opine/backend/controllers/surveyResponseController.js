@@ -739,20 +739,8 @@ const completeInterview = async (req, res) => {
     
     console.log(`🔍 IdempotencyCache MISS: No cached response for sessionId: ${sessionId}, proceeding with creation`);
     
-    // CRITICAL FIX: Only use audioRecording if it has valid audio data
-    // Prevent creating empty audioRecording objects that cause data loss confusion
-    // Top tech companies (Meta, WhatsApp) only store data that actually exists
-    let audioRecording = null;
-    if (metadata?.audioRecording && (
-      (metadata.audioRecording.audioUrl && metadata.audioRecording.audioUrl.trim() !== '') ||
-      (metadata.audioRecording.hasAudio === true && metadata.audioRecording.fileSize > 0)
-    )) {
-      audioRecording = metadata.audioRecording;
-      console.log('✅ Valid audioRecording found in metadata');
-    } else {
-      audioRecording = null; // Don't create empty object
-      console.log('ℹ️ No valid audioRecording in metadata - setting to null');
-    }
+    // Extract audioRecording from metadata
+    const audioRecording = metadata?.audioRecording || {};
 
     // CRITICAL: Handle offline CAPI interviews (sessionId starts with 'offline_')
     // For offline interviews, we don't have a server session, so we create the response directly from metadata
@@ -1265,58 +1253,69 @@ const completeInterview = async (req, res) => {
       // Don't save - status is already final and should not be changed
       // Return immediately with preserved status
     } else {
-      // CRITICAL FIX: Run auto-rejection BEFORE save to set status atomically
-      // This ensures status is 'Rejected' when saved, so batch addition will skip it
-      // Top-tier companies (Amazon, Google, Meta) validate and set status BEFORE database write
-      const isAbandonedResponse = surveyResponse.status === 'abandoned';
+      // Only save if it's a new response or status is not final
+    await surveyResponse.save();
+    
+    // INVALIDATE CACHE: Clear interviewer stats cache since stats have changed
+    const interviewerStatsCache = require('../utils/interviewerStatsCache');
+    interviewerStatsCache.delete(interviewerIdForResponse);
+    }
+    
+    // CRITICAL FIX: Skip auto-rejection and batch addition if this is an existing response with final status
+    // OR if this is a newly created abandoned response
+    const isAbandonedResponse = surveyResponse.status === 'abandoned';
+    
+    if (isExistingResponse && isFinalStatus) {
+      console.log(`⏭️  Skipping auto-rejection and batch addition for existing response with final status '${existingStatus}'`);
+    } else if (isAbandonedResponse) {
+      console.log(`⏭️  Skipping auto-rejection and batch addition for abandoned response ${surveyResponse._id} (status: abandoned)`);
+      // Abandoned responses should NOT be auto-rejected or added to QC batches
+    } else {
+      // Check for auto-rejection conditions (only for new responses or non-final statuses that are not abandoned)
+      const { checkAutoRejection, applyAutoRejection } = require('../utils/autoRejectionHelper');
       let wasAutoRejected = false;
-      
-      if (!isAbandonedResponse) {
-        // Check for auto-rejection conditions BEFORE saving
-        // This ensures duplicates are caught and rejected before they enter the system
-        const { checkAutoRejection, applyAutoRejection } = require('../utils/autoRejectionHelper');
-        try {
-          // Handle both populated and unpopulated session.survey
-          const sessionSurveyId = session.survey?._id || session.survey || session.surveyId || session.survey;
-          const surveyIdForRejection = isOfflineSession ? surveyIdForResponse : sessionSurveyId;
-          const rejectionInfo = await checkAutoRejection(surveyResponse, finalResponses, surveyIdForRejection);
-          if (rejectionInfo) {
-            // Apply auto-rejection BEFORE save - this sets status to 'Rejected' atomically
-            await applyAutoRejection(surveyResponse, rejectionInfo);
-            wasAutoRejected = true;
-            console.log(`✅ Auto-rejection applied BEFORE save - response will be saved with status 'Rejected'`);
-          }
-        } catch (autoRejectError) {
-          console.error('Error checking auto-rejection:', autoRejectError);
-          // Continue even if auto-rejection check fails - don't block response creation
+      try {
+        // Handle both populated and unpopulated session.survey
+        const sessionSurveyId = session.survey?._id || session.survey || session.surveyId || session.survey;
+        const surveyIdForRejection = isOfflineSession ? surveyIdForResponse : sessionSurveyId;
+        const rejectionInfo = await checkAutoRejection(surveyResponse, finalResponses, surveyIdForRejection);
+        if (rejectionInfo) {
+          await applyAutoRejection(surveyResponse, rejectionInfo);
+          wasAutoRejected = true;
+          // CRITICAL OPTIMIZATION: Don't populate survey - causes memory leaks
+          // We don't need survey data after auto-rejection, just reload response status
+          // Reload from database to ensure status is updated (without populating survey)
+          await surveyResponse.constructor.findById(surveyResponse._id).select('status verificationData');
         }
+      } catch (autoRejectError) {
+        console.error('Error checking auto-rejection:', autoRejectError);
+        // Continue even if auto-rejection check fails
+    }
+    
+    // CRITICAL: Double-check status before adding to batch
+    // Reload response to ensure we have the latest status
+    const latestResponse = await SurveyResponse.findById(surveyResponse._id);
+    const isAutoRejected = wasAutoRejected || 
+                          (latestResponse && latestResponse.status === 'Rejected') || 
+                          (latestResponse && latestResponse.verificationData?.autoRejected === true);
+    const isAbandoned = latestResponse && latestResponse.status === 'abandoned';
+    
+    // Add response to QC batch only if NOT auto-rejected AND NOT abandoned
+    // Auto-rejected and abandoned responses are already decided and don't need QC processing
+    if (!isAutoRejected && !isAbandoned) {
+      try {
+        // Handle both populated and unpopulated session.survey
+        const sessionSurveyIdForBatch = session.survey?._id || session.survey || session.surveyId || session.survey;
+        const surveyIdForBatch = isOfflineSession ? surveyIdForResponse : sessionSurveyIdForBatch;
+        const interviewerIdForBatch = isOfflineSession ? interviewerIdForResponse : session.interviewer.toString();
+        await addResponseToBatch(surveyResponse._id, surveyIdForBatch, interviewerIdForBatch);
+      } catch (batchError) {
+        console.error('Error adding response to batch:', batchError);
+        // Continue even if batch addition fails - response is still saved
       }
-      
-      // Save response with status already set (either 'Pending_Approval' or 'Rejected')
-      await surveyResponse.save();
-      
-      // INVALIDATE CACHE: Clear interviewer stats cache since stats have changed
-      const interviewerStatsCache = require('../utils/interviewerStatsCache');
-      interviewerStatsCache.delete(interviewerIdForResponse);
-      
-      // CRITICAL: Add response to QC batch ONLY if NOT auto-rejected
-      // Since auto-rejection happened BEFORE save, status is already 'Rejected' if duplicate
-      // This prevents duplicates from ever entering QC batches
-      if (!wasAutoRejected && surveyResponse.status !== 'Rejected' && surveyResponse.status !== 'abandoned') {
-        try {
-          // Handle both populated and unpopulated session.survey
-          const sessionSurveyIdForBatch = session.survey?._id || session.survey || session.surveyId || session.survey;
-          const surveyIdForBatch = isOfflineSession ? surveyIdForResponse : sessionSurveyIdForBatch;
-          const interviewerIdForBatch = isOfflineSession ? interviewerIdForResponse : session.interviewer.toString();
-          await addResponseToBatch(surveyResponse._id, surveyIdForBatch, interviewerIdForBatch);
-          console.log(`✅ Response added to QC batch (not auto-rejected)`);
-        } catch (batchError) {
-          console.error('Error adding response to batch:', batchError);
-          // Continue even if batch addition fails - response is still saved
-        }
-      } else {
-        const skipReason = surveyResponse.status === 'abandoned' ? 'abandoned' : 'auto-rejected';
-        console.log(`⏭️  Skipping batch addition for ${skipReason} response ${surveyResponse._id} (status: ${surveyResponse.status})`);
+    } else {
+      const skipReason = isAbandoned ? 'abandoned' : 'auto-rejected';
+      console.log(`⏭️  Skipping batch addition for ${skipReason} response ${surveyResponse._id} (status: ${latestResponse.status})`);
       }
     }
 
@@ -1530,19 +1529,8 @@ const abandonInterview = async (req, res) => {
       const endTime = new Date();
       const totalTimeSpent = Math.round((endTime - session.startTime) / 1000);
       
-      // CRITICAL FIX: Only use audioRecording if it has valid audio data
-      // Prevent creating empty audioRecording objects
-      let audioRecording = null;
-      if (metadata?.audioRecording && (
-        (metadata.audioRecording.audioUrl && metadata.audioRecording.audioUrl.trim() !== '') ||
-        (metadata.audioRecording.hasAudio === true && metadata.audioRecording.fileSize > 0)
-      )) {
-        audioRecording = metadata.audioRecording;
-        console.log('✅ Valid audioRecording found in metadata');
-      } else {
-        audioRecording = null; // Don't create empty object
-        console.log('ℹ️ No valid audioRecording in metadata - setting to null');
-      }
+      // Extract audioRecording from metadata if available
+      const audioRecording = metadata?.audioRecording || {};
       
       // Extract abandonment reason from metadata
       const abandonedReason = metadata?.abandonedReason || null;
@@ -1931,7 +1919,6 @@ const uploadAudioFile = async (req, res) => {
       if (existingResponse) {
         console.log(`✅ Linking audio to existing response: ${responseId}`);
         console.log(`📊 Audio upload details - req.file.size: ${req.file?.size}, filename: ${filename}, mimetype: ${req.file?.mimetype}`);
-        console.log(`📊 Existing audioRecording value: ${existingResponse.audioRecording === null ? 'null' : typeof existingResponse.audioRecording}`);
         
         // CRITICAL OPTIMIZATION: Fetch all needed metadata in a SINGLE query to reduce memory usage
         // Top tech companies minimize database roundtrips and memory allocations
@@ -1995,57 +1982,33 @@ const uploadAudioFile = async (req, res) => {
         
         console.log(`📊 Prepared metadata - fileSize: ${fileSize} bytes, duration: ${recordingDuration} seconds, format: ${audioFormat}`);
         
-        // CRITICAL FIX: If audioRecording is null, we must set the entire object, not use dot notation
-        // MongoDB cannot create nested fields in a null value using dot notation
-        // This fixes the error: "Cannot create field 'audioURL' in element {audioRecording: null}"
+        // Update response with audio (using native MongoDB update for efficiency)
+        // CRITICAL FIX: Set entire audioRecording object at once to avoid "Cannot create field in null" error
         const mongoose = require('mongoose');
         const collection = mongoose.connection.collection(SurveyResponse.collection.name);
         
-        // Check if audioRecording is null or doesn't exist
-        const isAudioRecordingNull = existingResponse.audioRecording === null || 
-                                     existingResponse.audioRecording === undefined ||
-                                     !existingResponse.audioRecording;
+        // Build complete audioRecording object (not dot notation)
+        const audioRecordingData = {
+          hasAudio: true,
+          audioUrl: audioUrl,
+          uploadedAt: new Date(),
+          storageType: storageType,
+          filename: filename,
+          fileSize: fileSize,
+          recordingDuration: recordingDuration,
+          format: audioFormat,
+          mimetype: req.file?.mimetype || 'audio/m4a'
+        };
         
-        let updateData;
-        if (isAudioRecordingNull) {
-          // audioRecording is null - set entire object
-          console.log(`📊 audioRecording is null - setting entire object`);
-          updateData = {
-            audioRecording: {
-              hasAudio: true,
-              audioUrl: audioUrl,
-              uploadedAt: new Date(),
-              storageType: storageType,
-              filename: filename,
-              fileSize: fileSize,
-              recordingDuration: recordingDuration,
-              format: audioFormat,
-              mimetype: req.file?.mimetype || 'audio/m4a'
-            }
-          };
-        } else {
-          // audioRecording exists - use dot notation for efficiency
-          console.log(`📊 audioRecording exists - using dot notation`);
-          updateData = {
-            'audioRecording.hasAudio': true,
-            'audioRecording.audioUrl': audioUrl,
-            'audioRecording.uploadedAt': new Date(),
-            'audioRecording.storageType': storageType,
-            'audioRecording.filename': filename,
-            'audioRecording.fileSize': fileSize,
-            'audioRecording.recordingDuration': recordingDuration,
-            'audioRecording.format': audioFormat,
-            'audioRecording.mimetype': req.file?.mimetype || 'audio/m4a'
-          };
-        }
+        console.log(`📊 Updating response with audio metadata - fileSize: ${audioRecordingData.fileSize} bytes, duration: ${audioRecordingData.recordingDuration} seconds, format: ${audioRecordingData.format}`);
         
-        // CRITICAL: Removed JSON.stringify() - causes memory leaks
-        console.log(`📊 Updating response with audio metadata - fileSize: ${fileSize} bytes, duration: ${recordingDuration} seconds, format: ${audioFormat}`);
-        
+        // CRITICAL: Set entire audioRecording object (not dot notation) to handle null case
         const updateResult = await collection.updateOne(
           { _id: new mongoose.Types.ObjectId(existingResponse._id) },
           {
-            $set: updateData
+            $set: {
+              audioRecording: audioRecordingData
+            }
           }
         );
         
@@ -2163,58 +2126,34 @@ const uploadAudioFile = async (req, res) => {
         }
         
         console.log(`📊 Prepared metadata - fileSize: ${fileSize} bytes, duration: ${recordingDuration} seconds, format: ${audioFormat}`);
-        console.log(`📊 Existing audioRecording value: ${existingResponse.audioRecording === null ? 'null' : typeof existingResponse.audioRecording}`);
         
         // Update response with audio (using native MongoDB update for efficiency)
+        // CRITICAL FIX: Set entire audioRecording object at once to avoid "Cannot create field in null" error
         const mongoose = require('mongoose');
         const collection = mongoose.connection.collection(SurveyResponse.collection.name);
         
-        // CRITICAL FIX: Check if audioRecording is null before using dot notation
-        // MongoDB cannot create nested fields in a null value using dot notation
-        const isAudioRecordingNull = existingResponse.audioRecording === null || 
-                                     existingResponse.audioRecording === undefined ||
-                                     !existingResponse.audioRecording;
+        // Build complete audioRecording object (not dot notation)
+        const audioRecordingData = {
+          hasAudio: true,
+          audioUrl: audioUrl,
+          uploadedAt: new Date(),
+          storageType: storageType,
+          filename: filename,
+          fileSize: fileSize,
+          recordingDuration: recordingDuration,
+          format: audioFormat,
+          mimetype: req.file?.mimetype || 'audio/m4a'
+        };
         
-        let updateData;
-        if (isAudioRecordingNull) {
-          // audioRecording is null - set entire object
-          console.log(`📊 audioRecording is null - setting entire object`);
-          updateData = {
-            audioRecording: {
-              hasAudio: true,
-              audioUrl: audioUrl,
-              uploadedAt: new Date(),
-              storageType: storageType,
-              filename: filename,
-              fileSize: fileSize,
-              recordingDuration: recordingDuration,
-              format: audioFormat,
-              mimetype: req.file?.mimetype || 'audio/m4a'
-            }
-          };
-        } else {
-          // audioRecording exists - use dot notation for efficiency
-          console.log(`📊 audioRecording exists - using dot notation`);
-          updateData = {
-            'audioRecording.hasAudio': true,
-            'audioRecording.audioUrl': audioUrl,
-            'audioRecording.uploadedAt': new Date(),
-            'audioRecording.storageType': storageType,
-            'audioRecording.filename': filename,
-            'audioRecording.fileSize': fileSize,
-            'audioRecording.recordingDuration': recordingDuration,
-            'audioRecording.format': audioFormat,
-            'audioRecording.mimetype': req.file?.mimetype || 'audio/m4a'
-          };
-        }
+        console.log(`📊 Updating response with audio metadata - fileSize: ${audioRecordingData.fileSize} bytes, duration: ${audioRecordingData.recordingDuration} seconds, format: ${audioRecordingData.format}`);
         
-        // CRITICAL: Removed JSON.stringify() - causes memory leaks
-        console.log(`📊 Updating response with audio metadata - fileSize: ${fileSize} bytes, duration: ${recordingDuration} seconds, format: ${audioFormat}`);
-        
+        // CRITICAL: Set entire audioRecording object (not dot notation) to handle null case
         const updateResult = await collection.updateOne(
           { _id: new mongoose.Types.ObjectId(existingResponse._id) },
           {
-            $set: updateData
+            $set: {
+              audioRecording: audioRecordingData
+            }
           }
         );
         
@@ -3209,11 +3148,36 @@ const getNextReviewAssignment = async (req, res) => {
             { 'reviewAssignment.expiresAt': { $lt: now } }
           ]
         },
+        // NOTE: We intentionally DO NOT filter by qcBatch/isSampleResponse for QA assignment.
+        // Quality Agents must be able to review any Pending_Approval response that has valid, playable audio.
+        // (QC batch sampling is for other workflows and should not block QA queue.)
+        // CRITICAL: Exclude CAPI responses with corrupted/missing/zero-duration audio
+        // For CAPI: Must have valid audioUrl AND recordingDuration > 0
+        // For CATI: Audio validation is handled separately (can have no audio)
         {
           $or: [
-            { qcBatch: { $exists: false } },
-            { qcBatch: null },
-            { isSampleResponse: true }
+            { interviewMode: { $ne: 'capi' } }, // Not CAPI, so no audio requirement
+            // CAPI with valid audio: has audioUrl AND has recordingDuration > 0
+            {
+              $and: [
+                // CRITICAL: QC must ONLY assign responses with playable S3 audio.
+                // We explicitly require S3 keys like "audio/interviews/...." and exclude ANY local paths.
+                // Local files ("uploads/audio/..." or "/uploads/audio/...") are not reliable behind a load balancer.
+                { 'audioRecording.hasAudio': true },
+                { 'audioRecording.fileSize': { $exists: true, $gt: 0 } },
+                { 'audioRecording.uploadedAt': { $exists: true, $ne: null } },
+                { 'audioRecording.audioUrl': { $exists: true, $type: 'string', $regex: /^audio\/interviews\// } },
+                { 'audioRecording.recordingDuration': { $exists: true, $gt: 0 } }
+              ]
+            }
+          ]
+        },
+        // CRITICAL: Exclude responses with < 3 responses in responses array
+        // This filters out incomplete or corrupted interviews
+        {
+          $or: [
+            { interviewMode: { $ne: 'capi' } }, // Not CAPI, so no minimum requirement
+            { 'responses.2': { $exists: true } } // CAPI must have at least 3 responses (index 0, 1, 2)
           ]
         }
       ]
@@ -3544,61 +3508,13 @@ const getNextReviewAssignment = async (req, res) => {
       console.log('🔍 getNextReviewAssignment - Excluding responseId from query:', excludeResponseId);
     }
 
-    // PRIORITIZATION: Fetch dulal.roy@convergent.com's interviewer IDs for priority sorting
-    // These responses will be prioritized (priority: 0) over others (priority: 1)
-    let prioritizedInterviewerIds = [];
-    try {
-      const dulalPM = await User.findOne({ 
-        email: 'dulal.roy@convergent.com',
-        userType: 'project_manager'
-      })
-      .select('assignedTeamMembers')
-      .lean();
-      
-      if (dulalPM && dulalPM.assignedTeamMembers && Array.isArray(dulalPM.assignedTeamMembers)) {
-        // Extract interviewer IDs from assignedTeamMembers (filter for interviewers only)
-        prioritizedInterviewerIds = dulalPM.assignedTeamMembers
-          .filter(member => member.userType === 'interviewer' && member.user)
-          .map(member => {
-            const userId = member.user?._id || member.user;
-            return mongoose.Types.ObjectId.isValid(userId) ? new mongoose.Types.ObjectId(userId) : userId;
-          });
-        
-        if (prioritizedInterviewerIds.length > 0) {
-          console.log(`⚡ Prioritizing ${prioritizedInterviewerIds.length} interviewers from dulal.roy@convergent.com`);
-        }
-      }
-    } catch (error) {
-      console.warn('⚠️ getNextReviewAssignment - Error fetching prioritized interviewers (non-critical):', error.message);
-      // Continue without prioritization if fetch fails
-    }
-
     // Find the next available response
-    // Priority: 
-    // 1. dulal.roy's interviewers first (priority: 0), then others (priority: 1)
-    // 2. Never-skipped responses first (lastSkippedAt is null), then skipped responses (sorted by lastSkippedAt)
-    // 3. Then by timestamp (oldest first)
-    // Use aggregation for complex sorting
+    // Priority: Never-skipped responses first (lastSkippedAt is null), then skipped responses (sorted by lastSkippedAt)
+    // Use aggregation for complex sorting: never-skipped first (by createdAt), then skipped (by lastSkippedAt, then createdAt)
     const aggregationPipeline = [
       { $match: query },
       {
         $addFields: {
-          // PRIORITIZATION: Mark responses from dulal.roy's interviewers with priority 0, others with 1
-          // Use $setIntersection to check if interviewer is in the prioritized list
-          priority: prioritizedInterviewerIds.length > 0 
-            ? {
-                $cond: {
-                  if: {
-                    $gt: [
-                      { $size: { $setIntersection: [{ $literal: prioritizedInterviewerIds }, ['$interviewer']] } },
-                      0
-                    ]
-                  },
-                  then: 0, // dulal.roy's interviewers: priority 0 (first)
-                  else: 1  // Others: priority 1 (after)
-                }
-              }
-            : 1, // If no prioritized interviewers, all get priority 1 (no prioritization)
           // Create a sort key: 0 for never-skipped (null lastSkippedAt), 1 for skipped
           // For never-skipped, use createdAt timestamp
           // For skipped, use lastSkippedAt timestamp
@@ -3609,12 +3525,22 @@ const getNextReviewAssignment = async (req, res) => {
               else: { $toLong: '$lastSkippedAt' } // Skipped: use lastSkippedAt
             }
           },
-          isSkipped: { $ne: ['$lastSkippedAt', null] } // Flag for secondary sort
+          isSkipped: { $ne: ['$lastSkippedAt', null] }, // Flag for secondary sort
+          // Add responses count for filtering
+          responsesCount: { $size: { $ifNull: ['$responses', []] } }
+        }
+      },
+      // Filter out CAPI responses with < 3 responses
+      {
+        $match: {
+          $or: [
+            { interviewMode: { $ne: 'capi' } },
+            { responsesCount: { $gte: 3 } }
+          ]
         }
       },
       {
         $sort: {
-          priority: 1, // dulal.roy's interviewers (0) first, then others (1)
           isSkipped: 1, // Never-skipped (false/0) first, then skipped (true/1)
           sortKey: 1, // Then by timestamp (oldest first)
           createdAt: 1 // Final tie-breaker
@@ -3826,6 +3752,122 @@ const getNextReviewAssignment = async (req, res) => {
         const assignedResponse = await findOneAndUpdateChain.lean();
         const assignmentDuration = Date.now() - assignmentStartTime;
         console.log(`⚡ Atomic assignment took ${assignmentDuration}ms`);
+        
+        // CRITICAL: Post-assignment validation for CAPI responses
+        // Check responses count and audio file existence (can't do in MongoDB query)
+        if (assignedResponse && assignedResponse.interviewMode === 'capi') {
+          const fs = require('fs');
+          const path = require('path');
+          
+          // Check 1: Must have at least 3 responses
+          const responsesCount = assignedResponse.responses ? assignedResponse.responses.length : 0;
+          if (responsesCount < 3) {
+            console.log(`⚠️ getNextReviewAssignment - Response has < 3 responses (${responsesCount}), releasing assignment and retrying...`);
+            await SurveyResponse.updateOne(
+              { _id: assignedResponse._id },
+              { $unset: { reviewAssignment: 1 } }
+            );
+            // CRITICAL: Retry getting another response instead of returning null
+            const retryQuery = JSON.parse(JSON.stringify(findOneQuery));
+            retryQuery.responseId = { $ne: assignedResponse.responseId };
+            retryQuery._id = { $ne: assignedResponse._id };
+            
+            const retryResponse = await SurveyResponse.findOneAndUpdate(
+              retryQuery,
+              {
+                $set: {
+                  reviewAssignment: {
+                    assignedTo: userId,
+                    assignedAt: new Date(),
+                    expiresAt: expiresAt
+                  }
+                }
+              },
+              {
+                new: true,
+                runValidators: true,
+                sort: { lastSkippedAt: 1, createdAt: 1 },
+                maxTimeMS: 10000
+              }
+            ).lean();
+            
+            if (!retryResponse) {
+              return res.status(200).json({
+                success: true,
+                data: {
+                  interview: null,
+                  message: 'No valid responses available for review'
+                }
+              });
+            }
+            
+            // Use retry response and continue validation
+            assignedResponse = retryResponse;
+            console.log(`✅ getNextReviewAssignment - Retried and found response: ${assignedResponse.responseId}`);
+            // Continue to audio check below
+          }
+          
+          // Check 2: Audio file must exist (for local files only)
+          // CRITICAL: Only check local files - S3 files are trusted if they have URL and duration
+          if (assignedResponse.audioRecording?.audioUrl) {
+            const audioUrl = assignedResponse.audioRecording.audioUrl;
+            // Only check local files - S3 files (audio/interviews/...) are assumed to exist
+            if (audioUrl.startsWith('/uploads/audio/')) {
+              const fullPath = path.join(__dirname, '../../', audioUrl);
+              if (!fs.existsSync(fullPath)) {
+                console.log(`⚠️ getNextReviewAssignment - Local audio file doesn't exist: ${audioUrl}, releasing assignment and retrying...`);
+                await SurveyResponse.updateOne(
+                  { _id: assignedResponse._id },
+                  { $unset: { reviewAssignment: 1 } }
+                );
+                // CRITICAL: Retry getting another response instead of returning null
+                // Add this responseId to exclusion list and try again
+                const retryQuery = { ...findOneQuery };
+                retryQuery.responseId = { $ne: assignedResponse.responseId };
+                retryQuery._id = { $ne: assignedResponse._id };
+                
+                const retryResponse = await SurveyResponse.findOneAndUpdate(
+                  retryQuery,
+                  {
+                    $set: {
+                      reviewAssignment: {
+                        assignedTo: userId,
+                        assignedAt: new Date(),
+                        expiresAt: expiresAt
+                      }
+                    }
+                  },
+                  {
+                    new: true,
+                    runValidators: true,
+                    sort: { lastSkippedAt: 1, createdAt: 1 },
+                    maxTimeMS: 10000
+                  }
+                ).lean();
+                
+                if (!retryResponse || retryResponse.interviewMode !== 'capi' || 
+                    !retryResponse.audioRecording?.audioUrl || 
+                    (retryResponse.audioRecording.audioUrl.startsWith('/uploads/audio/') && 
+                     !fs.existsSync(path.join(__dirname, '../../', retryResponse.audioRecording.audioUrl)))) {
+                  // No valid retry response found
+                  return res.status(200).json({
+                    success: true,
+                    data: {
+                      interview: null,
+                      message: 'No valid responses available for review'
+                    }
+                  });
+                }
+                
+                // Use retry response instead
+                assignedResponse = retryResponse;
+                console.log(`✅ getNextReviewAssignment - Retried and found valid response: ${assignedResponse.responseId}`);
+              }
+            }
+            // For S3 files (audio/interviews/...), we trust they exist if URL and duration are present
+            // These will be caught when streaming returns 404, but we can't pre-filter them efficiently
+          }
+        }
         
         // If null, no available response found (all assigned or doesn't exist)
         if (!assignedResponse) {
@@ -4475,13 +4517,8 @@ const generateRejectionReason = (verificationCriteria, status) => {
   const reasons = [];
   
   // Audio Status - fails if not '1', '4', or '7'
-  // Note: '9' (Interviewer acting as respondent) is also a rejection reason
   if (verificationCriteria.audioStatus && !['1', '4', '7'].includes(verificationCriteria.audioStatus)) {
-    if (verificationCriteria.audioStatus === '9') {
-      reasons.push('Interviewer acting as respondent');
-    } else {
-      reasons.push('Audio quality did not meet standards');
-    }
+    reasons.push('Audio quality did not meet standards');
   }
   
   // Gender Matching - fails if not '1'
@@ -5339,46 +5376,11 @@ const getSurveyResponses = async (req, res) => {
 const approveSurveyResponse = async (req, res) => {
   try {
     const { responseId } = req.params;
-    const reviewerId = req.user?._id || req.user?.id;
-    const reviewerEmail = req.user?.email || 'unknown';
     
-    // CRITICAL FIX: Check if response has abandonedReason BEFORE attempting status change
-    // This prevents bypassing Mongoose pre-save hooks when using findByIdAndUpdate
-    const existingResponse = await SurveyResponse.findById(responseId)
-      .select('status abandonedReason')
-      .lean();
-    
-    if (!existingResponse) {
-      return res.status(404).json({
-        success: false,
-        message: 'Survey response not found'
-      });
-    }
-    
-    // CRITICAL PROTECTION: If response has abandonedReason, status MUST remain "abandoned"
-    // Approving an abandoned response doesn't make sense - it's already abandoned
-    if (hasValidAbandonedReason(existingResponse.abandonedReason)) {
-      console.error(`🔒🔒🔒 approveSurveyResponse BLOCKED: Response ${responseId} has abandonedReason '${existingResponse.abandonedReason}' - cannot approve abandoned response`);
-      return res.status(400).json({
-        success: false,
-        message: `Cannot approve response: Response has abandonment reason '${existingResponse.abandonedReason}'. Abandoned responses cannot be approved (they are already in a final state).`,
-        data: {
-          responseId: responseId,
-          currentStatus: existingResponse.status,
-          abandonedReason: existingResponse.abandonedReason,
-          attemptedStatus: 'Approved'
-        }
-      });
-    }
-    
-    // CRITICAL: Record who approved the response for audit trail
     const response = await SurveyResponse.findByIdAndUpdate(
       responseId,
       { 
         status: 'Approved',
-        'verificationData.reviewer': reviewerId,
-        'verificationData.reviewedAt': new Date(),
-        'verificationData.autoApproved': false,
         updatedAt: new Date()
       },
       { new: true }
@@ -5390,8 +5392,6 @@ const approveSurveyResponse = async (req, res) => {
         message: 'Survey response not found'
       });
     }
-
-    console.log(`✅ Response ${responseId} approved by ${reviewerEmail} (${req.user?.userType || 'unknown'})`);
 
     res.json({
       success: true,
@@ -5413,36 +5413,6 @@ const rejectSurveyResponse = async (req, res) => {
   try {
     const { responseId } = req.params;
     const { reason, feedback } = req.body;
-    
-    // CRITICAL FIX: Check if response has abandonedReason BEFORE attempting status change
-    // Note: Abandoned responses can be rejected (they're already in a final state)
-    // But we should still check to ensure data integrity
-    const existingResponse = await SurveyResponse.findById(responseId)
-      .select('status abandonedReason')
-      .lean();
-    
-    if (!existingResponse) {
-      return res.status(404).json({
-        success: false,
-        message: 'Survey response not found'
-      });
-    }
-    
-    // CRITICAL PROTECTION: If response has abandonedReason, status MUST remain "abandoned"
-    // Rejecting an abandoned response doesn't make sense - it's already abandoned
-    if (hasValidAbandonedReason(existingResponse.abandonedReason)) {
-      console.error(`🔒🔒🔒 rejectSurveyResponse BLOCKED: Response ${responseId} has abandonedReason '${existingResponse.abandonedReason}' - cannot reject abandoned response`);
-      return res.status(400).json({
-        success: false,
-        message: `Cannot reject response: Response has abandonment reason '${existingResponse.abandonedReason}'. Abandoned responses cannot be rejected (they are already in a final state).`,
-        data: {
-          responseId: responseId,
-          currentStatus: existingResponse.status,
-          abandonedReason: existingResponse.abandonedReason,
-          attemptedStatus: 'Rejected'
-        }
-      });
-    }
     
     const response = await SurveyResponse.findByIdAndUpdate(
       responseId,
@@ -5476,16 +5446,6 @@ const rejectSurveyResponse = async (req, res) => {
   }
 };
 
-// Helper function to check if abandonedReason is valid (matches SurveyResponse model logic)
-const hasValidAbandonedReason = (abandonedReason) => {
-  return abandonedReason && 
-         typeof abandonedReason === 'string' &&
-         abandonedReason.trim() !== '' &&
-         abandonedReason !== 'No reason specified' &&
-         abandonedReason.toLowerCase() !== 'null' &&
-         abandonedReason.toLowerCase() !== 'undefined';
-};
-
 // Set response status to Pending_Approval
 const setPendingApproval = async (req, res) => {
     // 🔴 CRITICAL LOGGING - Track all calls to identify the problem
@@ -5500,52 +5460,6 @@ const setPendingApproval = async (req, res) => {
     });
   try {
     const { responseId } = req.params;
-    
-    // CRITICAL FIX: Check if response has abandonedReason BEFORE attempting status change
-    // This prevents bypassing Mongoose pre-save hooks when using findByIdAndUpdate
-    // Top tech companies validate before direct database updates
-    const existingResponse = await SurveyResponse.findById(responseId)
-      .select('status abandonedReason')
-      .lean();
-    
-    if (!existingResponse) {
-      return res.status(404).json({
-        success: false,
-        message: 'Survey response not found'
-      });
-    }
-    
-    // CRITICAL PROTECTION: If response has abandonedReason, status MUST remain "abandoned"
-    // This is the same protection logic from the Mongoose pre-save hook
-    // We need to check here because findByIdAndUpdate bypasses pre-save hooks
-    if (hasValidAbandonedReason(existingResponse.abandonedReason)) {
-      console.error(`🔒🔒🔒 setPendingApproval BLOCKED: Response ${responseId} has abandonedReason '${existingResponse.abandonedReason}' - cannot change status from '${existingResponse.status}' to 'Pending_Approval'`);
-      return res.status(400).json({
-        success: false,
-        message: `Cannot change status: Response has abandonment reason '${existingResponse.abandonedReason}'. Abandoned responses must remain in 'abandoned' status.`,
-        data: {
-          responseId: responseId,
-          currentStatus: existingResponse.status,
-          abandonedReason: existingResponse.abandonedReason,
-          attemptedStatus: 'Pending_Approval'
-        }
-      });
-    }
-    
-    // CRITICAL FIX: Also check if current status is a final status that shouldn't be changed
-    const finalStatuses = ['Terminated', 'abandoned', 'Rejected', 'Approved'];
-    if (finalStatuses.includes(existingResponse.status)) {
-      console.error(`🔒🔒🔒 setPendingApproval BLOCKED: Response ${responseId} has final status '${existingResponse.status}' - cannot change to 'Pending_Approval'`);
-      return res.status(400).json({
-        success: false,
-        message: `Cannot change status: Response has final status '${existingResponse.status}'. Final statuses cannot be changed.`,
-        data: {
-          responseId: responseId,
-          currentStatus: existingResponse.status,
-          attemptedStatus: 'Pending_Approval'
-        }
-      });
-    }
     
     // CRITICAL FIX: Preserve verificationData.reviewer and verificationData.reviewedAt
     // for historical tracking. Only clear reviewAssignment to allow re-assignment.
@@ -6595,6 +6509,75 @@ const streamAudioProxy = async (req, res) => {
       }
     }
 
+    // IMPORTANT: audioUrl can be either:
+    // - S3 key: "audio/interviews/2026/01/....m4a"
+    // - Local path: "/uploads/audio/....m4a"
+    //
+    // Local paths MUST be streamed from disk (not from S3), otherwise they 404.
+    // Also, behind a load balancer, local files may not exist on every node.
+    // In that case we return 404 so the client can treat it as unplayable.
+    if (typeof audioUrl === 'string' && (audioUrl.startsWith('/uploads/audio/') || audioUrl.startsWith('uploads/audio/'))) {
+      const fs = require('fs');
+      const path = require('path');
+      
+      // Convert "/uploads/audio/..." -> "uploads/audio/..." so path.join doesn't ignore base path
+      const relativeAudioPath = audioUrl.replace(/^\/+/, '');
+      const fullPath = path.join(__dirname, '..', '..', relativeAudioPath);
+      
+      if (!fs.existsSync(fullPath)) {
+        console.warn('⚠️ streamAudioProxy - Local audio file not found on this server:', {
+          audioUrl,
+          fullPath
+        });
+        return res.status(404).json({
+          success: false,
+          message: 'Audio file not found'
+        });
+      }
+      
+      const stat = fs.statSync(fullPath);
+      const fileSize = stat.size;
+      const ext = path.extname(fullPath).toLowerCase();
+      const contentType =
+        ext === '.m4a' || ext === '.mp4' ? 'audio/mp4' :
+        ext === '.mp3' ? 'audio/mpeg' :
+        ext === '.wav' ? 'audio/wav' :
+        ext === '.webm' ? 'audio/webm' :
+        'application/octet-stream';
+      
+      const range = req.headers.range;
+      if (range) {
+        const parts = range.replace(/bytes=/, '').split('-');
+        const start = parseInt(parts[0], 10);
+        const end = parts[1] ? parseInt(parts[1], 10) : fileSize - 1;
+        
+        // Guard invalid ranges
+        if (isNaN(start) || isNaN(end) || start > end || start < 0 || end >= fileSize) {
+          res.writeHead(416, { 'Content-Range': `bytes */${fileSize}` });
+          return res.end();
+        }
+        
+        const chunkSize = (end - start) + 1;
+        res.writeHead(206, {
+          'Content-Range': `bytes ${start}-${end}/${fileSize}`,
+          'Accept-Ranges': 'bytes',
+          'Content-Length': chunkSize,
+          'Content-Type': contentType
+        });
+        
+        fs.createReadStream(fullPath, { start, end }).pipe(res);
+        return;
+      }
+      
+      res.writeHead(200, {
+        'Content-Length': fileSize,
+        'Content-Type': contentType,
+        'Accept-Ranges': 'bytes'
+      });
+      fs.createReadStream(fullPath).pipe(res);
+      return;
+    }
+    
     console.log('✅ streamAudioProxy - Streaming audio with key:', audioUrl);
     const { streamAudioFromS3 } = require('../utils/cloudStorage');
     await streamAudioFromS3(audioUrl, req, res);
@@ -9383,6 +9366,385 @@ const verifyInterviewSync = async (req, res) => {
   }
 };
 
+// Haversine formula to calculate distance between two GPS coordinates (in kilometers)
+const calculateDistance = (lat1, lon1, lat2, lon2) => {
+  const R = 6371; // Earth's radius in kilometers
+  const dLat = (lat2 - lat1) * Math.PI / 180;
+  const dLon = (lon2 - lon1) * Math.PI / 180;
+  const a = 
+    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+    Math.sin(dLon / 2) * Math.sin(dLon / 2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  return R * c;
+};
+
+// Get Booster Checks - CAPI responses with booster enabled or distance > 5.1km
+const getBoosterChecks = async (req, res) => {
+  try {
+    const { surveyId } = req.params;
+    const {
+      status,
+      interviewMode = 'capi',
+      gpsCheck,
+      dateRange = 'today',
+      startDate,
+      endDate,
+      ac,
+      interviewerId,
+      page = 1,
+      limit = 20
+    } = req.query;
+
+    const ALLOWED_RADIUS_KM = 5.1;
+    const limitNum = parseInt(limit) || 20;
+    const pageNum = parseInt(page) || 1;
+    const fetchLimit = limitNum * 5; // Fetch 5x to account for filtering
+
+    // Check Redis cache first
+    const redisOps = require('../utils/redisClient');
+    const cacheKey = `booster-checks:${surveyId}:${JSON.stringify(req.query)}`;
+    try {
+      const cached = await redisOps.get(cacheKey);
+      if (cached) {
+        return res.json(cached);
+      }
+    } catch (cacheError) {
+      console.log('Redis cache miss or error:', cacheError.message);
+    }
+
+    // Build base filter
+    const matchFilter = {
+      survey: mongoose.Types.ObjectId.isValid(surveyId) ? new mongoose.Types.ObjectId(surveyId) : surveyId,
+      interviewMode: 'capi'
+    };
+
+    // Status filter
+    if (status && status !== 'all') {
+      if (status === 'approved_rejected_pending') {
+        matchFilter.status = { $in: ['Approved', 'Rejected', 'Pending_Approval'] };
+      } else {
+        matchFilter.status = status;
+      }
+    } else {
+      matchFilter.status = { $in: ['Approved', 'Rejected', 'Pending_Approval'] };
+    }
+
+    // Date range filter
+    if (dateRange && dateRange !== 'all' && dateRange !== 'custom') {
+      const istOffset = 5.5 * 60 * 60 * 1000;
+      let dateStart, dateEnd;
+      switch (dateRange) {
+        case 'today':
+          const todayIST = getISTDateString();
+          dateStart = getISTDateStartUTC(todayIST);
+          dateEnd = getISTDateEndUTC(todayIST);
+          break;
+        case 'yesterday':
+          const now = new Date();
+          const istTime = new Date(now.getTime() + istOffset);
+          istTime.setUTCDate(istTime.getUTCDate() - 1);
+          const yesterdayISTStr = getISTDateStringFromDate(new Date(istTime.getTime() - istOffset));
+          dateStart = getISTDateStartUTC(yesterdayISTStr);
+          dateEnd = getISTDateEndUTC(yesterdayISTStr);
+          break;
+        case 'week':
+          const nowWeek = new Date();
+          const istTimeWeek = new Date(nowWeek.getTime() + istOffset);
+          istTimeWeek.setUTCDate(istTimeWeek.getUTCDate() - 7);
+          const weekAgoISTStr = getISTDateStringFromDate(new Date(istTimeWeek.getTime() - istOffset));
+          const todayISTStr = getISTDateString();
+          dateStart = getISTDateStartUTC(weekAgoISTStr);
+          dateEnd = getISTDateEndUTC(todayISTStr);
+          break;
+        case 'month':
+          const nowMonth = new Date();
+          const istTimeMonth = new Date(nowMonth.getTime() + istOffset);
+          istTimeMonth.setUTCDate(istTimeMonth.getUTCDate() - 30);
+          const monthAgoISTStr = getISTDateStringFromDate(new Date(istTimeMonth.getTime() - istOffset));
+          const todayISTStr2 = getISTDateString();
+          dateStart = getISTDateStartUTC(monthAgoISTStr);
+          dateEnd = getISTDateEndUTC(todayISTStr2);
+          break;
+      }
+      if (dateStart && dateEnd) {
+        matchFilter.createdAt = { $gte: dateStart, $lte: dateEnd };
+      }
+    } else if (startDate || endDate) {
+      let dateStart = startDate ? new Date(startDate) : null;
+      let dateEnd = endDate ? new Date(endDate) : null;
+      if (dateStart || dateEnd) {
+        matchFilter.createdAt = {};
+        if (dateStart) matchFilter.createdAt.$gte = dateStart;
+        if (dateEnd) matchFilter.createdAt.$lte = dateEnd;
+      }
+    }
+
+    // AC filter
+    if (ac) {
+      matchFilter.selectedAC = ac;
+    }
+
+    // Interviewer filter
+    if (interviewerId) {
+      matchFilter.interviewer = mongoose.Types.ObjectId.isValid(interviewerId) ? new mongoose.Types.ObjectId(interviewerId) : interviewerId;
+    }
+
+    // Get booster-enabled interviewers (cache for 1 hour)
+    let boosterEnabledInterviewers = [];
+    try {
+      const boosterCacheKey = 'booster-enabled-interviewers';
+      const cachedBoosters = await redisOps.get(boosterCacheKey);
+      if (cachedBoosters) {
+        boosterEnabledInterviewers = cachedBoosters;
+      } else {
+        const boosterUsers = await User.find({
+          'preferences.locationControlBooster': true,
+          userType: 'interviewer'
+        }).select('_id').lean();
+        boosterEnabledInterviewers = boosterUsers.map(u => u._id.toString());
+        await redisOps.set(boosterCacheKey, boosterEnabledInterviewers, 3600); // 1 hour cache
+      }
+    } catch (error) {
+      console.log('Error fetching booster-enabled interviewers:', error.message);
+    }
+
+    // Fetch responses iteratively until we have enough
+    let processedResponses = [];
+    let totalFetched = 0;
+    let skip = 0;
+
+    while (processedResponses.length < limitNum && skip < 10000) { // Safety limit
+      const batch = await SurveyResponse.find(matchFilter)
+        .select('-responses') // Exclude large responses array
+        .populate('interviewer', 'firstName lastName email memberId')
+        .populate('selectedPollingStation', 'stationName latitude longitude')
+        .sort({ createdAt: -1 })
+        .skip(skip)
+        .limit(fetchLimit)
+        .lean();
+
+      if (batch.length === 0) break;
+
+      totalFetched += batch.length;
+
+      for (const response of batch) {
+        // Check if interviewer has booster enabled
+        const interviewerHasBooster = response.interviewer && 
+          boosterEnabledInterviewers.includes(response.interviewer._id.toString());
+
+        // Calculate distance from polling station
+        let distance = null;
+        if (response.selectedPollingStation && response.selectedPollingStation.latitude && 
+            response.selectedPollingStation.longitude && response.gpsLocation) {
+          const psLat = response.selectedPollingStation.latitude;
+          const psLon = response.selectedPollingStation.longitude;
+          let gpsLat = null, gpsLon = null;
+
+          if (response.gpsLocation.latitude && response.gpsLocation.longitude) {
+            gpsLat = response.gpsLocation.latitude;
+            gpsLon = response.gpsLocation.longitude;
+          } else if (response.location && response.location.latitude && response.location.longitude) {
+            gpsLat = response.location.latitude;
+            gpsLon = response.location.longitude;
+          }
+
+          if (gpsLat !== null && gpsLon !== null) {
+            distance = calculateDistance(gpsLat, gpsLon, psLat, psLon);
+          }
+        }
+
+        // Filter: must have booster enabled OR distance > 5.1km
+        const usedBooster = interviewerHasBooster || (distance !== null && distance > ALLOWED_RADIUS_KM);
+        if (!usedBooster) continue;
+
+        // GPS Check Pass/Fail (within 5.1km = pass)
+        const gpsCheckPass = distance !== null ? distance <= ALLOWED_RADIUS_KM : null;
+
+        // Apply GPS Check filter if specified
+        if (gpsCheck === 'pass' && !gpsCheckPass) continue;
+        if (gpsCheck === 'fail' && gpsCheckPass) continue;
+
+        processedResponses.push({
+          ...response,
+          distanceFromPollingStation: distance !== null ? parseFloat(distance.toFixed(2)) : null,
+          gpsCheckPass
+        });
+
+        if (processedResponses.length >= limitNum) break;
+      }
+
+      skip += fetchLimit;
+      if (batch.length < fetchLimit) break; // No more data
+    }
+
+    // Paginate processed responses
+    const startIdx = (pageNum - 1) * limitNum;
+    const paginatedResponses = processedResponses.slice(startIdx, startIdx + limitNum);
+
+    // Calculate total count
+    let totalResponses;
+    if (processedResponses.length > 0 && totalFetched > 0) {
+      const ratio = processedResponses.length / totalFetched;
+      const totalMatching = await SurveyResponse.countDocuments(matchFilter);
+      totalResponses = Math.ceil(totalMatching * ratio);
+    } else {
+      totalResponses = await SurveyResponse.countDocuments(matchFilter);
+    }
+
+    const result = {
+      success: true,
+      responses: paginatedResponses,
+      pagination: {
+        page: pageNum,
+        limit: limitNum,
+        total: totalResponses,
+        pages: Math.ceil(totalResponses / limitNum)
+      }
+    };
+
+    // Cache for 5 minutes
+    try {
+      await redisOps.set(cacheKey, result, 300);
+    } catch (cacheError) {
+      console.log('Error caching result:', cacheError.message);
+    }
+
+    res.json(result);
+  } catch (error) {
+    console.error('Error fetching booster checks:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Failed to fetch booster checks',
+      error: error.message
+    });
+  }
+};
+
+// Bulk approve booster checks
+const bulkApproveBoosterChecks = async (req, res) => {
+  try {
+    const { responseIds } = req.body;
+    if (!Array.isArray(responseIds) || responseIds.length === 0) {
+      return res.status(400).json({
+        success: false,
+        message: 'responseIds array is required'
+      });
+    }
+
+    const result = await SurveyResponse.updateMany(
+      {
+        _id: { $in: responseIds.map(id => mongoose.Types.ObjectId.isValid(id) ? new mongoose.Types.ObjectId(id) : id) },
+        abandonedReason: { $exists: false } // Don't update abandoned responses
+      },
+      {
+        $set: { status: 'Approved' }
+      }
+    );
+
+    // Remove from AvailableAssignment
+    const AvailableAssignment = require('../models/AvailableAssignment');
+    await AvailableAssignment.deleteMany({
+      responseId: { $in: responseIds }
+    });
+
+    res.json({
+      success: true,
+      updated: result.modifiedCount
+    });
+  } catch (error) {
+    console.error('Error bulk approving booster checks:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Failed to bulk approve',
+      error: error.message
+    });
+  }
+};
+
+// Bulk reject booster checks
+const bulkRejectBoosterChecks = async (req, res) => {
+  try {
+    const { responseIds } = req.body;
+    if (!Array.isArray(responseIds) || responseIds.length === 0) {
+      return res.status(400).json({
+        success: false,
+        message: 'responseIds array is required'
+      });
+    }
+
+    const result = await SurveyResponse.updateMany(
+      {
+        _id: { $in: responseIds.map(id => mongoose.Types.ObjectId.isValid(id) ? new mongoose.Types.ObjectId(id) : id) },
+        abandonedReason: { $exists: false }
+      },
+      {
+        $set: {
+          status: 'Rejected',
+          abandonedReason: 'Location out of Accepted Radius of distance from polling station'
+        }
+      }
+    );
+
+    const AvailableAssignment = require('../models/AvailableAssignment');
+    await AvailableAssignment.deleteMany({
+      responseId: { $in: responseIds }
+    });
+
+    res.json({
+      success: true,
+      updated: result.modifiedCount
+    });
+  } catch (error) {
+    console.error('Error bulk rejecting booster checks:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Failed to bulk reject',
+      error: error.message
+    });
+  }
+};
+
+// Bulk set pending booster checks
+const bulkSetPendingBoosterChecks = async (req, res) => {
+  try {
+    const { responseIds } = req.body;
+    if (!Array.isArray(responseIds) || responseIds.length === 0) {
+      return res.status(400).json({
+        success: false,
+        message: 'responseIds array is required'
+      });
+    }
+
+    const result = await SurveyResponse.updateMany(
+      {
+        _id: { $in: responseIds.map(id => mongoose.Types.ObjectId.isValid(id) ? new mongoose.Types.ObjectId(id) : id) },
+        abandonedReason: { $exists: false }
+      },
+      {
+        $set: { status: 'Pending_Approval' }
+      }
+    );
+
+    const AvailableAssignment = require('../models/AvailableAssignment');
+    await AvailableAssignment.deleteMany({
+      responseId: { $in: responseIds }
+    });
+
+    res.json({
+      success: true,
+      updated: result.modifiedCount
+    });
+  } catch (error) {
+    console.error('Error bulk setting pending:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Failed to bulk set pending',
+      error: error.message
+    });
+  }
+};
+
 module.exports = {
   getLastCatiSetNumber,
   startInterview,
@@ -9425,5 +9787,9 @@ module.exports = {
   createCSVJob, // New async job queue version - creates job and returns immediately
   getCSVJobProgress, // Get job progress
   downloadCSVFromJob, // Download completed CSV file
-  verifyInterviewSync // Two-phase commit verification (like WhatsApp/Meta)
+  verifyInterviewSync, // Two-phase commit verification (like WhatsApp/Meta)
+  getBoosterChecks,
+  bulkApproveBoosterChecks,
+  bulkRejectBoosterChecks,
+  bulkSetPendingBoosterChecks
 };

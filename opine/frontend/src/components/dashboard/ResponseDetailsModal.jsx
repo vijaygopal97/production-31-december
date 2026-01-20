@@ -3,6 +3,7 @@ import { X, User, Calendar, MapPin, Clock, CheckCircle, AlertCircle, SkipForward
 import { surveyResponseAPI, catiAPI } from '../../services/api';
 import api from '../../services/api';
 import { useToast } from '../../contexts/ToastContext';
+import { useAuth } from '../../contexts/AuthContext';
 import assemblyConstituencies from '../../data/assemblyConstituencies.json';
 import { renderWithTranslationProfessional, parseTranslation, getMainText, getLanguageText, parseMultiTranslation } from '../../utils/translations';
 import { findGenderResponse, normalizeGenderResponse } from '../../utils/genderUtils';
@@ -18,6 +19,14 @@ const ResponseDetailsModal = ({ response, survey, onClose, hideActions = false, 
   const [currentResponse, setCurrentResponse] = useState(response);
   const [selectedLanguageIndex, setSelectedLanguageIndex] = useState(0); // Language index for responses display
   const { showSuccess, showError } = useToast();
+  const { user } = useAuth();
+  
+  // Check if current user is a project manager (should not be able to approve responses)
+  // CRITICAL: Check multiple possible variations of userType to ensure project managers cannot approve
+  const isProjectManager = user?.userType === 'project_manager' || 
+                          user?.userType === 'Project Manager' ||
+                          user?.role === 'project_manager' ||
+                          user?.role === 'Project Manager';
 
   // Update currentResponse when response prop changes
   useEffect(() => {
@@ -2312,8 +2321,9 @@ const ResponseDetailsModal = ({ response, survey, onClose, hideActions = false, 
                     </button>
                   )}
                   
-                  {/* Approve - Show if Rejected or Pending_Approval */}
-                  {(currentResponse.status === 'Rejected' || currentResponse.status === 'Pending_Approval') && (
+                  {/* Approve - Show if Rejected or Pending_Approval, but NOT for project managers */}
+                  {/* CRITICAL: Project managers should NEVER see the approve button */}
+                  {!isProjectManager && (currentResponse.status === 'Rejected' || currentResponse.status === 'Pending_Approval') && (
                     <button
                       onClick={handleApproveResponse}
                       disabled={isSubmitting}

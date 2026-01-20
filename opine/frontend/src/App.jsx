@@ -27,6 +27,7 @@ import CallerPerformanceV2Page from './pages/CallerPerformanceV2Page';
 import QCPerformancePage from './pages/QCPerformancePage';
 import QCBatchesPage from './pages/QCBatchesPage';
 import FindingsDashboard from './pages/FindingsDashboard';
+import BoosterChecksPage from './pages/BoosterChecksPage';
 import PageTitleManager from './components/PageTitleManager';
 import './App.css';
 
@@ -99,6 +100,7 @@ function App() {
             <Route path="/company/team-management" element={<AdminDashboard />} />
             <Route path="/company/surveys" element={<AdminDashboard />} />
             <Route path="/company/survey-approvals" element={<AdminDashboard />} />
+            <Route path="/company/cati-config" element={<AdminDashboard />} />
             <Route path="/company/document-verification" element={<AdminDashboard />} />
             <Route path="/company/performance" element={<AdminDashboard />} />
             <Route path="/company/generate-report" element={<AdminDashboard />} />
@@ -132,6 +134,9 @@ function App() {
             
             {/* Findings Dashboard Page */}
             <Route path="/company/surveys/:surveyId/findings" element={<FindingsDashboard />} />
+            
+            {/* Booster Checks Page */}
+            <Route path="/company/surveys/:surveyId/booster-checks" element={<BoosterChecksPage />} />
             
             {/* Project Manager routes */}
             <Route path="/project-manager/survey-reports" element={<AdminDashboard />} />

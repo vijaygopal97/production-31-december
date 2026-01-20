@@ -76,4 +76,10 @@ router.get('/qc-performance/survey/:surveyId', authorize('company_admin', 'proje
 // @access  Private (Company Admin, Project Manager)
 router.get('/qc-performance/survey/:surveyId/trends', authorize('company_admin', 'project_manager'), getQCPerformanceTrends);
 
+// @route   GET /api/performance/qc-performance/survey/:surveyId/quality-agent/:qualityAgentId/responses
+// @desc    Get responses reviewed by a specific quality agent
+// @access  Private (Company Admin, Project Manager)
+// TODO: Implement getQualityAgentResponses function in qcPerformanceController
+// router.get('/qc-performance/survey/:surveyId/quality-agent/:qualityAgentId/responses', authorize('company_admin', 'project_manager'), getQualityAgentResponses);
+
 module.exports = router;

@@ -1,0 +1,25 @@
+{
+  "generatedAt": "2026-01-16T19:41:38.405Z",
+  "surveyId": "68fd1915d41841da463f0d46",
+  "surveyName": "West Bengal Opinion Poll (2025 - 2026)",
+  "acName": "Test AC",
+  "excelFile": "/var/www/Report-Generation/ac224_output.xlsx",
+  "totalRowsInExcel": 5001,
+  "validContacts": 5000,
+  "errors": [
+    "Row 1664: Invalid phone number format. Phone must be 10-15 digits (got 9 digits)"
+  ],
+  "newContactsAdded": 0,
+  "queueEntriesCreated": 0,
+  "duplicateCleanup": {
+    "totalEntries": 614568,
+    "uniquePhones": 614568,
+    "duplicateCount": 0,
+    "deleted": 0
+  },
+  "finalStatus": {
+    "pendingTargetAC": 0,
+    "totalPending": 513844
+  },
+  "durationSeconds": "21.18"
+}

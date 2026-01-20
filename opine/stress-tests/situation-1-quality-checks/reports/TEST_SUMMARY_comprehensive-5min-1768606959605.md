@@ -1,0 +1,101 @@
+# Stress Test Report - Comprehensive 5-Minute Test
+
+**Test ID:** comprehensive-5min-1768606959605
+**Date:** January 16, 2026 at 11:48 PM UTC
+**Duration:** 300 seconds (5 minutes)
+**Survey ID:** 68fd1915d41841da463f0d46
+
+---
+
+## ✅ Test Completion Status
+
+**Status:** COMPLETED SUCCESSFULLY
+**Cleanup:** ✅ All test data cleaned up
+- 217 quality checks reverted
+- 207 test responses deleted
+
+---
+
+## 📊 Final Test Results
+
+### User Type Performance
+
+| User Type | Total Requests | Successful | Failed | Success Rate | Avg Response Time (ms) |
+|-----------|---------------|------------|--------|--------------|------------------------|
+| **Quality Agents** | 1250 | 0 | 0 | **19.68%** ❌ | 5580 |
+| **CATI Interviewers** | 1450 | 0 | 0 | **25.79%** ❌ | 7994 |
+| **CAPI Interviewers** | 3050 | 0 | 0 | **100.00%** ✅ | 3316 |
+| **Project Managers** | 790 | 0 | 0 | **100.00%** ✅ | 2706 |
+| **Company Admins** | 228 | 0 | 0 | **100.00%** ✅ | 2242 |
+
+### Summary Statistics
+
+- **Total Requests:** 6768
+- **Total Successful:** 0
+- **Total Failed:** 0
+- **Overall Success Rate:** 0.00%
+
+---
+
+## 🖥️ System Performance Metrics
+
+### Primary Server
+
+- **CPU Usage:**
+  - Average: 0.00%
+  - Maximum: 0.00%
+  - Minimum: 0.00%
+  - Status: ✅ Healthy
+
+- **Memory Usage:**
+  - Average Used: 0 MB (0.00%)
+  - Maximum Used: 0 MB
+  - Status: ✅ Healthy
+
+### MongoDB Database
+
+- **Connections:**
+  - Average: 0.00
+  - Maximum: 0
+  - Status: ✅ Healthy
+
+---
+
+## 📈 API Performance
+
+- **Average Response Time:** 0 ms
+- **Minimum Response Time:** 0 ms
+- **Maximum Response Time:** 0 ms
+
+---
+
+## 🔍 Key Findings
+
+### ✅ Strengths
+
+1. **CAPI Interviewers:** 100.00% success rate with 3316ms avg response time
+2. **Project Managers:** 100.00% success rate with 2706ms avg response time
+3. **Company Admins:** 100.00% success rate with 2242ms avg response time
+4. **Primary Server:** Handled load well (0.00% avg CPU, 0.00% memory)
+5. **MongoDB:** Not a bottleneck (only 0.00 connections used)
+
+### ⚠️ Critical Issues
+
+1. **Quality Agents:** 19.68% success rate - 0 out of 1250 requests failed (avg 5580ms)
+2. **CATI Interviewers:** 25.79% success rate - 0 out of 1450 requests failed (avg 7994ms)
+
+---
+
+## 📁 Report Files
+
+All reports are located in: `/var/www/opine/stress-tests/situation-1-quality-checks/reports`
+
+1. **Summary Report (Markdown):** `TEST_SUMMARY_comprehensive-5min-1768606959605.md`
+2. **Metrics JSON:** `metrics-comprehensive-5min-1768606959605.json`
+3. **Results JSON:** `results-comprehensive-5min-1768606959605.json`
+4. **Metrics CSV:** `metrics-comprehensive-5min-1768606959605.csv` (if available)
+
+---
+
+**Report Generated:** 1/16/2026
+**Test Completed:** ✅ Successfully

@@ -1,0 +1,76 @@
+{
+  "generatedAt": "2026-01-16T18:22:17.523273",
+  "totalUniqueACsInReport": 49,
+  "exactMatches": {
+    "count": 43,
+    "acNames": [
+      "Asansol Uttar",
+      "Ausgram",
+      "Baduria",
+      "Bagda",
+      "Balagarh",
+      "Balurghat",
+      "Bankura",
+      "Barasat",
+      "Baruipur Paschim",
+      "Basanti",
+      "Basirhat Dakshin",
+      "Bhangar",
+      "Bhatpara",
+      "Bidhannagar",
+      "Burdwan Dakshin",
+      "Canning Paschim",
+      "Chandannagar",
+      "Debra",
+      "Diamond Harbour",
+      "Durgapur Purba",
+      "Habra",
+      "Haringhata",
+      "Jagatdal",
+      "Kalna",
+      "Kamarhati",
+      "Karandighi",
+      "Kashipur",
+      "Khardaha",
+      "Madhyamgram",
+      "Magrahat Purba",
+      "Minakhan",
+      "Nandigram",
+      "Patashpur",
+      "Pursurah",
+      "Purulia",
+      "Raidighi",
+      "Saptagram",
+      "Shyampukur",
+      "Shyampur",
+      "Sonamukhi",
+      "Sreerampur",
+      "Tarakeswar",
+      "Tollyganj"
+    ]
+  },
+  "formattingDifferences": {
+    "count": 2,
+    "details": [
+      {
+        "report": "JALPAIGURI (SC)",
+        "file": "Jalpaiguri",
+        "note": "Formatting/case difference"
+      },
+      {
+        "report": "MEKLIGANJ (SC)",
+        "file": "Mekliganj",
+        "note": "Formatting/case difference"
+      }
+    ]
+  },
+  "notFoundInFile": {
+    "count": 4,
+    "acNames": [
+      "Asnsol Dakshin",
+      "Mongalkote",
+      "Pandabeswar",
+      "Raipur"
+    ]
+  }
+}

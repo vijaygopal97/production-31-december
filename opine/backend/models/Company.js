@@ -81,6 +81,51 @@ const companySchema = new mongoose.Schema({
     dateFormat: { type: String, default: 'DD/MM/YYYY' }
   },
 
+  /**
+   * CATI Calling Provider Configuration
+   * Controls which click-to-call provider(s) are used for this company.
+   *
+   * Notes:
+   * - Secrets should ideally remain in environment variables; providerConfig overrides are optional.
+   * - This is intentionally small and stable to avoid breaking downstream code.
+   */
+  catiProviderConfig: {
+    enabledProviders: {
+      type: [String],
+      default: ['deepcall'],
+      validate: {
+        validator: function(arr) {
+          return Array.isArray(arr) && arr.length > 0;
+        },
+        message: 'At least one CATI provider must be enabled'
+      }
+    },
+    selectionMethod: {
+      type: String,
+      enum: ['switch', 'random', 'percentage'],
+      default: 'switch'
+    },
+    activeProvider: {
+      type: String,
+      enum: ['deepcall', 'cloudtelephony'],
+      default: 'deepcall'
+    },
+    fallbackProvider: {
+      type: String,
+      enum: ['deepcall', 'cloudtelephony'],
+      default: 'deepcall'
+    },
+    percentages: {
+      deepcall: { type: Number, default: 100, min: 0, max: 100 },
+      cloudtelephony: { type: Number, default: 0, min: 0, max: 100 }
+    },
+    // Optional per-provider config overrides (prefer env vars in production)
+    providersConfig: {
+      type: mongoose.Schema.Types.Mixed,
+      default: {}
+    }
+  },
+
   // Payment Configuration
   paymentConfig: {
     gateway: {

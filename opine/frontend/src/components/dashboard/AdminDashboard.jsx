@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import DashboardLayout from './DashboardLayout';
 import SuperAdminDashboard from './SuperAdminDashboard';
 import CompanyAdminDashboard from './CompanyAdminDashboard';
@@ -27,12 +27,12 @@ import DocumentVerification from './DocumentVerification';
 import SuperAdminDocumentVerification from './SuperAdminDocumentVerification';
 import ProfileCompletionGate from './ProfileCompletionGate';
 import GenerateReport from './GenerateReport';
+import CatiConfig from './CatiConfig';
 import { useAuth } from '../../contexts/AuthContext';
 
 const AdminDashboard = () => {
   const { user, loading, isAuthenticated } = useAuth();
   const location = useLocation();
-  const navigate = useNavigate();
 
   useEffect(() => {
     if (!loading && !isAuthenticated()) {
@@ -86,6 +86,9 @@ const AdminDashboard = () => {
       }
       if (path === '/company/survey-approvals') {
         return <SurveyApprovals />;
+      }
+      if (path === '/company/cati-config') {
+        return <CatiConfig />;
       }
       if (path === '/company/document-verification') {
         return <DocumentVerification />;

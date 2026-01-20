@@ -598,31 +598,61 @@ const streamAudioFromS3 = async (audioUrl, req, res) => {
 };
 
 /**
- * Download audio from DeepCall URL and upload to S3
- * @param {string} deepCallUrl - DeepCall recording URL
+ * Download audio from provider recording URL and upload to S3
+ * @param {string} recordingUrl - Recording URL (DeepCall or other provider)
  * @param {string} callId - CATI call ID (for S3 key generation)
- * @param {Object} options - Options including DEEPCALL_TOKEN, DEEPCALL_USER_ID
+ * @param {Object} options - Options including DEEPCALL_TOKEN, DEEPCALL_USER_ID, source
  * @returns {Promise<{s3Key: string, fileSize: number, duration?: number}>} - S3 key and metadata
  */
-const downloadAndUploadCatiAudio = async (deepCallUrl, callId, options = {}) => {
+const downloadAndUploadCatiAudio = async (recordingUrl, callId, options = {}) => {
   const axios = require('axios');
   const { uploadBufferToS3, generateAudioKey } = require('./cloudStorage');
   
-  if (!deepCallUrl || !callId) {
-    throw new Error('DeepCall URL and callId are required');
+  if (!recordingUrl || !callId) {
+    throw new Error('Recording URL and callId are required');
   }
 
   const DEEPCALL_TOKEN = options.DEEPCALL_TOKEN || process.env.DEEPCALL_TOKEN || '6GQJuwW6lB8ZBHntzaRU';
   const DEEPCALL_USER_ID = options.DEEPCALL_USER_ID || process.env.DEEPCALL_USER_ID || '89130240';
+  const source = options.source || (() => {
+    try {
+      const host = new URL(String(recordingUrl)).hostname || '';
+      return host.includes('sarv.com') ? 'deepcall' : 'provider';
+    } catch (_) {
+      return 'provider';
+    }
+  })();
 
-  console.log(`📥 Downloading CATI audio from DeepCall for callId: ${callId}`);
+  console.log(`📥 Downloading CATI audio (${source}) for callId: ${callId}`);
   
   let recordingResponse = null;
   let lastError = null;
 
-  // Method 1: Try with token as query parameter
+  if (source !== 'deepcall') {
+    // Non-DeepCall: do NOT mutate query params (could break signed URLs)
+    try {
+      recordingResponse = await axios.get(recordingUrl, {
+        headers: {
+          'User-Agent': 'OpineCATI/1.0',
+          'Accept': 'audio/*, */*'
+        },
+        responseType: 'arraybuffer',
+        timeout: 60000,
+        maxRedirects: 5,
+        maxContentLength: 100 * 1024 * 1024
+      });
+      console.log('✅ Successfully downloaded recording (no auth)');
+    } catch (error) {
+      console.error('❌ Download failed:', error.message);
+      if (error.response?.status === 404) {
+        throw new Error('RECORDING_DELETED');
+      }
+      throw new Error(`Failed to download recording: ${error.message}`);
+    }
+  } else {
+    // DeepCall: Try with token as query parameter
   try {
-    const urlWithToken = new URL(deepCallUrl);
+      const urlWithToken = new URL(recordingUrl);
     urlWithToken.searchParams.set('token', DEEPCALL_TOKEN);
     urlWithToken.searchParams.set('user_id', DEEPCALL_USER_ID);
     
@@ -643,7 +673,7 @@ const downloadAndUploadCatiAudio = async (deepCallUrl, callId, options = {}) => 
     
     // Method 2: Try with Bearer token in header
     try {
-      recordingResponse = await axios.get(deepCallUrl, {
+        recordingResponse = await axios.get(recordingUrl, {
         headers: {
           'Authorization': `Bearer ${DEEPCALL_TOKEN}`,
           'User-Agent': 'SarvCT/1.0',
@@ -661,7 +691,7 @@ const downloadAndUploadCatiAudio = async (deepCallUrl, callId, options = {}) => 
       
       // Method 3: Try without authentication
       try {
-        recordingResponse = await axios.get(deepCallUrl, {
+          recordingResponse = await axios.get(recordingUrl, {
           headers: {
             'User-Agent': 'SarvCT/1.0',
             'Accept': 'audio/mpeg, audio/*, */*'
@@ -678,6 +708,7 @@ const downloadAndUploadCatiAudio = async (deepCallUrl, callId, options = {}) => 
           throw new Error('RECORDING_DELETED'); // Special error for deleted recordings
         }
         throw new Error(`Failed to download recording: ${error3.message}`);
+        }
       }
     }
   }
@@ -703,9 +734,9 @@ const downloadAndUploadCatiAudio = async (deepCallUrl, callId, options = {}) => 
   const uploadResult = await uploadBufferToS3(audioBuffer, s3Key, {
     contentType: 'audio/mpeg',
     metadata: {
-      source: 'deepcall',
+      source: source,
       callId: callId,
-      originalUrl: deepCallUrl,
+      originalUrl: recordingUrl,
       uploadedAt: now.toISOString()
     }
   });

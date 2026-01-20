@@ -776,9 +776,9 @@ const InterviewInterface = ({ survey, onClose, onComplete }) => {
       
       
       const recorder = new MediaRecorder(stream, {
-        mimeType: mimeType,
-        audioBitsPerSecond: 128000, // Increased bitrate for better mobile compatibility
-        audioSampleRate: 44100 // Standard sample rate for better compatibility
+        mimeType: mimeType || 'audio/webm;codecs=opus', // ✅ Prefer Opus codec (better for speech)
+        audioBitsPerSecond: 32000, // ✅ Industry standard for speech (was 128000 - music quality)
+        audioSampleRate: 16000 // ✅ Industry standard for speech (was 44100 - music quality)
       });
       
       const chunks = [];

@@ -38,6 +38,7 @@ import JSZip from 'jszip';
 import { appLoggingService } from '../services/appLoggingService';
 import { appUpdateService, UpdateInfo } from '../services/appUpdateService';
 import { AppUpdateModal } from '../components/AppUpdateModal';
+import { analyticsService } from '../services/analyticsService';
 
 const { width } = Dimensions.get('window');
 
@@ -479,6 +480,14 @@ export default function InterviewerDashboard({ navigation, user, onLogout }: Das
         setLastSyncTime(new Date());
         setLastSyncResult({ synced: result.syncedCount, failed: result.failedCount });
         
+        // Track background offline sync completion
+        analyticsService.track('Offline Sync Completed', {
+          synced_count: result.syncedCount,
+          failed_count: result.failedCount,
+          location: 'Interviewer Dashboard',
+          sync_type: 'background',
+        });
+        
         // Update data incrementally without full reload
         // Only reload what's necessary to reflect sync changes
         await loadOfflineInterviews(); // Update offline interviews list (removes synced ones)
@@ -866,6 +875,15 @@ export default function InterviewerDashboard({ navigation, user, onLogout }: Das
         showSnackbar(`Successfully synced ${result.syncedCount} interview(s)`, 'success');
         setLastSyncTime(new Date());
         setLastSyncResult({ synced: result.syncedCount, failed: result.failedCount });
+        
+        // Track offline sync completion
+        analyticsService.track('Offline Sync Completed', {
+          synced_count: result.syncedCount,
+          failed_count: result.failedCount,
+          location: 'Interviewer Dashboard',
+          sync_type: 'manual',
+        });
+        
         await loadOfflineInterviews(); // Reload offline interviews to update the list
         await loadPendingInterviewsCount();
         // Don't reload full dashboard data - only update stats if needed (lightweight)
@@ -1627,6 +1645,14 @@ export default function InterviewerDashboard({ navigation, user, onLogout }: Das
   const handleStartInterview = async (survey: Survey) => {
     // Check if this is a CATI interview (multi_mode with cati assignment or direct cati mode)
     const isCatiMode = survey.mode === 'cati' || (survey.mode === 'multi_mode' && survey.assignedMode === 'cati');
+    
+    // Track button click (lightweight - no overhead)
+    analyticsService.track('Button Clicked', {
+      button_name: isCatiMode ? 'Start CATI Interview' : 'Start CAPI Interview',
+      survey_id: survey._id || survey.id,
+      survey_name: survey.surveyName,
+      location: 'Interviewer Dashboard',
+    });
     
     if (isCatiMode) {
       // Check if offline - CATI interviews require internet connection

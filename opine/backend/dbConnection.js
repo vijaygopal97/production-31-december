@@ -37,33 +37,53 @@ async function initializeConnections(mongoUri) {
       const primary = hostList.filter(h => h.includes('13.202.181.167'));
       const reorderedHosts = [...secondaries, ...primary].join(',');
       
-      const readUri = `mongodb://${auth}@${reorderedHosts}/${db}${query || '?'}readPreference=secondaryPreferred&maxStalenessSeconds=5`;
+      const readUri = `mongodb://${auth}@${reorderedHosts}/${db}${query || '?'}readPreference=secondaryPreferred&maxStalenessSeconds=90`;
       
-      readConnection = await mongoose.createConnection(readUri, {
+      readConnection = mongoose.createConnection(readUri, {
         maxPoolSize: 100, // More connections for reads
         minPoolSize: 10,
-        serverSelectionTimeoutMS: 10000,
+        serverSelectionTimeoutMS: 15000, // Increased for better secondary discovery
         socketTimeoutMS: 45000,
-        connectTimeoutMS: 10000,
+        connectTimeoutMS: 15000, // Increased
         readPreference: 'secondaryPreferred', // Prefer secondaries, fallback to primary if needed
+        maxStalenessSeconds: 90, // Minimum required by MongoDB
         readPreferenceTags: [],
-        directConnection: false
-      }).asPromise();
+        directConnection: false,
+        retryWrites: false, // Reads don't need retry writes
+        retryReads: true // Enable retry reads for better reliability
+      });
+      
+      // Wait for connection to be ready
+      await new Promise((resolve, reject) => {
+        readConnection.once('connected', resolve);
+        readConnection.once('error', reject);
+        setTimeout(() => reject(new Error('Connection timeout')), 15000);
+      });
     } else {
       // Fallback to original URI if parsing fails
       const readUri = mongoUri.includes('readPreference') 
         ? mongoUri 
-        : mongoUri + (mongoUri.includes('?') ? '&' : '?') + 'readPreference=secondaryPreferred&maxStalenessSeconds=5';
+        : mongoUri + (mongoUri.includes('?') ? '&' : '?') + 'readPreference=secondaryPreferred&maxStalenessSeconds=90';
       
-      readConnection = await mongoose.createConnection(readUri, {
+      readConnection = mongoose.createConnection(readUri, {
         maxPoolSize: 100,
         minPoolSize: 10,
-        serverSelectionTimeoutMS: 10000,
+        serverSelectionTimeoutMS: 15000,
         socketTimeoutMS: 45000,
-        connectTimeoutMS: 10000,
+        connectTimeoutMS: 15000,
         readPreference: 'secondaryPreferred',
-        directConnection: false
-      }).asPromise();
+        maxStalenessSeconds: 30,
+        directConnection: false,
+        retryWrites: false,
+        retryReads: true
+      });
+      
+      // Wait for connection to be ready
+      await new Promise((resolve, reject) => {
+        readConnection.once('connected', resolve);
+        readConnection.once('error', reject);
+        setTimeout(() => reject(new Error('Connection timeout')), 15000);
+      });
     }
     
     console.log('✅ Read connection (secondaries) established');

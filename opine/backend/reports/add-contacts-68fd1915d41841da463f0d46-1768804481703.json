@@ -1,0 +1,25 @@
+{
+  "generatedAt": "2026-01-19T06:34:41.703Z",
+  "surveyId": "68fd1915d41841da463f0d46",
+  "surveyName": "West Bengal Opinion Poll (2025 - 2026)",
+  "acName": "Darjeeling",
+  "excelFile": "/var/www/Report-Generation/ac23_output.xlsx",
+  "totalRowsInExcel": 5000,
+  "validContacts": 4999,
+  "errors": [
+    "Row 4043: Invalid phone number format. Phone must be 10-15 digits (got 9 digits)"
+  ],
+  "newContactsAdded": 4999,
+  "queueEntriesCreated": 4995,
+  "duplicateCleanup": {
+    "totalEntries": 638649,
+    "uniquePhones": 638433,
+    "duplicateCount": 216,
+    "deleted": 216
+  },
+  "finalStatus": {
+    "pendingTargetAC": 4782,
+    "totalPending": 572285
+  },
+  "durationSeconds": "23.34"
+}

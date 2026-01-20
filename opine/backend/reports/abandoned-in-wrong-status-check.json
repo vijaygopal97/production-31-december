@@ -1,0 +1,33 @@
+{
+  "totalIssues": 2,
+  "detectedAt": "2026-01-13T14:05:26.666Z",
+  "pendingApproval": {
+    "count": 0,
+    "responses": []
+  },
+  "approved": {
+    "count": 2,
+    "responses": [
+      {
+        "_id": "6964a92f2c6929eed3ec5271",
+        "responseId": "d398a1b5-3c67-434d-848e-57e8bac348c2",
+        "status": "Approved",
+        "abandonedReason": "Not_Registered_Voter_In_AC",
+        "createdAt": "2026-01-12T07:56:31.891Z",
+        "updatedAt": "2026-01-12T07:56:42.099Z"
+      },
+      {
+        "_id": "69620a00a787339dd1f1a3c4",
+        "responseId": "82595c90-02b4-4e09-b50c-32d0445cd2f2",
+        "status": "Approved",
+        "abandonedReason": "Call_Not_Connected",
+        "createdAt": "2026-01-10T08:12:48.696Z",
+        "updatedAt": "2026-01-10T08:12:48.741Z"
+      }
+    ]
+  },
+  "rejected": {
+    "count": 0,
+    "responses": []
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "generatedAt": "2026-01-16T20:28:46.382Z",
+  "surveyId": "68fd1915d41841da463f0d46",
+  "surveyName": "West Bengal Opinion Poll (2025 - 2026)",
+  "acName": "Kashipur",
+  "excelFile": "/var/www/Report-Generation/ac244_output.xlsx",
+  "totalRowsInExcel": 5000,
+  "validContacts": 4998,
+  "errors": [
+    "Row 22: Missing name or phone",
+    "Row 23: Missing name or phone"
+  ],
+  "newContactsAdded": 4967,
+  "queueEntriesCreated": 4967,
+  "duplicateCleanup": {
+    "totalEntries": 633913,
+    "uniquePhones": 633654,
+    "duplicateCount": 259,
+    "deleted": 259
+  },
+  "finalStatus": {
+    "pendingTargetAC": 4710,
+    "totalPending": 532928
+  },
+  "durationSeconds": "21.22"
+}

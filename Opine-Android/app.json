@@ -2,7 +2,7 @@
   "expo": {
     "name": "Convergent",
     "slug": "opine-interviewer",
-    "version": "17",
+    "version": "19",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -23,7 +23,7 @@
       }
     },
     "android": {
-      "versionCode": 17,
+      "versionCode": 19,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
@@ -53,7 +53,9 @@
     "extra": {
       "eas": {
         "projectId": "c6cf86d9-bf4a-46ed-bf37-0cb42d2d5b00"
-      }
+      },
+      "ga4MeasurementId": "G-2NTD38R8NW",
+      "ga4ApiSecret": "PaD5q4zsTvWLK6-Va9EBhA"
     }
   }
 }

@@ -1,0 +1,55 @@
+{
+  "checkTimestamp": "2026-01-13T14:05:54.939Z",
+  "totalIssues": 2,
+  "summary": {
+    "pendingApproval": {
+      "count": 0,
+      "description": "Responses with abandonedReason incorrectly in Pending_Approval status"
+    },
+    "approved": {
+      "count": 2,
+      "description": "Responses with abandonedReason incorrectly in Approved status"
+    },
+    "rejected": {
+      "count": 0,
+      "description": "Responses with abandonedReason incorrectly in Rejected status"
+    }
+  },
+  "issues": {
+    "pendingApproval": [],
+    "approved": [
+      {
+        "responseId": "82595c90-02b4-4e09-b50c-32d0445cd2f2",
+        "status": "Approved",
+        "abandonedReason": "Call_Not_Connected",
+        "createdAt": "2026-01-10T08:12:48.696Z",
+        "updatedAt": "2026-01-10T08:12:48.741Z",
+        "surveyId": "68fd1915d41841da463f0d46",
+        "interviewerId": "693d451dcba171e81f4d4d32"
+      },
+      {
+        "responseId": "d398a1b5-3c67-434d-848e-57e8bac348c2",
+        "status": "Approved",
+        "abandonedReason": "Not_Registered_Voter_In_AC",
+        "createdAt": "2026-01-12T07:56:31.891Z",
+        "updatedAt": "2026-01-12T07:56:42.099Z",
+        "surveyId": "68fd1915d41841da463f0d46",
+        "interviewerId": "693d2b7fa66b5df82f9fc01b"
+      }
+    ],
+    "rejected": []
+  },
+  "breakdown": {
+    "byAbandonedReason": {
+      "Call_Not_Connected": 1,
+      "Not_Registered_Voter_In_AC": 1
+    },
+    "bySurvey": {
+      "68fd1915d41841da463f0d46": 2
+    },
+    "byDate": {
+      "2026-01-10": 1,
+      "2026-01-12": 1
+    }
+  }
+}

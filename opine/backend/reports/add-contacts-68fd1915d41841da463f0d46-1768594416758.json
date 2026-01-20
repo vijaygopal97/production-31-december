@@ -1,0 +1,25 @@
+{
+  "generatedAt": "2026-01-16T20:13:36.758Z",
+  "surveyId": "68fd1915d41841da463f0d46",
+  "surveyName": "West Bengal Opinion Poll (2025 - 2026)",
+  "acName": "Kanthi Uttar",
+  "excelFile": "/var/www/Report-Generation/ac213_output.xlsx",
+  "totalRowsInExcel": 5000,
+  "validContacts": 4999,
+  "errors": [
+    "Row 4287: Invalid phone number format. Phone must be 10-15 digits (got 9 digits)"
+  ],
+  "newContactsAdded": 4958,
+  "queueEntriesCreated": 4956,
+  "duplicateCleanup": {
+    "totalEntries": 624300,
+    "uniquePhones": 624083,
+    "duplicateCount": 217,
+    "deleted": 217
+  },
+  "finalStatus": {
+    "pendingTargetAC": 4743,
+    "totalPending": 523359
+  },
+  "durationSeconds": "21.04"
+}

@@ -1,0 +1,1290 @@
+{
+  "summary": {
+    "totalDefectiveResponses": 91,
+    "dateRange": {
+      "start": "2026-01-10",
+      "end": "2026-01-19"
+    },
+    "defectBreakdown": {
+      "corrupted_audio": 6,
+      "no_audio": 85,
+      "no_duration": 85,
+      "empty_responses": 0
+    },
+    "statusBreakdown": {
+      "Approved": 10,
+      "Pending_Approval": 63,
+      "Rejected": 18
+    }
+  },
+  "responses": [
+    {
+      "responseId": "40be97af-6dda-43dd-b113-002cbb7bd6e2",
+      "createdAt": "2026-01-19T02:32:51.757Z",
+      "startTime": "2026-01-06T11:38:40.176Z",
+      "status": "Pending_Approval",
+      "audioUrl": null,
+      "recordingDuration": null,
+      "responsesCount": 32,
+      "defects": [
+        "no_audio",
+        "no_duration"
+      ],
+      "defectSummary": "no_audio, no_duration"
+    },
+    {
+      "responseId": "1a1f0279-0f17-49b0-92cd-f4502033eb3d",
+      "createdAt": "2026-01-19T02:32:50.625Z",
+      "startTime": "2026-01-06T11:31:39.825Z",
+      "status": "Pending_Approval",
+      "audioUrl": null,
+      "recordingDuration": null,
+      "responsesCount": 32,
+      "defects": [
+        "no_audio",
+        "no_duration"
+      ],
+      "defectSummary": "no_audio, no_duration"
+    },
+    {
+      "responseId": "cc247911-7c1d-4f5d-882f-fb7fe8a16596",
+      "createdAt": "2026-01-19T02:32:49.109Z",
+      "startTime": "2026-01-06T11:12:06.044Z",
+      "status": "Pending_Approval",
+      "audioUrl": null,
+      "recordingDuration": null,
+      "responsesCount": 32,
+      "defects": [
+        "no_audio",
+        "no_duration"
+      ],
+      "defectSummary": "no_audio, no_duration"
+    },
+    {
+      "responseId": "c57b4c44-5b52-447e-8c03-3aa672f56902",
+      "createdAt": "2026-01-19T02:32:39.537Z",
+      "startTime": "2026-01-06T11:02:06.621Z",
+      "status": "Pending_Approval",
+      "audioUrl": null,
+      "recordingDuration": null,
+      "responsesCount": 32,
+      "defects": [
+        "no_audio",
+        "no_duration"
+      ],
+      "defectSummary": "no_audio, no_duration"
+    },
+    {
+      "responseId": "5b7b6266-9dc8-44be-a74e-abe8093d2e20",
+      "createdAt": "2026-01-18T13:11:55.070Z",
+      "startTime": "2026-01-09T11:13:51.477Z",
+      "status": "Pending_Approval",
+      "audioUrl": null,
+      "recordingDuration": null,
+      "responsesCount": 32,
+      "defects": [
+        "no_audio",
+        "no_duration"
+      ],
+      "defectSummary": "no_audio, no_duration"
+    },
+    {
+      "responseId": "6f981711-17a4-4620-88c0-b5d37f562c93",
+      "createdAt": "2026-01-18T13:11:53.001Z",
+      "startTime": "2026-01-07T11:57:03.154Z",
+      "status": "Pending_Approval",
+      "audioUrl": null,
+      "recordingDuration": null,
+      "responsesCount": 32,
+      "defects": [
+        "no_audio",
+        "no_duration"
+      ],
+      "defectSummary": "no_audio, no_duration"
+    },
+    {
+      "responseId": "f19b3fb0-3ec2-4826-84b1-9d92aacd1574",
+      "createdAt": "2026-01-18T13:11:51.615Z",
+      "startTime": "2026-01-07T11:49:08.316Z",
+      "status": "Pending_Approval",
+      "audioUrl": null,
+      "recordingDuration": null,
+      "responsesCount": 32,
+      "defects": [
+        "no_audio",
+        "no_duration"
+      ],
+      "defectSummary": "no_audio, no_duration"
+    },
+    {
+      "responseId": "7a944ee6-51d3-4358-8612-4925a0da3962",
+      "createdAt": "2026-01-18T13:11:50.512Z",
+      "startTime": "2026-01-07T11:39:13.152Z",
+      "status": "Pending_Approval",
+      "audioUrl": null,
+      "recordingDuration": null,
+      "responsesCount": 32,
+      "defects": [
+        "no_audio",
+        "no_duration"
+      ],
+      "defectSummary": "no_audio, no_duration"
+    },
+    {
+      "responseId": "3482c94f-f482-49db-a114-ffe4f3030509",
+      "createdAt": "2026-01-18T13:11:49.430Z",
+      "startTime": "2026-01-07T11:31:59.396Z",
+      "status": "Pending_Approval",
+      "audioUrl": null,
+      "recordingDuration": null,
+      "responsesCount": 32,
+      "defects": [
+        "no_audio",
+        "no_duration"
+      ],
+      "defectSummary": "no_audio, no_duration"
+    },
+    {
+      "responseId": "f6bc514f-2710-4ac2-ae0c-2a27e0ec5dfc",
+      "createdAt": "2026-01-18T13:11:47.875Z",
+      "startTime": "2026-01-07T08:32:55.029Z",
+      "status": "Pending_Approval",
+      "audioUrl": null,
+      "recordingDuration": null,
+      "responsesCount": 32,
+      "defects": [
+        "no_audio",
+        "no_duration"
+      ],
+      "defectSummary": "no_audio, no_duration"
+    },
+    {
+      "responseId": "5ce3b820-d87e-48b9-9dcf-88567d5bede1",
+      "createdAt": "2026-01-18T13:11:38.574Z",
+      "startTime": "2026-01-07T08:25:43.212Z",
+      "status": "Pending_Approval",
+      "audioUrl": null,
+      "recordingDuration": null,
+      "responsesCount": 32,
+      "defects": [
+        "no_audio",
+        "no_duration"
+      ],
+      "defectSummary": "no_audio, no_duration"
+    },
+    {
+      "responseId": "c6df67c2-a0c6-4e15-aa29-9e060a5542c3",
+      "createdAt": "2026-01-18T09:19:32.262Z",
+      "startTime": "2026-01-06T07:36:04.487Z",
+      "status": "Pending_Approval",
+      "audioUrl": null,
+      "recordingDuration": null,
+      "responsesCount": 32,
+      "defects": [
+        "no_audio",
+        "no_duration"
+      ],
+      "defectSummary": "no_audio, no_duration"
+    },
+    {
+      "responseId": "8af642fb-98f5-427a-beb6-7fa4711b7317",
+      "createdAt": "2026-01-18T09:19:27.629Z",
+      "startTime": "2026-01-06T06:46:21.754Z",
+      "status": "Pending_Approval",
+      "audioUrl": null,
+      "recordingDuration": null,
+      "responsesCount": 32,
+      "defects": [
+        "no_audio",
+        "no_duration"
+      ],
+      "defectSummary": "no_audio, no_duration"
+    },
+    {
+      "responseId": "eb60ba25-4445-4444-82a5-c34eff3fe101",
+      "createdAt": "2026-01-18T09:19:16.876Z",
+      "startTime": "2026-01-06T06:30:37.766Z",
+      "status": "Pending_Approval",
+      "audioUrl": null,
+      "recordingDuration": null,
+      "responsesCount": 32,
+      "defects": [
+        "no_audio",
+        "no_duration"
+      ],
+      "defectSummary": "no_audio, no_duration"
+    },
+    {
+      "responseId": "fcf78382-029e-4691-8ec6-aae27bd6ff77",
+      "createdAt": "2026-01-18T03:43:59.782Z",
+      "startTime": "2026-01-08T12:50:00.077Z",
+      "status": "Rejected",
+      "audioUrl": null,
+      "recordingDuration": null,
+      "responsesCount": 4,
+      "defects": [
+        "no_audio",
+        "no_duration"
+      ],
+      "defectSummary": "no_audio, no_duration"
+    },
+    {
+      "responseId": "da5e2c62-a0c2-42b3-a0bb-1a754bb9554f",
+      "createdAt": "2026-01-18T03:43:56.869Z",
+      "startTime": "2026-01-08T09:36:07.405Z",
+      "status": "Pending_Approval",
+      "audioUrl": null,
+      "recordingDuration": null,
+      "responsesCount": 32,
+      "defects": [
+        "no_audio",
+        "no_duration"
+      ],
+      "defectSummary": "no_audio, no_duration"
+    },
+    {
+      "responseId": "2d2e78ee-1163-449b-a1a1-dd1e1e96f11a",
+      "createdAt": "2026-01-18T03:43:53.927Z",
+      "startTime": "2026-01-08T08:30:39.343Z",
+      "status": "Pending_Approval",
+      "audioUrl": null,
+      "recordingDuration": null,
+      "responsesCount": 32,
+      "defects": [
+        "no_audio",
+        "no_duration"
+      ],
+      "defectSummary": "no_audio, no_duration"
+    },
+    {
+      "responseId": "55a370f7-7391-4fbd-b51a-daafc98b5f7f",
+      "createdAt": "2026-01-18T03:43:50.706Z",
+      "startTime": "2026-01-08T07:04:19.932Z",
+      "status": "Pending_Approval",
+      "audioUrl": null,
+      "recordingDuration": null,
+      "responsesCount": 32,
+      "defects": [
+        "no_audio",
+        "no_duration"
+      ],
+      "defectSummary": "no_audio, no_duration"
+    },
+    {
+      "responseId": "ec48b372-50b3-4da1-a206-c3fcae4f6403",
+      "createdAt": "2026-01-18T03:43:47.925Z",
+      "startTime": "2026-01-08T06:22:29.755Z",
+      "status": "Pending_Approval",
+      "audioUrl": null,
+      "recordingDuration": null,
+      "responsesCount": 32,
+      "defects": [
+        "no_audio",
+        "no_duration"
+      ],
+      "defectSummary": "no_audio, no_duration"
+    },
+    {
+      "responseId": "f9149c2d-7154-4fbb-afa7-a884fc19de41",
+      "createdAt": "2026-01-18T03:43:45.114Z",
+      "startTime": "2026-01-08T06:16:09.939Z",
+      "status": "Pending_Approval",
+      "audioUrl": null,
+      "recordingDuration": null,
+      "responsesCount": 32,
+      "defects": [
+        "no_audio",
+        "no_duration"
+      ],
+      "defectSummary": "no_audio, no_duration"
+    },
+    {
+      "responseId": "1e5c0bc6-4fb1-49e7-81ad-eb1c6dbbc7f3",
+      "createdAt": "2026-01-18T03:43:43.208Z",
+      "startTime": "2026-01-08T06:08:48.323Z",
+      "status": "Pending_Approval",
+      "audioUrl": null,
+      "recordingDuration": null,
+      "responsesCount": 32,
+      "defects": [
+        "no_audio",
+        "no_duration"
+      ],
+      "defectSummary": "no_audio, no_duration"
+    },
+    {
+      "responseId": "975ac0ed-8471-4a6d-8d67-1264c9419ca4",
+      "createdAt": "2026-01-18T03:43:41.583Z",
+      "startTime": "2026-01-08T06:02:35.175Z",
+      "status": "Pending_Approval",
+      "audioUrl": null,
+      "recordingDuration": null,
+      "responsesCount": 32,
+      "defects": [
+        "no_audio",
+        "no_duration"
+      ],
+      "defectSummary": "no_audio, no_duration"
+    },
+    {
+      "responseId": "f46349a6-2807-4922-8dda-0ab0e41e324c",
+      "createdAt": "2026-01-18T03:43:39.853Z",
+      "startTime": "2026-01-08T05:55:04.790Z",
+      "status": "Pending_Approval",
+      "audioUrl": null,
+      "recordingDuration": null,
+      "responsesCount": 32,
+      "defects": [
+        "no_audio",
+        "no_duration"
+      ],
+      "defectSummary": "no_audio, no_duration"
+    },
+    {
+      "responseId": "787c6b0b-b032-4411-914a-5723f30eda19",
+      "createdAt": "2026-01-18T03:43:38.287Z",
+      "startTime": "2026-01-08T05:43:43.347Z",
+      "status": "Pending_Approval",
+      "audioUrl": null,
+      "recordingDuration": null,
+      "responsesCount": 32,
+      "defects": [
+        "no_audio",
+        "no_duration"
+      ],
+      "defectSummary": "no_audio, no_duration"
+    },
+    {
+      "responseId": "e6508d1b-a074-4b82-bef2-8db8ffc12a39",
+      "createdAt": "2026-01-18T03:43:28.914Z",
+      "startTime": "2026-01-06T05:31:22.503Z",
+      "status": "Pending_Approval",
+      "audioUrl": null,
+      "recordingDuration": null,
+      "responsesCount": 32,
+      "defects": [
+        "no_audio",
+        "no_duration"
+      ],
+      "defectSummary": "no_audio, no_duration"
+    },
+    {
+      "responseId": "c7c046eb-901b-4b42-a4a2-df99c4b1b7b1",
+      "createdAt": "2026-01-18T03:43:24.141Z",
+      "startTime": "2025-12-29T05:34:32.067Z",
+      "status": "Pending_Approval",
+      "audioUrl": null,
+      "recordingDuration": null,
+      "responsesCount": 32,
+      "defects": [
+        "no_audio",
+        "no_duration"
+      ],
+      "defectSummary": "no_audio, no_duration"
+    },
+    {
+      "responseId": "e7f1f464-7d1b-46d4-bda5-71bd6231b542",
+      "createdAt": "2026-01-18T03:43:14.338Z",
+      "startTime": "2025-12-28T07:15:55.994Z",
+      "status": "Pending_Approval",
+      "audioUrl": null,
+      "recordingDuration": null,
+      "responsesCount": 32,
+      "defects": [
+        "no_audio",
+        "no_duration"
+      ],
+      "defectSummary": "no_audio, no_duration"
+    },
+    {
+      "responseId": "783eddd4-bd38-4ff6-b3ec-8642e8d8c2dc",
+      "createdAt": "2026-01-17T17:16:29.900Z",
+      "startTime": "2026-01-05T05:05:54.698Z",
+      "status": "Pending_Approval",
+      "audioUrl": null,
+      "recordingDuration": null,
+      "responsesCount": 32,
+      "defects": [
+        "no_audio",
+        "no_duration"
+      ],
+      "defectSummary": "no_audio, no_duration"
+    },
+    {
+      "responseId": "83ecc905-57ff-45ac-9f4d-12d8acfd0b95",
+      "createdAt": "2026-01-17T17:16:12.282Z",
+      "startTime": "2026-01-03T07:47:25.651Z",
+      "status": "Pending_Approval",
+      "audioUrl": null,
+      "recordingDuration": null,
+      "responsesCount": 32,
+      "defects": [
+        "no_audio",
+        "no_duration"
+      ],
+      "defectSummary": "no_audio, no_duration"
+    },
+    {
+      "responseId": "6fe9132c-e48d-4f0c-bba7-efdb3b08a9e5",
+      "createdAt": "2026-01-17T17:16:07.341Z",
+      "startTime": "2026-01-03T07:33:03.689Z",
+      "status": "Pending_Approval",
+      "audioUrl": null,
+      "recordingDuration": null,
+      "responsesCount": 32,
+      "defects": [
+        "no_audio",
+        "no_duration"
+      ],
+      "defectSummary": "no_audio, no_duration"
+    },
+    {
+      "responseId": "92a6193d-8fe1-4050-8b36-a61f8e0f94da",
+      "createdAt": "2026-01-17T17:16:00.078Z",
+      "startTime": "2026-01-03T07:01:48.629Z",
+      "status": "Pending_Approval",
+      "audioUrl": null,
+      "recordingDuration": null,
+      "responsesCount": 32,
+      "defects": [
+        "no_audio",
+        "no_duration"
+      ],
+      "defectSummary": "no_audio, no_duration"
+    },
+    {
+      "responseId": "d79a098c-0987-4a93-8ebf-a6b0137914b9",
+      "createdAt": "2026-01-17T17:15:55.609Z",
+      "startTime": "2026-01-03T06:11:51.055Z",
+      "status": "Pending_Approval",
+      "audioUrl": null,
+      "recordingDuration": null,
+      "responsesCount": 32,
+      "defects": [
+        "no_audio",
+        "no_duration"
+      ],
+      "defectSummary": "no_audio, no_duration"
+    },
+    {
+      "responseId": "5f9a8f62-9ad9-4c7d-a157-043fcda72548",
+      "createdAt": "2026-01-17T17:15:50.500Z",
+      "startTime": "2026-01-03T05:49:50.505Z",
+      "status": "Pending_Approval",
+      "audioUrl": null,
+      "recordingDuration": null,
+      "responsesCount": 32,
+      "defects": [
+        "no_audio",
+        "no_duration"
+      ],
+      "defectSummary": "no_audio, no_duration"
+    },
+    {
+      "responseId": "300bf57a-025a-468e-abb8-9c197c9693bb",
+      "createdAt": "2026-01-17T17:15:45.866Z",
+      "startTime": "2026-01-03T05:40:41.151Z",
+      "status": "Pending_Approval",
+      "audioUrl": null,
+      "recordingDuration": null,
+      "responsesCount": 32,
+      "defects": [
+        "no_audio",
+        "no_duration"
+      ],
+      "defectSummary": "no_audio, no_duration"
+    },
+    {
+      "responseId": "e588a05e-0931-4b2d-89c8-0c674831fe13",
+      "createdAt": "2026-01-17T17:15:42.152Z",
+      "startTime": "2026-01-03T05:25:29.164Z",
+      "status": "Pending_Approval",
+      "audioUrl": null,
+      "recordingDuration": null,
+      "responsesCount": 32,
+      "defects": [
+        "no_audio",
+        "no_duration"
+      ],
+      "defectSummary": "no_audio, no_duration"
+    },
+    {
+      "responseId": "82f064cc-f3a0-4ef2-83b3-2e2fe7a6c52e",
+      "createdAt": "2026-01-17T17:15:38.020Z",
+      "startTime": "2026-01-03T05:17:59.614Z",
+      "status": "Pending_Approval",
+      "audioUrl": null,
+      "recordingDuration": null,
+      "responsesCount": 32,
+      "defects": [
+        "no_audio",
+        "no_duration"
+      ],
+      "defectSummary": "no_audio, no_duration"
+    },
+    {
+      "responseId": "de1f2325-ed2a-4e5c-9ea5-7d814d156a76",
+      "createdAt": "2026-01-17T17:15:25.339Z",
+      "startTime": "2026-01-03T05:09:47.702Z",
+      "status": "Pending_Approval",
+      "audioUrl": null,
+      "recordingDuration": null,
+      "responsesCount": 32,
+      "defects": [
+        "no_audio",
+        "no_duration"
+      ],
+      "defectSummary": "no_audio, no_duration"
+    },
+    {
+      "responseId": "c5fd69ad-67af-49ac-bd92-e42465a54589",
+      "createdAt": "2026-01-17T02:25:15.836Z",
+      "startTime": "2026-01-06T05:09:25.273Z",
+      "status": "Pending_Approval",
+      "audioUrl": null,
+      "recordingDuration": null,
+      "responsesCount": 27,
+      "defects": [
+        "no_audio",
+        "no_duration"
+      ],
+      "defectSummary": "no_audio, no_duration"
+    },
+    {
+      "responseId": "4d2595d3-d5a8-4b53-95dd-9ff62ecd3e35",
+      "createdAt": "2026-01-17T02:24:32.539Z",
+      "startTime": "2026-01-06T03:42:42.945Z",
+      "status": "Pending_Approval",
+      "audioUrl": null,
+      "recordingDuration": null,
+      "responsesCount": 27,
+      "defects": [
+        "no_audio",
+        "no_duration"
+      ],
+      "defectSummary": "no_audio, no_duration"
+    },
+    {
+      "responseId": "b3377ed9-838b-4641-8d15-d9d740407049",
+      "createdAt": "2026-01-16T16:59:17.451Z",
+      "startTime": "2026-01-08T06:16:09.827Z",
+      "status": "Approved",
+      "audioUrl": null,
+      "recordingDuration": null,
+      "responsesCount": 32,
+      "defects": [
+        "no_audio",
+        "no_duration"
+      ],
+      "defectSummary": "no_audio, no_duration"
+    },
+    {
+      "responseId": "7807c272-163b-4741-9d34-cf79cd137921",
+      "createdAt": "2026-01-16T16:59:15.217Z",
+      "startTime": "2026-01-08T06:08:48.273Z",
+      "status": "Approved",
+      "audioUrl": null,
+      "recordingDuration": null,
+      "responsesCount": 32,
+      "defects": [
+        "no_audio",
+        "no_duration"
+      ],
+      "defectSummary": "no_audio, no_duration"
+    },
+    {
+      "responseId": "a0747c5c-dae7-41c6-8c37-867691f1ca1a",
+      "createdAt": "2026-01-15T07:15:52.904Z",
+      "startTime": "2026-01-08T06:02:35.292Z",
+      "status": "Approved",
+      "audioUrl": null,
+      "recordingDuration": null,
+      "responsesCount": 32,
+      "defects": [
+        "no_audio",
+        "no_duration"
+      ],
+      "defectSummary": "no_audio, no_duration"
+    },
+    {
+      "responseId": "bb1a5d26-8185-4b9e-8879-09ec2cfaf0e6",
+      "createdAt": "2026-01-15T07:15:38.599Z",
+      "startTime": "2026-01-08T05:43:43.342Z",
+      "status": "Approved",
+      "audioUrl": null,
+      "recordingDuration": null,
+      "responsesCount": 32,
+      "defects": [
+        "no_audio",
+        "no_duration"
+      ],
+      "defectSummary": "no_audio, no_duration"
+    },
+    {
+      "responseId": "75abb9d2-66f5-4b07-b725-ac03607d69a2",
+      "createdAt": "2026-01-15T03:58:59.096Z",
+      "startTime": "2026-01-14T05:00:09.463Z",
+      "status": "Pending_Approval",
+      "audioUrl": null,
+      "recordingDuration": null,
+      "responsesCount": 30,
+      "defects": [
+        "no_audio",
+        "no_duration"
+      ],
+      "defectSummary": "no_audio, no_duration"
+    },
+    {
+      "responseId": "b10447d8-50a3-46e3-8c0a-91475d6bfa7d",
+      "createdAt": "2026-01-15T03:58:55.316Z",
+      "startTime": "2026-01-14T04:54:08.272Z",
+      "status": "Pending_Approval",
+      "audioUrl": null,
+      "recordingDuration": null,
+      "responsesCount": 30,
+      "defects": [
+        "no_audio",
+        "no_duration"
+      ],
+      "defectSummary": "no_audio, no_duration"
+    },
+    {
+      "responseId": "da606b30-5698-40f8-bb81-0411f7a3c721",
+      "createdAt": "2026-01-15T03:58:51.308Z",
+      "startTime": "2026-01-14T04:47:22.771Z",
+      "status": "Pending_Approval",
+      "audioUrl": null,
+      "recordingDuration": null,
+      "responsesCount": 30,
+      "defects": [
+        "no_audio",
+        "no_duration"
+      ],
+      "defectSummary": "no_audio, no_duration"
+    },
+    {
+      "responseId": "58ef4d0d-5f3c-4d10-b393-3d7e9ba82c23",
+      "createdAt": "2026-01-15T03:58:47.436Z",
+      "startTime": "2026-01-14T04:39:15.315Z",
+      "status": "Pending_Approval",
+      "audioUrl": null,
+      "recordingDuration": null,
+      "responsesCount": 30,
+      "defects": [
+        "no_audio",
+        "no_duration"
+      ],
+      "defectSummary": "no_audio, no_duration"
+    },
+    {
+      "responseId": "8ef29119-1794-4fce-86e7-d65dd77ee6d1",
+      "createdAt": "2026-01-15T03:58:43.356Z",
+      "startTime": "2026-01-14T04:26:23.609Z",
+      "status": "Pending_Approval",
+      "audioUrl": null,
+      "recordingDuration": null,
+      "responsesCount": 30,
+      "defects": [
+        "no_audio",
+        "no_duration"
+      ],
+      "defectSummary": "no_audio, no_duration"
+    },
+    {
+      "responseId": "9357a4c1-6899-4b4e-a517-6215a79549ec",
+      "createdAt": "2026-01-15T03:58:39.678Z",
+      "startTime": "2026-01-14T04:20:03.843Z",
+      "status": "Pending_Approval",
+      "audioUrl": null,
+      "recordingDuration": null,
+      "responsesCount": 30,
+      "defects": [
+        "no_audio",
+        "no_duration"
+      ],
+      "defectSummary": "no_audio, no_duration"
+    },
+    {
+      "responseId": "4b5e201b-0210-4e0f-b39e-5993913e4e80",
+      "createdAt": "2026-01-15T03:58:35.429Z",
+      "startTime": "2026-01-14T04:12:33.421Z",
+      "status": "Pending_Approval",
+      "audioUrl": null,
+      "recordingDuration": null,
+      "responsesCount": 30,
+      "defects": [
+        "no_audio",
+        "no_duration"
+      ],
+      "defectSummary": "no_audio, no_duration"
+    },
+    {
+      "responseId": "e8f87c00-cb4b-430c-83dc-6c2376d07fbd",
+      "createdAt": "2026-01-15T03:58:31.822Z",
+      "startTime": "2026-01-14T04:06:11.861Z",
+      "status": "Pending_Approval",
+      "audioUrl": null,
+      "recordingDuration": null,
+      "responsesCount": 30,
+      "defects": [
+        "no_audio",
+        "no_duration"
+      ],
+      "defectSummary": "no_audio, no_duration"
+    },
+    {
+      "responseId": "339c0a43-f19f-43f4-8830-18da15c48eb0",
+      "createdAt": "2026-01-15T03:58:14.221Z",
+      "startTime": "2026-01-09T09:48:06.816Z",
+      "status": "Rejected",
+      "audioUrl": null,
+      "recordingDuration": null,
+      "responsesCount": 4,
+      "defects": [
+        "no_audio",
+        "no_duration"
+      ],
+      "defectSummary": "no_audio, no_duration"
+    },
+    {
+      "responseId": "c9fbe6c2-9cbb-4cb2-bdcc-5b2a7b1f9cee",
+      "createdAt": "2026-01-14T06:51:07.985Z",
+      "startTime": "2026-01-08T05:38:15.923Z",
+      "status": "Rejected",
+      "audioUrl": null,
+      "recordingDuration": null,
+      "responsesCount": 32,
+      "defects": [
+        "no_audio",
+        "no_duration"
+      ],
+      "defectSummary": "no_audio, no_duration"
+    },
+    {
+      "responseId": "0c1179cb-df20-4afa-8902-7a170196e4f0",
+      "createdAt": "2026-01-14T06:38:51.139Z",
+      "startTime": "2026-01-08T04:49:55.802Z",
+      "status": "Rejected",
+      "audioUrl": null,
+      "recordingDuration": null,
+      "responsesCount": 32,
+      "defects": [
+        "no_audio",
+        "no_duration"
+      ],
+      "defectSummary": "no_audio, no_duration"
+    },
+    {
+      "responseId": "ddf44b33-0d62-4fd3-a54d-ea6fc5634bb8",
+      "createdAt": "2026-01-14T06:22:47.748Z",
+      "startTime": "2026-01-14T06:06:27.045Z",
+      "status": "Rejected",
+      "audioUrl": null,
+      "recordingDuration": null,
+      "responsesCount": 32,
+      "defects": [
+        "no_audio",
+        "no_duration"
+      ],
+      "defectSummary": "no_audio, no_duration"
+    },
+    {
+      "responseId": "ffd962b0-688a-419b-a9ae-480008b5a319",
+      "createdAt": "2026-01-13T08:22:41.497Z",
+      "startTime": "2026-01-06T03:35:59.853Z",
+      "status": "Pending_Approval",
+      "audioUrl": null,
+      "recordingDuration": null,
+      "responsesCount": 32,
+      "defects": [
+        "no_audio",
+        "no_duration"
+      ],
+      "defectSummary": "no_audio, no_duration"
+    },
+    {
+      "responseId": "f03bacc8-8a1a-4824-93a6-79f264da7c8c",
+      "createdAt": "2026-01-13T08:22:39.973Z",
+      "startTime": "2026-01-06T03:31:11.782Z",
+      "status": "Pending_Approval",
+      "audioUrl": null,
+      "recordingDuration": null,
+      "responsesCount": 32,
+      "defects": [
+        "no_audio",
+        "no_duration"
+      ],
+      "defectSummary": "no_audio, no_duration"
+    },
+    {
+      "responseId": "8026a241-a7c9-4524-b82e-aa78dadb408b",
+      "createdAt": "2026-01-13T08:21:50.614Z",
+      "startTime": "2026-01-06T03:26:35.904Z",
+      "status": "Pending_Approval",
+      "audioUrl": null,
+      "recordingDuration": null,
+      "responsesCount": 32,
+      "defects": [
+        "no_audio",
+        "no_duration"
+      ],
+      "defectSummary": "no_audio, no_duration"
+    },
+    {
+      "responseId": "5a60cf1e-3bc3-491f-acf6-9f4bb6448019",
+      "createdAt": "2026-01-13T08:21:00.909Z",
+      "startTime": "2026-01-06T03:21:48.674Z",
+      "status": "Pending_Approval",
+      "audioUrl": null,
+      "recordingDuration": null,
+      "responsesCount": 32,
+      "defects": [
+        "no_audio",
+        "no_duration"
+      ],
+      "defectSummary": "no_audio, no_duration"
+    },
+    {
+      "responseId": "f4efac93-be3d-4ffd-8915-b7859652a227",
+      "createdAt": "2026-01-13T08:20:11.181Z",
+      "startTime": "2026-01-06T03:16:27.603Z",
+      "status": "Pending_Approval",
+      "audioUrl": null,
+      "recordingDuration": null,
+      "responsesCount": 32,
+      "defects": [
+        "no_audio",
+        "no_duration"
+      ],
+      "defectSummary": "no_audio, no_duration"
+    },
+    {
+      "responseId": "abda1e36-6e38-4670-bd1e-f8c165dfd47a",
+      "createdAt": "2026-01-13T08:19:21.152Z",
+      "startTime": "2026-01-06T03:11:45.490Z",
+      "status": "Pending_Approval",
+      "audioUrl": null,
+      "recordingDuration": null,
+      "responsesCount": 32,
+      "defects": [
+        "no_audio",
+        "no_duration"
+      ],
+      "defectSummary": "no_audio, no_duration"
+    },
+    {
+      "responseId": "203370d5-a95c-4b3a-9263-61af93b97552",
+      "createdAt": "2026-01-13T08:19:18.603Z",
+      "startTime": "2026-01-06T03:07:00.000Z",
+      "status": "Pending_Approval",
+      "audioUrl": null,
+      "recordingDuration": null,
+      "responsesCount": 32,
+      "defects": [
+        "no_audio",
+        "no_duration"
+      ],
+      "defectSummary": "no_audio, no_duration"
+    },
+    {
+      "responseId": "e5e6cae4-23cd-4ce9-933b-11003eaee44b",
+      "createdAt": "2026-01-13T08:18:26.427Z",
+      "startTime": "2026-01-06T03:02:04.604Z",
+      "status": "Pending_Approval",
+      "audioUrl": null,
+      "recordingDuration": null,
+      "responsesCount": 32,
+      "defects": [
+        "no_audio",
+        "no_duration"
+      ],
+      "defectSummary": "no_audio, no_duration"
+    },
+    {
+      "responseId": "29383c8e-e76a-4d81-a176-e6d1eb3b85ed",
+      "createdAt": "2026-01-13T08:18:23.659Z",
+      "startTime": "2026-01-06T02:57:02.313Z",
+      "status": "Pending_Approval",
+      "audioUrl": null,
+      "recordingDuration": null,
+      "responsesCount": 32,
+      "defects": [
+        "no_audio",
+        "no_duration"
+      ],
+      "defectSummary": "no_audio, no_duration"
+    },
+    {
+      "responseId": "fc15b7e0-e4dc-4a75-a9fe-f0ddb1dcaf5d",
+      "createdAt": "2026-01-13T08:18:20.249Z",
+      "startTime": "2026-01-06T02:52:26.602Z",
+      "status": "Pending_Approval",
+      "audioUrl": null,
+      "recordingDuration": null,
+      "responsesCount": 32,
+      "defects": [
+        "no_audio",
+        "no_duration"
+      ],
+      "defectSummary": "no_audio, no_duration"
+    },
+    {
+      "responseId": "153bd10a-fa75-467e-b779-3978bb895693",
+      "createdAt": "2026-01-13T08:17:28.386Z",
+      "startTime": "2026-01-06T02:47:45.148Z",
+      "status": "Pending_Approval",
+      "audioUrl": null,
+      "recordingDuration": null,
+      "responsesCount": 32,
+      "defects": [
+        "no_audio",
+        "no_duration"
+      ],
+      "defectSummary": "no_audio, no_duration"
+    },
+    {
+      "responseId": "8774b1dc-0760-4a96-9595-ee5393709bec",
+      "createdAt": "2026-01-13T08:16:34.976Z",
+      "startTime": "2026-01-06T02:42:40.296Z",
+      "status": "Pending_Approval",
+      "audioUrl": null,
+      "recordingDuration": null,
+      "responsesCount": 32,
+      "defects": [
+        "no_audio",
+        "no_duration"
+      ],
+      "defectSummary": "no_audio, no_duration"
+    },
+    {
+      "responseId": "58555dfc-f5cd-4343-aaf9-e05b042826d7",
+      "createdAt": "2026-01-13T08:16:20.221Z",
+      "startTime": "2026-01-06T02:37:25.477Z",
+      "status": "Pending_Approval",
+      "audioUrl": null,
+      "recordingDuration": null,
+      "responsesCount": 32,
+      "defects": [
+        "no_audio",
+        "no_duration"
+      ],
+      "defectSummary": "no_audio, no_duration"
+    },
+    {
+      "responseId": "d928a03c-6d3b-41b2-ba8e-4e11ec8cd28f",
+      "createdAt": "2026-01-13T05:50:09.553Z",
+      "startTime": "2026-01-13T05:44:30.525Z",
+      "status": "Pending_Approval",
+      "audioUrl": "/uploads/audio/interview_1c06eaea-54db-48bb-a6a6-75e22ca1c3d6_1768283409303.m4a",
+      "recordingDuration": 308,
+      "responsesCount": 27,
+      "defects": [
+        "corrupted_audio"
+      ],
+      "defectSummary": "corrupted_audio"
+    },
+    {
+      "responseId": "3530f015-b05f-4021-9782-61027fcee7d7",
+      "createdAt": "2026-01-12T08:00:43.614Z",
+      "startTime": "2026-01-12T05:28:39.637Z",
+      "status": "Pending_Approval",
+      "audioUrl": null,
+      "recordingDuration": null,
+      "responsesCount": 30,
+      "defects": [
+        "no_audio",
+        "no_duration"
+      ],
+      "defectSummary": "no_audio, no_duration"
+    },
+    {
+      "responseId": "be671a8e-26e6-4853-beb1-c0475f46cbca",
+      "createdAt": "2026-01-12T08:00:38.536Z",
+      "startTime": "2026-01-11T11:23:36.892Z",
+      "status": "Rejected",
+      "audioUrl": null,
+      "recordingDuration": null,
+      "responsesCount": 4,
+      "defects": [
+        "no_audio",
+        "no_duration"
+      ],
+      "defectSummary": "no_audio, no_duration"
+    },
+    {
+      "responseId": "373a5b95-8cb5-4948-ae96-e2158d69f355",
+      "createdAt": "2026-01-12T07:59:27.195Z",
+      "startTime": "2026-01-11T11:10:05.080Z",
+      "status": "Rejected",
+      "audioUrl": null,
+      "recordingDuration": null,
+      "responsesCount": 4,
+      "defects": [
+        "no_audio",
+        "no_duration"
+      ],
+      "defectSummary": "no_audio, no_duration"
+    },
+    {
+      "responseId": "7b4efd96-e9d0-4ad4-a449-72d85fea0fd1",
+      "createdAt": "2026-01-12T07:59:06.189Z",
+      "startTime": "2026-01-09T09:48:09.024Z",
+      "status": "Rejected",
+      "audioUrl": null,
+      "recordingDuration": null,
+      "responsesCount": 4,
+      "defects": [
+        "no_audio",
+        "no_duration"
+      ],
+      "defectSummary": "no_audio, no_duration"
+    },
+    {
+      "responseId": "fa710907-8fda-41aa-b849-27292f305c6b",
+      "createdAt": "2026-01-12T07:24:57.841Z",
+      "startTime": "2026-01-09T05:14:09.461Z",
+      "status": "Pending_Approval",
+      "audioUrl": "/uploads/audio/interview_16f5c821-ab77-47c3-996a-cf6121f5d69f_1768202697563.m4a",
+      "recordingDuration": 242,
+      "responsesCount": 27,
+      "defects": [
+        "corrupted_audio"
+      ],
+      "defectSummary": "corrupted_audio"
+    },
+    {
+      "responseId": "d944b0f2-201a-4e52-9b90-7c4f77cea974",
+      "createdAt": "2026-01-12T05:56:20.972Z",
+      "startTime": "2026-01-07T08:46:48.294Z",
+      "status": "Pending_Approval",
+      "audioUrl": null,
+      "recordingDuration": null,
+      "responsesCount": 32,
+      "defects": [
+        "no_audio",
+        "no_duration"
+      ],
+      "defectSummary": "no_audio, no_duration"
+    },
+    {
+      "responseId": "b45e6341-ec62-4d59-a5ce-75fd5164c72d",
+      "createdAt": "2026-01-12T05:10:53.017Z",
+      "startTime": "2026-01-06T11:14:14.484Z",
+      "status": "Rejected",
+      "audioUrl": null,
+      "recordingDuration": null,
+      "responsesCount": 32,
+      "defects": [
+        "no_audio",
+        "no_duration"
+      ],
+      "defectSummary": "no_audio, no_duration"
+    },
+    {
+      "responseId": "4e599d5d-aeb4-40e4-af6e-9454cd74659d",
+      "createdAt": "2026-01-12T05:10:14.940Z",
+      "startTime": "2026-01-06T10:52:25.618Z",
+      "status": "Rejected",
+      "audioUrl": null,
+      "recordingDuration": null,
+      "responsesCount": 32,
+      "defects": [
+        "no_audio",
+        "no_duration"
+      ],
+      "defectSummary": "no_audio, no_duration"
+    },
+    {
+      "responseId": "81c6dc15-832b-4385-a6b8-1a4962942a97",
+      "createdAt": "2026-01-12T03:58:49.662Z",
+      "startTime": "2026-01-11T05:56:20.689Z",
+      "status": "Rejected",
+      "audioUrl": null,
+      "recordingDuration": null,
+      "responsesCount": 4,
+      "defects": [
+        "no_audio",
+        "no_duration"
+      ],
+      "defectSummary": "no_audio, no_duration"
+    },
+    {
+      "responseId": "243c27a8-d710-412d-b5f3-9ab4007d574d",
+      "createdAt": "2026-01-11T06:03:40.205Z",
+      "startTime": "2026-01-11T05:56:21.430Z",
+      "status": "Rejected",
+      "audioUrl": null,
+      "recordingDuration": null,
+      "responsesCount": 4,
+      "defects": [
+        "no_audio",
+        "no_duration"
+      ],
+      "defectSummary": "no_audio, no_duration"
+    },
+    {
+      "responseId": "d97271ef-2a75-4d3d-8f18-5e79afb91532",
+      "createdAt": "2026-01-11T06:01:30.804Z",
+      "startTime": "2026-01-11T05:57:55.040Z",
+      "status": "Approved",
+      "audioUrl": null,
+      "recordingDuration": null,
+      "responsesCount": 30,
+      "defects": [
+        "no_audio",
+        "no_duration"
+      ],
+      "defectSummary": "no_audio, no_duration"
+    },
+    {
+      "responseId": "162a8cb0-a8bc-431b-957e-18efc531f7a4",
+      "createdAt": "2026-01-10T20:29:15.792Z",
+      "startTime": "2026-01-07T10:31:19.246Z",
+      "status": "Rejected",
+      "audioUrl": null,
+      "recordingDuration": null,
+      "responsesCount": 32,
+      "defects": [
+        "no_audio",
+        "no_duration"
+      ],
+      "defectSummary": "no_audio, no_duration"
+    },
+    {
+      "responseId": "33225641-0d8f-4413-81dc-b30f8c5498ab",
+      "createdAt": "2026-01-10T15:56:29.418Z",
+      "startTime": "2026-01-10T14:58:59.837Z",
+      "status": "Approved",
+      "audioUrl": "/uploads/audio/interview_fa3f837c-2c7c-4060-a402-f27c4fd1f1c9_1768060589134.m4a",
+      "recordingDuration": 359,
+      "responsesCount": 27,
+      "defects": [
+        "corrupted_audio"
+      ],
+      "defectSummary": "corrupted_audio"
+    },
+    {
+      "responseId": "eb2a7ff8-0a54-4a58-ab9a-467d9b49ddd1",
+      "createdAt": "2026-01-10T15:00:30.197Z",
+      "startTime": "2026-01-10T09:14:30.613Z",
+      "status": "Approved",
+      "audioUrl": "/uploads/audio/interview_eaddd22d-5c74-4aff-a57c-24ef6cd1883e_1768057229911.m4a",
+      "recordingDuration": 444,
+      "responsesCount": 27,
+      "defects": [
+        "corrupted_audio"
+      ],
+      "defectSummary": "corrupted_audio"
+    },
+    {
+      "responseId": "b5374332-8ed5-4fe9-b8d4-0b79d1e3ec6f",
+      "createdAt": "2026-01-10T14:00:36.655Z",
+      "startTime": "2025-12-31T07:12:42.182Z",
+      "status": "Rejected",
+      "audioUrl": null,
+      "recordingDuration": null,
+      "responsesCount": 32,
+      "defects": [
+        "no_audio",
+        "no_duration"
+      ],
+      "defectSummary": "no_audio, no_duration"
+    },
+    {
+      "responseId": "13334ec4-5791-4228-a87b-68a6a223103a",
+      "createdAt": "2026-01-10T13:57:16.851Z",
+      "startTime": "2025-12-31T07:06:05.370Z",
+      "status": "Rejected",
+      "audioUrl": null,
+      "recordingDuration": null,
+      "responsesCount": 32,
+      "defects": [
+        "no_audio",
+        "no_duration"
+      ],
+      "defectSummary": "no_audio, no_duration"
+    },
+    {
+      "responseId": "b38a40e9-bf26-4fab-bb2f-97ddfb00c6a5",
+      "createdAt": "2026-01-10T13:55:16.182Z",
+      "startTime": "2025-12-31T06:59:37.125Z",
+      "status": "Rejected",
+      "audioUrl": null,
+      "recordingDuration": null,
+      "responsesCount": 32,
+      "defects": [
+        "no_audio",
+        "no_duration"
+      ],
+      "defectSummary": "no_audio, no_duration"
+    },
+    {
+      "responseId": "c0aa6630-67a3-48cf-a542-72f366342d55",
+      "createdAt": "2026-01-10T13:53:11.291Z",
+      "startTime": "2025-12-31T06:52:47.553Z",
+      "status": "Rejected",
+      "audioUrl": null,
+      "recordingDuration": null,
+      "responsesCount": 32,
+      "defects": [
+        "no_audio",
+        "no_duration"
+      ],
+      "defectSummary": "no_audio, no_duration"
+    },
+    {
+      "responseId": "80c73422-9989-444a-a8cc-e36aefe2333f",
+      "createdAt": "2026-01-10T13:12:15.287Z",
+      "startTime": "2025-12-31T06:08:21.830Z",
+      "status": "Rejected",
+      "audioUrl": null,
+      "recordingDuration": null,
+      "responsesCount": 32,
+      "defects": [
+        "no_audio",
+        "no_duration"
+      ],
+      "defectSummary": "no_audio, no_duration"
+    },
+    {
+      "responseId": "b37d9102-128c-469f-b869-6e6df3a4a09d",
+      "createdAt": "2026-01-10T11:03:11.663Z",
+      "startTime": "2026-01-10T10:55:08.294Z",
+      "status": "Approved",
+      "audioUrl": null,
+      "recordingDuration": null,
+      "responsesCount": 4,
+      "defects": [
+        "no_audio",
+        "no_duration"
+      ],
+      "defectSummary": "no_audio, no_duration"
+    },
+    {
+      "responseId": "5d40f0d3-94f8-4faf-b813-9981419db92e",
+      "createdAt": "2026-01-10T09:15:27.610Z",
+      "startTime": "2026-01-10T09:02:29.786Z",
+      "status": "Approved",
+      "audioUrl": "/uploads/audio/interview_ffe0e564-310f-4ad7-b25c-21f1981465db_1768036527303.m4a",
+      "recordingDuration": 349,
+      "responsesCount": 27,
+      "defects": [
+        "corrupted_audio"
+      ],
+      "defectSummary": "corrupted_audio"
+    },
+    {
+      "responseId": "867c8d33-1c1f-45f2-8f1a-6bfcc324d878",
+      "createdAt": "2026-01-10T09:03:16.560Z",
+      "startTime": "2026-01-09T16:15:43.680Z",
+      "status": "Approved",
+      "audioUrl": "/uploads/audio/interview_1d8f4638-9f66-4597-bdde-ad2f8fb40688_1768035796282.m4a",
+      "recordingDuration": 529,
+      "responsesCount": 27,
+      "defects": [
+        "corrupted_audio"
+      ],
+      "defectSummary": "corrupted_audio"
+    }
+  ]
+}

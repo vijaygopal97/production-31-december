@@ -1,0 +1,23 @@
+{
+  "generatedAt": "2026-01-16T19:49:44.684Z",
+  "surveyId": "68fd1915d41841da463f0d46",
+  "surveyName": "West Bengal Opinion Poll (2025 - 2026)",
+  "acName": "Jhargram",
+  "excelFile": "/var/www/Report-Generation/ac222_output.xlsx",
+  "totalRowsInExcel": 5000,
+  "validContacts": 5000,
+  "errors": [],
+  "newContactsAdded": 5000,
+  "queueEntriesCreated": 4997,
+  "duplicateCleanup": {
+    "totalEntries": 619565,
+    "uniquePhones": 619344,
+    "duplicateCount": 221,
+    "deleted": 221
+  },
+  "finalStatus": {
+    "pendingTargetAC": 4779,
+    "totalPending": 518620
+  },
+  "durationSeconds": "21.12"
+}

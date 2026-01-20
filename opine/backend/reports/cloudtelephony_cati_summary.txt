@@ -1,0 +1,103 @@
+CLOUDTELEPHONY CATI RESPONSES - SUMMARY REPORT
+Generated: 2026-01-18T01:50:01.175Z
+
+================================================================================
+SUMMARY STATISTICS
+================================================================================
+
+Total CloudTelephony Queue Entries: 102
+Total CloudTelephony Responses: 80
+
+================================================================================
+HOW TO IDENTIFY PROVIDER FOR CATI RESPONSES
+================================================================================
+
+Method 1: Via CatiRespondentQueue (Most Reliable)
+--------------------------------------------------
+Query: CatiRespondentQueue.find({ response: <responseId> })
+Check: queueEntry.lastCallProvider
+  - 'cloudtelephony' = CloudTelephony
+  - 'deepcall' = DeepCall (first provider)
+  - null = Provider not set (old records)
+
+Method 2: Via CatiCall (If call_id exists)
+-------------------------------------------
+Query: CatiCall.findOne({ callId: <call_id from SurveyResponse> })
+Check: callRecord.metadata.provider (if stored)
+Note: This is less reliable as metadata may not always be set
+
+Method 3: Via callAttempts in Queue Entry
+------------------------------------------
+Query: CatiRespondentQueue.find({ response: <responseId> })
+Check: queueEntry.callAttempts[].provider
+  - 'cloudtelephony' = CloudTelephony
+  - 'deepcall' = DeepCall
+Note: Multiple attempts may have different providers
+
+Method 4: Direct Query (Fastest)
+----------------------------------
+For CloudTelephony:
+  CatiRespondentQueue.find({ lastCallProvider: 'cloudtelephony' })
+
+For DeepCall:
+  CatiRespondentQueue.find({ lastCallProvider: 'deepcall' })
+
+================================================================================
+FIELD LOCATIONS IN DATABASE
+================================================================================
+
+1. CatiRespondentQueue.lastCallProvider
+   - Type: String (enum: ['deepcall', 'cloudtelephony'])
+   - Indexed: Yes
+   - Most reliable field for provider identification
+
+2. CatiRespondentQueue.callAttempts[].provider
+   - Type: String
+   - Stores provider for each call attempt
+   - Useful for tracking provider changes across attempts
+
+3. CatiRespondentQueue.lastCallProviderCallId
+   - Type: String
+   - Stores the call ID from the provider
+   - CloudTelephony: CallSid
+   - DeepCall: callId
+
+4. SurveyResponse.call_id
+   - Type: String
+   - Links to CatiCall.callId
+   - Can be used to find CatiCall record
+
+================================================================================
+QUERY EXAMPLES
+================================================================================
+
+// Find all CloudTelephony responses
+const cloudTelephonyQueue = await CatiRespondentQueue.find({
+  lastCallProvider: 'cloudtelephony'
+}).populate('response');
+
+// Find all DeepCall responses
+const deepCallQueue = await CatiRespondentQueue.find({
+  lastCallProvider: 'deepcall'
+}).populate('response');
+
+// Find provider for a specific response
+const queueEntry = await CatiRespondentQueue.findOne({
+  response: <responseObjectId>
+});
+const provider = queueEntry?.lastCallProvider; // 'cloudtelephony' or 'deepcall'
+
+================================================================================
+FILES GENERATED
+================================================================================
+
+1. cloudtelephony_cati_responses.csv
+   - All CATI responses made through CloudTelephony
+   - Includes Response IDs, Survey info, Interviewer info, Provider details
+   - Location: /var/www/opine/backend/reports/cloudtelephony_cati_responses.csv
+
+2. cloudtelephony_cati_summary.txt
+   - This summary file
+   - Location: /var/www/opine/backend/reports/cloudtelephony_cati_summary.txt
+
+================================================================================

@@ -1539,8 +1539,50 @@ export const surveyResponseAPI = {
         console.error('Error downloading CSV:', error);
         throw error;
       }
+    },
+
+  // Booster Checks API methods
+  getBoosterChecks: async (surveyId, params = {}, signal = null) => {
+    try {
+      const response = await api.get(`/api/survey-responses/survey/${surveyId}/booster-checks`, { 
+        params,
+        timeout: 60000, // 1 minute timeout
+        signal
+      });
+      return response.data;
+    } catch (error) {
+      if (error.name === 'AbortError' || error.code === 'ERR_CANCELED') {
+        throw error;
+      }
+      console.error('Error fetching booster checks:', error);
+      throw error;
     }
-  };
+  },
+  bulkApproveBoosterChecks: async (responseIds) => {
+    try {
+      const response = await api.post(`/api/survey-responses/booster-checks/bulk-approve`, { responseIds });
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  },
+  bulkRejectBoosterChecks: async (responseIds) => {
+    try {
+      const response = await api.post(`/api/survey-responses/booster-checks/bulk-reject`, { responseIds });
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  },
+  bulkSetPendingBoosterChecks: async (responseIds) => {
+    try {
+      const response = await api.post(`/api/survey-responses/booster-checks/bulk-pending`, { responseIds });
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  }
+};
 
 // Performance API
 export const performanceAPI = {
@@ -1876,6 +1918,26 @@ export const catiAPI = {
   getCallStats: async () => {
     try {
       const response = await api.get('/api/cati/stats');
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  },
+
+  // Get provider configuration
+  getProviderConfig: async () => {
+    try {
+      const response = await api.get('/api/cati/provider-config');
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  },
+
+  // Update provider configuration
+  updateProviderConfig: async (config) => {
+    try {
+      const response = await api.put('/api/cati/provider-config', config);
       return response.data;
     } catch (error) {
       throw error;

@@ -340,7 +340,7 @@ const surveyResponseSchema = new mongoose.Schema({
       // New verification criteria fields
       audioStatus: {
         type: String,
-        enum: ['1', '2', '3', '4', '7', '8']
+        enum: ['1', '2', '3', '4', '7', '8', '9']
       },
       genderMatching: {
         type: String,
@@ -396,7 +396,7 @@ const surveyResponseSchema = new mongoose.Schema({
     // New verification criteria fields
     audioStatus: {
       type: String,
-      enum: ['1', '2', '3', '4', '7', '8']
+      enum: ['1', '2', '3', '4', '7', '8', '9']
     },
     genderMatching: {
       type: String,
@@ -526,6 +526,8 @@ surveyResponseSchema.index({ contentHash: 1 }, { unique: true, sparse: true }); 
 // Performance indexes for Quality Agent queries
 surveyResponseSchema.index({ 'verificationData.reviewer': 1, status: 1 }); // For Quality Agent dashboard
 surveyResponseSchema.index({ 'verificationData.reviewer': 1, 'verificationData.reviewedAt': -1 }); // For Quality Agent analytics
+// TOP-TIER TECH COMPANY SOLUTION: Optimized compound index for QC Performance queries
+surveyResponseSchema.index({ survey: 1, 'verificationData.reviewer': 1, 'verificationData.reviewedAt': 1, status: 1 }); // For QC Performance aggregates
 
 // Performance indexes for getNextReviewAssignment
 surveyResponseSchema.index({ status: 1, 'reviewAssignment.assignedTo': 1, 'reviewAssignment.expiresAt': 1 }); // For active assignment check
@@ -742,8 +744,27 @@ surveyResponseSchema.statics.createCompleteResponse = async function(data) {
     OldinterviewerID
   } = data;
   
-  console.log('createCompleteResponse received audioRecording:', audioRecording); // Debug log
-  console.log('Audio file size:', audioRecording?.fileSize, 'bytes'); // Debug file size
+  // CRITICAL FIX: Only create audioRecording object if audio actually exists
+  // Prevent creating empty audioRecording objects that cause data loss confusion
+  // Top tech companies (Meta, WhatsApp) only store data that actually exists
+  let finalAudioRecording = null;
+  if (audioRecording && (
+    (audioRecording.audioUrl && audioRecording.audioUrl.trim() !== '') ||
+    (audioRecording.hasAudio === true && audioRecording.fileSize > 0)
+  )) {
+    // Audio exists - use it
+    finalAudioRecording = audioRecording;
+    console.log('createCompleteResponse received audioRecording with audio:', {
+      hasAudio: audioRecording.hasAudio,
+      audioUrl: audioRecording.audioUrl ? 'SET' : 'MISSING',
+      fileSize: audioRecording.fileSize || 0,
+      format: audioRecording.format || 'unknown'
+    });
+  } else {
+    // No valid audio - set to null (don't create empty object)
+    finalAudioRecording = null;
+    console.log('createCompleteResponse: No valid audioRecording provided - setting to null (no empty object)');
+  }
 
   // Calculate statistics
   const totalQuestions = responses.length;
@@ -764,18 +785,19 @@ surveyResponseSchema.statics.createCompleteResponse = async function(data) {
     console.log(`✅ Calculated totalTimeSpent from timestamps: ${totalTimeSpent} seconds (${Math.floor(totalTimeSpent / 60)} minutes)`);
   }
 
-  // LIGHTWEIGHT DUPLICATE DETECTION: Generate content hash
-  // Include mode-specific fields: audio/GPS for CAPI, call_id for CATI
-  // EXCLUDE interviewer - same interview can be synced by different users
-  // Use endTime and totalTimeSpent for exact matching
-  const contentHash = generateContentHash(interviewer, survey, startTime, responses, {
-    interviewMode: interviewMode,
-    audioRecording: audioRecording,
-    location: location,
-    call_id: null, // CAPI doesn't have call_id (it's passed via createCompleteResponse)
-    endTime: endTime,
-    totalTimeSpent: data.totalTimeSpent || null
-  });
+    // LIGHTWEIGHT DUPLICATE DETECTION: Generate content hash
+    // Include mode-specific fields: audio/GPS for CAPI, call_id for CATI
+    // EXCLUDE interviewer - same interview can be synced by different users
+    // Use endTime and totalTimeSpent for exact matching
+    // CRITICAL: Use finalAudioRecording (validated) for hash generation
+    const contentHash = generateContentHash(interviewer, survey, startTime, responses, {
+      interviewMode: interviewMode,
+      audioRecording: finalAudioRecording, // Use validated audioRecording
+      location: location,
+      call_id: null, // CAPI doesn't have call_id (it's passed via createCompleteResponse)
+      endTime: endTime,
+      totalTimeSpent: data.totalTimeSpent || null
+    });
   
   // Check for existing response with same content hash (fast indexed lookup - <20ms)
   const existingResponse = await this.findOne({ contentHash })
@@ -811,7 +833,11 @@ surveyResponseSchema.statics.createCompleteResponse = async function(data) {
     const updateFields = {};
     
     // Update audio if new one exists and old one doesn't
-    if (audioRecording && audioRecording.audioUrl && (!existingResponse.audioRecording || !existingResponse.audioRecording.audioUrl)) {
+    // CRITICAL: Only update if new audio is valid (has audioUrl or hasAudio=true with fileSize>0)
+    if (audioRecording && (
+      (audioRecording.audioUrl && audioRecording.audioUrl.trim() !== '') ||
+      (audioRecording.hasAudio === true && audioRecording.fileSize > 0)
+    ) && (!existingResponse.audioRecording || !existingResponse.audioRecording.audioUrl)) {
       updateFields['audioRecording'] = audioRecording;
       console.log(`   ✅ Updating audio recording in existing response`);
     }
@@ -916,7 +942,7 @@ surveyResponseSchema.statics.createCompleteResponse = async function(data) {
       responses,
       interviewMode,
       deviceInfo,
-      audioRecording: audioRecording || {},
+      audioRecording: finalAudioRecording, // Use validated audioRecording (null if no valid audio)
       selectedAC: selectedAC || null,
       selectedPollingStation: selectedPollingStation || null,
       location: location || null,

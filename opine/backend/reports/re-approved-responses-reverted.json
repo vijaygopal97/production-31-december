@@ -1,0 +1,737 @@
+{
+  "timestamp": "2026-01-13T10:20:47.638Z",
+  "action": "Reverted re-approved responses back to Rejected status",
+  "totalReApproved": 81,
+  "successfullyReverted": 81,
+  "responses": [
+    {
+      "responseId": "00ae5c53-0ceb-405b-8c62-f819fb7359fd",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "lastUpdatedAt": "2026-01-13T10:09:04.147Z",
+      "reviewer": "null",
+      "autoApproved": false,
+      "feedback": "Duplicate Phone Number"
+    },
+    {
+      "responseId": "00ee10ed-2a42-48ef-b930-e4681d44270b",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "lastUpdatedAt": "2026-01-13T10:15:44.523Z",
+      "reviewer": "null",
+      "autoApproved": false,
+      "feedback": "Interview Too Short"
+    },
+    {
+      "responseId": "04ef7d31-4ae2-4f7e-a299-919225b51d05",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "lastUpdatedAt": "2026-01-13T10:15:39.693Z",
+      "reviewer": "null",
+      "autoApproved": false,
+      "feedback": "Interview Too Short"
+    },
+    {
+      "responseId": "0b34a1dc-9f45-4049-b8a7-5a698856e4b3",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "lastUpdatedAt": "2026-01-13T10:17:34.940Z",
+      "reviewer": "null",
+      "autoApproved": false,
+      "feedback": "Interview Too Short"
+    },
+    {
+      "responseId": "16471427-5929-44c7-8092-429ca96ee096",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "lastUpdatedAt": "2026-01-13T10:12:35.418Z",
+      "reviewer": "null",
+      "autoApproved": false,
+      "feedback": "Interview Too Short"
+    },
+    {
+      "responseId": "20d29f61-5150-4543-853d-acc0af9bc93a",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "lastUpdatedAt": "2026-01-13T10:12:03.398Z",
+      "reviewer": "null",
+      "autoApproved": false,
+      "feedback": "Interview Too Short"
+    },
+    {
+      "responseId": "21500129-8d4b-4b0f-8233-9bd25164d97a",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "lastUpdatedAt": "2026-01-13T10:19:47.564Z",
+      "reviewer": "null",
+      "autoApproved": false,
+      "feedback": "Interview Too Short"
+    },
+    {
+      "responseId": "2193bb80-bd2b-4a87-be79-ed7c40ed9b98",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "lastUpdatedAt": "2026-01-13T10:14:57.533Z",
+      "reviewer": "null",
+      "autoApproved": false,
+      "feedback": "Interview Too Short"
+    },
+    {
+      "responseId": "22bfee46-f93b-4755-b2d9-e47dab28cd52",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "lastUpdatedAt": "2026-01-13T10:15:30.573Z",
+      "reviewer": "null",
+      "autoApproved": false,
+      "feedback": "Interview Too Short"
+    },
+    {
+      "responseId": "23e02435-7c35-4213-b7cb-b428b82d914e",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "lastUpdatedAt": "2026-01-13T10:11:05.905Z",
+      "reviewer": "null",
+      "autoApproved": false,
+      "feedback": "Interview Too Short"
+    },
+    {
+      "responseId": "243c27a8-d710-412d-b5f3-9ab4007d574d",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "lastUpdatedAt": "2026-01-13T10:19:20.527Z",
+      "reviewer": "null",
+      "autoApproved": false,
+      "feedback": "Interview Too Short"
+    },
+    {
+      "responseId": "2689703e-7878-4443-ae0a-4b7ffe4b6724",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "lastUpdatedAt": "2026-01-13T10:15:07.630Z",
+      "reviewer": "null",
+      "autoApproved": false,
+      "feedback": "Interview Too Short"
+    },
+    {
+      "responseId": "268d7984-b11a-45f0-ab42-0f2b7029cc2e",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "lastUpdatedAt": "2026-01-13T10:13:38.257Z",
+      "reviewer": "null",
+      "autoApproved": false,
+      "feedback": "Interview Too Short"
+    },
+    {
+      "responseId": "28a54e10-82bf-445c-a7b7-0817dd3f177f",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "lastUpdatedAt": "2026-01-13T10:10:41.046Z",
+      "reviewer": "null",
+      "autoApproved": false,
+      "feedback": "Interview Too Short"
+    },
+    {
+      "responseId": "29848637-8c85-48e7-a3a3-2a2618248e0d",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "lastUpdatedAt": "2026-01-13T10:15:49.384Z",
+      "reviewer": "null",
+      "autoApproved": false,
+      "feedback": "Interview Too Short"
+    },
+    {
+      "responseId": "2bb6e18e-4ce3-47d1-80e5-01bc29d7e1cb",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "lastUpdatedAt": "2026-01-13T10:12:08.427Z",
+      "reviewer": "null",
+      "autoApproved": false,
+      "feedback": "Interview Too Short"
+    },
+    {
+      "responseId": "2e6f7c94-8a89-4683-a603-1dcd5101662e",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "lastUpdatedAt": "2026-01-13T10:12:30.487Z",
+      "reviewer": "null",
+      "autoApproved": false,
+      "feedback": "Interview Too Short"
+    },
+    {
+      "responseId": "2ee99888-c77c-4082-bfb7-7a54e64c8fb3",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "lastUpdatedAt": "2026-01-13T10:10:50.444Z",
+      "reviewer": "null",
+      "autoApproved": false,
+      "feedback": "Interview Too Short"
+    },
+    {
+      "responseId": "2fc5b2f0-1c88-434e-9c90-210e1c4a650b",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "lastUpdatedAt": "2026-01-13T10:19:56.776Z",
+      "reviewer": "null",
+      "autoApproved": false,
+      "feedback": "Interview Too Short"
+    },
+    {
+      "responseId": "347cc24f-9477-489b-b915-ddd2c9426537",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "lastUpdatedAt": "2026-01-13T10:08:50.447Z",
+      "reviewer": "null",
+      "autoApproved": false,
+      "feedback": "Interview Too Short"
+    },
+    {
+      "responseId": "373a5b95-8cb5-4948-ae96-e2158d69f355",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "lastUpdatedAt": "2026-01-13T10:18:39.236Z",
+      "reviewer": "null",
+      "autoApproved": false,
+      "feedback": "Interview Too Short"
+    },
+    {
+      "responseId": "4347b904-6fef-453d-bb0e-9c9e36a6b7cc",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "lastUpdatedAt": "2026-01-13T10:20:11.912Z",
+      "reviewer": "null",
+      "autoApproved": false,
+      "feedback": "Interview Too Short"
+    },
+    {
+      "responseId": "44971178-d29d-45a9-a3a4-f1cd7ceb915f",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "lastUpdatedAt": "2026-01-13T10:08:56.747Z",
+      "reviewer": "null",
+      "autoApproved": false,
+      "feedback": "Duplicate Phone Number"
+    },
+    {
+      "responseId": "46531215-7a08-44d6-833a-c97dee0fd871",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "lastUpdatedAt": "2026-01-13T10:10:45.330Z",
+      "reviewer": "null",
+      "autoApproved": false,
+      "feedback": "Interview Too Short"
+    },
+    {
+      "responseId": "4b5af025-6c58-4ed7-a878-6030ad8cd32b",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "lastUpdatedAt": "2026-01-13T10:12:25.148Z",
+      "reviewer": "null",
+      "autoApproved": false,
+      "feedback": "Interview Too Short"
+    },
+    {
+      "responseId": "4c231fdd-de49-42a4-9e07-69c4f8a30055",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "lastUpdatedAt": "2026-01-13T10:11:17.558Z",
+      "reviewer": "null",
+      "autoApproved": false,
+      "feedback": "Interview Too Short"
+    },
+    {
+      "responseId": "4c9be762-cd91-4047-8009-e6980164c919",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "lastUpdatedAt": "2026-01-13T10:11:12.790Z",
+      "reviewer": "null",
+      "autoApproved": false,
+      "feedback": "Interview Too Short"
+    },
+    {
+      "responseId": "4fae7765-7671-462f-8290-03e463ca0a11",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "lastUpdatedAt": "2026-01-13T10:18:57.396Z",
+      "reviewer": "null",
+      "autoApproved": false,
+      "feedback": "Interview Too Short"
+    },
+    {
+      "responseId": "50d69854-baff-41e6-9473-ec1ad40778c6",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "lastUpdatedAt": "2026-01-13T10:15:02.424Z",
+      "reviewer": "null",
+      "autoApproved": false,
+      "feedback": "Interview Too Short"
+    },
+    {
+      "responseId": "5206dbaf-653c-4f61-8a2d-48a58bde4c70",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "lastUpdatedAt": "2026-01-13T10:14:36.544Z",
+      "reviewer": "null",
+      "autoApproved": false,
+      "feedback": "Interview Too Short"
+    },
+    {
+      "responseId": "53da18b5-4573-4bba-b370-f9da0260a828",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "lastUpdatedAt": "2026-01-13T10:20:01.308Z",
+      "reviewer": "null",
+      "autoApproved": false,
+      "feedback": "Interview Too Short"
+    },
+    {
+      "responseId": "5525cd6c-208f-4cf6-92e0-0cdadb4a9b45",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "lastUpdatedAt": "2026-01-13T10:17:20.949Z",
+      "reviewer": "null",
+      "autoApproved": false,
+      "feedback": "Interview Too Short"
+    },
+    {
+      "responseId": "5627df88-046d-40c8-8a09-de53c3375860",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "lastUpdatedAt": "2026-01-13T10:13:49.466Z",
+      "reviewer": "null",
+      "autoApproved": false,
+      "feedback": "Interview Too Short"
+    },
+    {
+      "responseId": "5898a740-a188-4417-81da-99d453d267d3",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "lastUpdatedAt": "2026-01-13T10:09:40.618Z",
+      "reviewer": "null",
+      "autoApproved": false,
+      "feedback": "Interview Too Short"
+    },
+    {
+      "responseId": "5981fb3f-7b71-482e-b41d-df1539d32e6e",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "lastUpdatedAt": "2026-01-13T10:10:35.423Z",
+      "reviewer": "null",
+      "autoApproved": false,
+      "feedback": "Interview Too Short"
+    },
+    {
+      "responseId": "5b79a885-1d51-4ff6-b7f9-f6fce7be1964",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "lastUpdatedAt": "2026-01-13T10:20:36.280Z",
+      "reviewer": "null",
+      "autoApproved": false,
+      "feedback": "Interview Too Short"
+    },
+    {
+      "responseId": "5dca6179-d125-43da-b7c9-f7966d6266c7",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "lastUpdatedAt": "2026-01-13T10:19:37.644Z",
+      "reviewer": "null",
+      "autoApproved": false,
+      "feedback": "Interview Too Short"
+    },
+    {
+      "responseId": "5e2e08d7-5dcb-4db5-a0a6-0533fc1b06e6",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "lastUpdatedAt": "2026-01-13T10:17:41.731Z",
+      "reviewer": "null",
+      "autoApproved": false,
+      "feedback": "Interview Too Short"
+    },
+    {
+      "responseId": "68da177f-4a80-4e9a-bb47-2872c9f14171",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "lastUpdatedAt": "2026-01-13T10:20:16.996Z",
+      "reviewer": "null",
+      "autoApproved": false,
+      "feedback": "Interview Too Short"
+    },
+    {
+      "responseId": "78039e8b-cfb5-473e-88b0-61cf782d5cfc",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "lastUpdatedAt": "2026-01-13T10:09:17.120Z",
+      "reviewer": "null",
+      "autoApproved": false,
+      "feedback": "Duplicate Phone Number"
+    },
+    {
+      "responseId": "7af2baa4-08da-4697-9d64-82b564487b90",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "lastUpdatedAt": "2026-01-13T10:11:50.029Z",
+      "reviewer": "null",
+      "autoApproved": false,
+      "feedback": "Interview Too Short"
+    },
+    {
+      "responseId": "7c690450-e5b6-4711-955d-6e762f632c0c",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "lastUpdatedAt": "2026-01-13T10:09:54.456Z",
+      "reviewer": "null",
+      "autoApproved": false,
+      "feedback": "Duplicate Phone Number"
+    },
+    {
+      "responseId": "7d69e3cf-48fe-4c25-8e83-27f404cad85c",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "lastUpdatedAt": "2026-01-13T10:10:12.087Z",
+      "reviewer": "null",
+      "autoApproved": false,
+      "feedback": "Interview Too Short"
+    },
+    {
+      "responseId": "8014c489-8dc5-467f-aff4-0dd0ffd6cd77",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "lastUpdatedAt": "2026-01-13T10:18:45.382Z",
+      "reviewer": "null",
+      "autoApproved": false,
+      "feedback": "Interview Too Short"
+    },
+    {
+      "responseId": "8052ed12-a356-4c8e-aa97-e833a571b0c5",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "lastUpdatedAt": "2026-01-13T10:10:55.385Z",
+      "reviewer": "null",
+      "autoApproved": false,
+      "feedback": "Interview Too Short"
+    },
+    {
+      "responseId": "81868afe-6442-460f-86fa-e59be2efebc6",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "lastUpdatedAt": "2026-01-13T10:11:36.667Z",
+      "reviewer": "null",
+      "autoApproved": false,
+      "feedback": "Interview Too Short"
+    },
+    {
+      "responseId": "81c6dc15-832b-4385-a6b8-1a4962942a97",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "lastUpdatedAt": "2026-01-13T10:19:25.175Z",
+      "reviewer": "null",
+      "autoApproved": false,
+      "feedback": "Interview Too Short"
+    },
+    {
+      "responseId": "8584d0e2-2c4b-4da8-a0ed-beba27c8eea7",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "lastUpdatedAt": "2026-01-13T10:11:29.246Z",
+      "reviewer": "null",
+      "autoApproved": false,
+      "feedback": "Interview Too Short"
+    },
+    {
+      "responseId": "89caca89-48f6-482d-a41c-34fb2d7c9918",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "lastUpdatedAt": "2026-01-13T10:19:03.463Z",
+      "reviewer": "null",
+      "autoApproved": false,
+      "feedback": "Interview Too Short"
+    },
+    {
+      "responseId": "90dac361-63de-413f-8f77-dbe31b8e5afe",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "lastUpdatedAt": "2026-01-13T10:20:30.540Z",
+      "reviewer": "null",
+      "autoApproved": false,
+      "feedback": "Interview Too Short"
+    },
+    {
+      "responseId": "983a0115-fb1f-4a47-890f-75ce7a1f3886",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "lastUpdatedAt": "2026-01-13T10:20:40.715Z",
+      "reviewer": "null",
+      "autoApproved": false,
+      "feedback": "Interview Too Short"
+    },
+    {
+      "responseId": "9ab1c236-dbe6-4cc7-b942-08ea6401623b",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "lastUpdatedAt": "2026-01-13T10:09:09.587Z",
+      "reviewer": "null",
+      "autoApproved": false,
+      "feedback": "Duplicate Phone Number"
+    },
+    {
+      "responseId": "9f1f4916-df3d-4856-a62c-2def5e9fba04",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "lastUpdatedAt": "2026-01-13T10:20:07.287Z",
+      "reviewer": "null",
+      "autoApproved": false,
+      "feedback": "Interview Too Short"
+    },
+    {
+      "responseId": "a475eaae-9a45-4178-a8a1-a0fa023ff116",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "lastUpdatedAt": "2026-01-13T10:13:54.735Z",
+      "reviewer": "null",
+      "autoApproved": false,
+      "feedback": "Interview Too Short"
+    },
+    {
+      "responseId": "a4cf6b5e-b4e0-49f3-b7bf-f1d8391de0d9",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "lastUpdatedAt": "2026-01-13T10:13:06.247Z",
+      "reviewer": "null",
+      "autoApproved": false,
+      "feedback": "Interview Too Short"
+    },
+    {
+      "responseId": "a9d3d486-2a43-427b-816c-3229cc3d2f35",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "lastUpdatedAt": "2026-01-13T10:09:23.293Z",
+      "reviewer": "null",
+      "autoApproved": false,
+      "feedback": "Interview Too Short"
+    },
+    {
+      "responseId": "abc6391c-a5f2-4a2e-96f9-08d1d7770657",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "lastUpdatedAt": "2026-01-13T10:13:44.313Z",
+      "reviewer": "null",
+      "autoApproved": false,
+      "feedback": "Interview Too Short"
+    },
+    {
+      "responseId": "ac0c9046-bb48-4e4b-8daa-6258510d7c7f",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "lastUpdatedAt": "2026-01-13T10:10:07.513Z",
+      "reviewer": "null",
+      "autoApproved": false,
+      "feedback": "Interview Too Short"
+    },
+    {
+      "responseId": "b4bbb5dd-e3e1-4f92-ab2c-6088f55fc62f",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "lastUpdatedAt": "2026-01-13T10:15:20.507Z",
+      "reviewer": "null",
+      "autoApproved": false,
+      "feedback": "Interview Too Short"
+    },
+    {
+      "responseId": "b774e123-d82c-468d-aef9-3fc0e0a2d374",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "lastUpdatedAt": "2026-01-13T10:10:20.015Z",
+      "reviewer": "null",
+      "autoApproved": false,
+      "feedback": "Interview Too Short"
+    },
+    {
+      "responseId": "b89b5364-a0fb-4e39-8a2a-c444c216ab99",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "lastUpdatedAt": "2026-01-13T10:17:28.351Z",
+      "reviewer": "null",
+      "autoApproved": false,
+      "feedback": "Interview Too Short"
+    },
+    {
+      "responseId": "bb2d2cb2-9fec-46e2-b535-a97ca706a2f8",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "lastUpdatedAt": "2026-01-13T10:15:15.540Z",
+      "reviewer": "null",
+      "autoApproved": false,
+      "feedback": "Interview Too Short"
+    },
+    {
+      "responseId": "bba70c33-2624-4f1b-b559-a6d8324a72fa",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "lastUpdatedAt": "2026-01-13T10:09:59.625Z",
+      "reviewer": "null",
+      "autoApproved": false,
+      "feedback": "Interview Too Short"
+    },
+    {
+      "responseId": "be671a8e-26e6-4853-beb1-c0475f46cbca",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "lastUpdatedAt": "2026-01-13T10:18:34.602Z",
+      "reviewer": "null",
+      "autoApproved": false,
+      "feedback": "Interview Too Short"
+    },
+    {
+      "responseId": "bef65f5f-214d-49eb-84a0-108235c7e21f",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "lastUpdatedAt": "2026-01-13T10:19:10.172Z",
+      "reviewer": "null",
+      "autoApproved": false,
+      "feedback": "Interview Too Short"
+    },
+    {
+      "responseId": "c0c93470-1ba2-4fa9-a0bc-f6becc697f52",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "lastUpdatedAt": "2026-01-13T10:20:45.998Z",
+      "reviewer": "null",
+      "autoApproved": false,
+      "feedback": "Interview Too Short"
+    },
+    {
+      "responseId": "c6272f56-2e2e-4cc4-9441-38323e3f3b50",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "lastUpdatedAt": "2026-01-13T10:11:23.661Z",
+      "reviewer": "null",
+      "autoApproved": false,
+      "feedback": "Interview Too Short"
+    },
+    {
+      "responseId": "c7b9b5cf-3b2d-4c4f-8747-6f38b09646a4",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "lastUpdatedAt": "2026-01-13T10:14:42.215Z",
+      "reviewer": "null",
+      "autoApproved": false,
+      "feedback": "Interview Too Short"
+    },
+    {
+      "responseId": "cfe28503-4e58-4fb8-9e38-3ce69b80b4bd",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "lastUpdatedAt": "2026-01-13T10:19:30.112Z",
+      "reviewer": "null",
+      "autoApproved": false,
+      "feedback": "Interview Too Short"
+    },
+    {
+      "responseId": "cfe5b686-f325-4c5e-96f6-273f5c4f6a9b",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "lastUpdatedAt": "2026-01-13T10:18:50.754Z",
+      "reviewer": "null",
+      "autoApproved": false,
+      "feedback": "Interview Too Short"
+    },
+    {
+      "responseId": "e128873a-1523-4294-9eb4-23f20451953c",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "lastUpdatedAt": "2026-01-13T10:19:15.467Z",
+      "reviewer": "null",
+      "autoApproved": false,
+      "feedback": "Interview Too Short"
+    },
+    {
+      "responseId": "e1f44717-255f-406a-a9ff-4227bf5c08ba",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "lastUpdatedAt": "2026-01-13T10:11:41.300Z",
+      "reviewer": "null",
+      "autoApproved": false,
+      "feedback": "Interview Too Short"
+    },
+    {
+      "responseId": "e24376b6-0f93-4a69-91f0-01c9d90cd129",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "lastUpdatedAt": "2026-01-13T10:19:42.429Z",
+      "reviewer": "null",
+      "autoApproved": false,
+      "feedback": "Interview Too Short"
+    },
+    {
+      "responseId": "eb6d8cc5-c9d7-47d1-be54-5374986a925a",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "lastUpdatedAt": "2026-01-13T10:09:46.404Z",
+      "reviewer": "null",
+      "autoApproved": false,
+      "feedback": "Duplicate Phone Number"
+    },
+    {
+      "responseId": "ebac7427-c96e-468e-a95a-7ad84703c098",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "lastUpdatedAt": "2026-01-13T10:11:58.283Z",
+      "reviewer": "null",
+      "autoApproved": false,
+      "feedback": "Interview Too Short"
+    },
+    {
+      "responseId": "ece63f54-c0be-4e41-84e3-65c4dc6a3907",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "lastUpdatedAt": "2026-01-13T10:10:25.866Z",
+      "reviewer": "null",
+      "autoApproved": false,
+      "feedback": "Interview Too Short"
+    },
+    {
+      "responseId": "f598426c-f039-431b-a81b-61aa2befd9e4",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "lastUpdatedAt": "2026-01-13T10:08:45.491Z",
+      "reviewer": "null",
+      "autoApproved": false,
+      "feedback": "Interview Too Short"
+    },
+    {
+      "responseId": "f68572bc-ca64-480e-95b7-0ffdb8701905",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "lastUpdatedAt": "2026-01-13T10:15:25.084Z",
+      "reviewer": "null",
+      "autoApproved": false,
+      "feedback": "Interview Too Short"
+    },
+    {
+      "responseId": "f89b77a5-784f-47fa-bba6-daa7684f2691",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "lastUpdatedAt": "2026-01-13T10:12:13.800Z",
+      "reviewer": "null",
+      "autoApproved": false,
+      "feedback": "Interview Too Short"
+    },
+    {
+      "responseId": "fbc25982-de60-45ea-b8b0-c279094faf8a",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "lastUpdatedAt": "2026-01-13T10:17:16.780Z",
+      "reviewer": "null",
+      "autoApproved": false,
+      "feedback": "Interview Too Short"
+    },
+    {
+      "responseId": "fc3a9654-bb59-4637-b6a9-80e046c2b14f",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "lastUpdatedAt": "2026-01-13T10:14:51.555Z",
+      "reviewer": "null",
+      "autoApproved": false,
+      "feedback": "Interview Too Short"
+    }
+  ]
+}

@@ -4,12 +4,24 @@ const path = require('path');
 const CatiCall = require('../models/CatiCall');
 const CatiRespondentQueue = require('../models/CatiRespondentQueue');
 const SurveyResponse = require('../models/SurveyResponse');
+const CatiAgent = require('../models/CatiAgent');
+const ProviderFactory = require('../services/catiProviders/providerFactory');
+const CloudTelephonyProvider = require('../services/catiProviders/cloudtelephonyProvider');
+const Company = require('../models/Company');
 
 // DeepCall API Configuration
 const DEEPCALL_API_BASE_URL = 'https://s-ct3.sarv.com/v2/clickToCall/para';
 const DEEPCALL_USER_ID = process.env.DEEPCALL_USER_ID || '89130240';
 const DEEPCALL_TOKEN = process.env.DEEPCALL_TOKEN || '6GQJuwW6lB8ZBHntzaRU';
 const WEBHOOK_BASE_URL = process.env.WEBHOOK_BASE_URL || 'https://opine.exypnossolutions.com';
+
+// Lightweight, safe debug logger for webhooks (avoids large JSON stringify + sync disk writes)
+const shouldDebugWebhook = () => process.env.WEBHOOK_DEBUG_LOG === '1';
+const safePreview = (val, max = 500) => {
+  if (val === null || val === undefined) return '';
+  const str = typeof val === 'string' ? val : (() => { try { return JSON.stringify(val); } catch { return String(val); } })();
+  return str.length > max ? str.slice(0, max) + '…' : str;
+};
 
 // @desc    Make a CATI call
 // @route   POST /api/cati/make-call
@@ -41,121 +53,109 @@ const makeCall = async (req, res) => {
     const cleanFrom = fromNumber.replace(/[^0-9]/g, '');
     const cleanTo = toNumber.replace(/[^0-9]/g, '');
 
-    // Build API request parameters (exactly as DeepCall API expects)
-    const params = {
-      user_id: DEEPCALL_USER_ID,
-      token: DEEPCALL_TOKEN,
-      from: cleanFrom,
-      to: cleanTo
-    };
+    // Provider selection (company-specific)
+    const { provider, providerName } = await ProviderFactory.getProvider(companyId, {
+      fromNumber: cleanFrom,
+      toNumber: cleanTo,
+      selectionKey: `${companyId}_${cleanFrom}_${cleanTo}`
+    });
 
-    // Add optional parameters only if provided
-    if (fromType && fromType !== 'Number') params.fromType = fromType;
-    if (toType && toType !== 'Number') params.toType = toType;
-    if (fromRingTime) params.fromRingTime = parseInt(fromRingTime);
-    if (toRingTime) params.toRingTime = parseInt(toRingTime);
-    if (timeLimit) params.timeLimit = parseInt(timeLimit);
-
-    // Note: Webhook should be configured in DeepCall dashboard
-    // But we can also pass it as a parameter if the API supports it
-    // The webhook URL format should match what's configured in DeepCall dashboard
-    const webhookUrl = `${WEBHOOK_BASE_URL}/api/cati/webhook`;
-    // Only add webhook parameter if API supports it (check DeepCall docs)
-    // params.webhook = webhookUrl;
-
-    console.log(`📞 Making CATI call: ${fromNumber} -> ${toNumber}`);
-    console.log(`📡 Webhook URL: ${webhookUrl}`);
-    console.log(`📋 API Parameters:`, JSON.stringify(params, null, 2));
-
-    // Build the full URL with query parameters (as DeepCall API expects)
-    const queryString = new URLSearchParams(params).toString();
-    const fullUrl = `${DEEPCALL_API_BASE_URL}?${queryString}`;
-    console.log(`🔗 Full API URL: ${fullUrl}`);
-
-    // Make API call to DeepCall - Use GET method as it works in browser
-    let apiResponse;
-    try {
-      const response = await axios.get(fullUrl, {
-        timeout: 30000, // 30 seconds timeout
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
+    // Ensure agent is registered for providers that require it (CloudTelephony)
+    if (providerName === 'cloudtelephony') {
+      const agent = await CatiAgent.getOrCreate(userId, cleanFrom);
+      if (!agent.isRegistered('cloudtelephony')) {
+        const agentName = `${req.user.firstName || ''} ${req.user.lastName || ''}`.trim() || cleanFrom;
+        try {
+          const regResult = await provider.registerAgent(cleanFrom, agentName);
+          // Mark as registered even if provider says "already exists" (idempotent behavior)
+          agent.markRegistered('cloudtelephony', regResult?.response?.member_id || regResult?.response?.agentId || null);
+          await agent.save();
+        } catch (regErr) {
+          // If registration fails, don't attempt call (provider requires it)
+          return res.status(500).json({
+            success: false,
+            message: 'Failed to register agent for CloudTelephony',
+            error: regErr.message
+          });
         }
-      });
-      apiResponse = response.data;
-      console.log(`✅ API Response Status: ${response.status}`);
-      console.log(`✅ API Response Data:`, JSON.stringify(apiResponse, null, 2));
-      
-      // Check if the response indicates success
-      if (response.status === 200 && apiResponse) {
-        console.log(`✅ Call initiated successfully`);
       }
+    }
+
+    const webhookUrlDeepCall = `${WEBHOOK_BASE_URL}/api/cati/webhook`;
+    const webhookUrlCloudTelephony = `${WEBHOOK_BASE_URL}/api/cati/webhook/cloudtelephony`;
+
+    console.log(`📞 Making CATI call via provider=${providerName}: ${fromNumber} -> ${toNumber}`);
+    if (shouldDebugWebhook()) {
+      console.log(`📡 Webhook URLs: deepcall=${webhookUrlDeepCall}, cloudtelephony=${webhookUrlCloudTelephony}`);
+    }
+
+    // Initiate provider call
+    let callResult;
+    try {
+      callResult = await provider.makeCall({
+        fromNumber: cleanFrom,
+        toNumber: cleanTo,
+        fromType,
+        toType,
+        fromRingTime,
+        toRingTime,
+        timeLimit,
+        // CloudTelephony can return uid back in webhook; provide one for correlation (admin calls)
+        uid: providerName === 'cloudtelephony'
+          ? `adm_${Date.now()}_${Math.random().toString(36).slice(2, 10)}`
+          : undefined
+      });
     } catch (error) {
-      console.error('❌ DeepCall API Error Details:');
-      console.error('   Status:', error.response?.status);
-      console.error('   Status Text:', error.response?.statusText);
-      console.error('   Response Data:', JSON.stringify(error.response?.data, null, 2));
-      console.error('   Error Message:', error.message);
-      
-      // Create call record with error
+      // Persist an error record for visibility (keeps existing behavior for admins)
       const callRecord = new CatiCall({
         callId: `call_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
         company: companyId,
         createdBy: userId,
-        fromNumber: fromNumber.replace(/[^0-9]/g, ''),
-        toNumber: toNumber.replace(/[^0-9]/g, ''),
+        fromNumber: cleanFrom,
+        toNumber: cleanTo,
         fromType: fromType || 'Number',
         toType: toType || 'Number',
         apiStatus: 'failed',
-        apiResponse: error.response?.data || { error: error.message },
-        apiErrorMessage: error.response?.data?.message || error.message,
+        apiResponse: { error: error.message, provider: providerName },
+        apiErrorMessage: error.message,
         callStatus: 'failed',
-        errorCode: error.response?.status?.toString() || '500',
-        errorMessage: error.response?.data?.message || error.message
+        errorCode: '500',
+        errorMessage: error.message,
+        metadata: { provider: providerName }
       });
       await callRecord.save();
 
       return res.status(500).json({
         success: false,
         message: 'Failed to initiate call',
-        error: error.response?.data || error.message,
+        error: error.message,
+        provider: providerName,
         callId: callRecord.callId
       });
     }
 
-    // Extract call ID from API response
-    // DeepCall API returns: {"callId":"...","status":"success","code":"200"}
-    const callId = apiResponse?.callId || 
-                   apiResponse?.id || 
-                   apiResponse?.call_id ||
-                   apiResponse?.data?.callId;
-    
+    const callId = callResult?.callId;
     if (!callId) {
-      console.error('⚠️  API response does not contain callId:', JSON.stringify(apiResponse, null, 2));
       return res.status(500).json({
         success: false,
-        message: 'API response does not contain call ID',
-        apiResponse: apiResponse
+        message: 'Provider response does not contain call ID',
+        provider: providerName,
+        apiResponse: callResult?.apiResponse
       });
     }
-    
-    console.log(`✅ Extracted Call ID from API: ${callId}`);
 
-    // IMPORTANT: Do NOT create call record here
-    // Call records will ONLY be created when webhook arrives
-    // This ensures call history only shows calls with complete webhook data
-    console.log(`📞 Call initiated. Call ID: ${callId}. Waiting for webhook to create call record...`);
-
+    // IMPORTANT: Do NOT create call record here (webhook creates the canonical record)
     res.json({
       success: true,
       message: 'Call initiated successfully. Call details will appear in history once the webhook is received.',
-      callId: callId,
+      provider: providerName,
+      callId,
       data: {
-        callId: callId,
-        fromNumber: fromNumber,
-        toNumber: toNumber,
-        apiResponse: apiResponse,
-        webhookUrl: webhookUrl,
+        callId,
+        fromNumber,
+        toNumber,
+        apiResponse: callResult?.apiResponse,
+        webhookUrl: providerName === 'cloudtelephony' ? webhookUrlCloudTelephony : webhookUrlDeepCall,
         note: 'Call record will be created when webhook is received'
       }
     });
@@ -168,6 +168,306 @@ const makeCall = async (req, res) => {
       error: error.message
     });
   }
+};
+
+// @desc    Get current company CATI provider configuration
+// @route   GET /api/cati/provider-config
+// @access  Private (Company Admin only)
+const getProviderConfig = async (req, res) => {
+  try {
+    const companyId = req.user.company;
+    const company = await Company.findById(companyId).select('catiProviderConfig').lean();
+    if (!company) {
+      return res.status(404).json({ success: false, message: 'Company not found' });
+    }
+
+    return res.status(200).json({
+      success: true,
+      data: company.catiProviderConfig || null
+    });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: 'Server error', error: error.message });
+  }
+};
+
+// @desc    Update company CATI provider configuration
+// @route   PUT /api/cati/provider-config
+// @access  Private (Company Admin only)
+const updateProviderConfig = async (req, res) => {
+  try {
+    const companyId = req.user.company;
+    const config = req.body || {};
+
+    // Minimal validation & normalization
+    const enabledProviders = Array.isArray(config.enabledProviders) ? config.enabledProviders : undefined;
+    const selectionMethod = config.selectionMethod;
+    const activeProvider = config.activeProvider;
+    const fallbackProvider = config.fallbackProvider;
+    const percentages = config.percentages;
+    const providersConfig = config.providersConfig;
+
+    const update = {};
+    if (enabledProviders) update['catiProviderConfig.enabledProviders'] = enabledProviders;
+    if (selectionMethod) update['catiProviderConfig.selectionMethod'] = selectionMethod;
+    if (activeProvider) update['catiProviderConfig.activeProvider'] = activeProvider;
+    if (fallbackProvider) update['catiProviderConfig.fallbackProvider'] = fallbackProvider;
+    if (percentages) update['catiProviderConfig.percentages'] = percentages;
+    if (providersConfig) update['catiProviderConfig.providersConfig'] = providersConfig;
+
+    const company = await Company.findByIdAndUpdate(companyId, { $set: update }, { new: true, runValidators: true })
+      .select('catiProviderConfig')
+      .lean();
+
+    if (!company) {
+      return res.status(404).json({ success: false, message: 'Company not found' });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: 'CATI provider configuration updated',
+      data: company.catiProviderConfig
+    });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: 'Server error', error: error.message });
+  }
+};
+
+// @desc    Receive webhook from CloudTelephony (GET query params)
+// @route   GET /api/cati/webhook/cloudtelephony
+// @access  Public
+const receiveCloudTelephonyWebhook = async (req, res) => {
+  // Respond immediately to avoid provider retries
+  res.status(200).send('OK');
+
+  setImmediate(async () => {
+    const logDir = path.join(__dirname, '../logs');
+    const logFile = path.join(logDir, 'cloudtelephony-webhook-requests.log');
+    const timestamp = new Date().toISOString();
+    try {
+      // Ensure log directory exists
+      if (!fs.existsSync(logDir)) {
+        fs.mkdirSync(logDir, { recursive: true });
+      }
+
+      const ip = req.ip || req.headers['x-real-ip'] || req.headers['x-forwarded-for'] || 'unknown';
+      const userAgent = req.headers['user-agent'] || 'unknown';
+
+      // Always write a minimal line (safe + small), and write detailed entry only when debug enabled.
+      const minimalLine = `\n[${timestamp}] CLOUDTELEPHONY WEBHOOK ip=${safePreview(ip, 120)} ua=${safePreview(userAgent, 200)} url=${safePreview(req.url, 500)} queryPreview=${safePreview(req.query, 800)}\n`;
+      fs.promises.appendFile(logFile, minimalLine, 'utf8').catch(() => {});
+
+      if (shouldDebugWebhook()) {
+        const debugEntry = {
+          timestamp,
+          ip,
+          userAgent,
+          method: req.method,
+          url: req.url,
+          queryKeys: req.query && typeof req.query === 'object' ? Object.keys(req.query).slice(0, 80) : [],
+          query: req.query
+        };
+        const debugLine = `\n${'='.repeat(80)}\n[${timestamp}] CLOUDTELEPHONY WEBHOOK (DEBUG)\n${safePreview(debugEntry, 8000)}\n${'='.repeat(80)}\n`;
+        fs.promises.appendFile(logFile, debugLine, 'utf8').catch(() => {});
+      }
+
+      const provider = new CloudTelephonyProvider({});
+      const normalized = provider.normalizeWebhookData(null, req.method, req.query, req.body);
+
+      const callId = normalized?.callId ? String(normalized.callId).trim() : null;
+      if (!callId) {
+        console.error('❌ [CloudTelephony] Webhook missing callId/CallSid. Query preview:', safePreview(req.query, 800));
+        return;
+      }
+
+      // Extract/clean numbers
+      const fromNum = (normalized.fromNumber || '').toString().replace(/[^0-9]/g, '');
+      const toNum = (normalized.toNumber || '').toString().replace(/[^0-9]/g, '');
+      const uid = normalized.uid ? String(normalized.uid) : null;
+
+      let queueEntry = null;
+      if (uid) {
+        queueEntry = await CatiRespondentQueue.findOne({ lastCallProviderUid: uid }).sort({ assignedAt: -1 });
+      }
+      if (!queueEntry && toNum) {
+        // Fallback: recent queue entry match by respondent phone (best-effort)
+        queueEntry = await CatiRespondentQueue.findOne({
+          'respondentContact.phone': { $regex: toNum.slice(-10) },
+          status: { $in: ['assigned', 'calling'] },
+          lastAttemptedAt: { $gte: new Date(Date.now() - 60 * 60 * 1000) } // 60 mins
+        }).sort({ assignedAt: -1 });
+      }
+
+      // Resolve company from survey (for proper company-admin visibility in call lists)
+      let resolvedCompanyId = null;
+      if (queueEntry?.survey) {
+        try {
+          const Survey = require('../models/Survey');
+          const survey = await Survey.findById(queueEntry.survey).select('company').lean();
+          resolvedCompanyId = survey?.company || null;
+        } catch (_) {
+          resolvedCompanyId = null;
+        }
+      }
+
+      let callRecord = await CatiCall.findOne({ callId });
+      if (!callRecord) {
+        callRecord = new CatiCall({
+          callId,
+          survey: queueEntry?.survey || null,
+          queueEntry: queueEntry?._id || null,
+          company: resolvedCompanyId,
+          createdBy: queueEntry?.assignedTo || null,
+          fromNumber: fromNum,
+          toNumber: toNum,
+          webhookReceived: true,
+          webhookReceivedAt: new Date(),
+          metadata: {
+            provider: 'cloudtelephony',
+            uid: uid || undefined
+          }
+        });
+      }
+
+      const update = {
+        webhookData: req.query || {},
+        webhookReceived: true,
+        webhookReceivedAt: new Date(),
+        updatedAt: new Date(),
+        callStatus: normalized.callStatus || 'completed',
+        callDuration: Number.isFinite(normalized.callDuration) ? normalized.callDuration : (parseInt(normalized.callDuration || '0', 10) || 0),
+        recordingUrl: normalized.recordingUrl || null,
+        // Ensure existing records created with earlier mapping get corrected
+        fromNumber: fromNum || callRecord.fromNumber,
+        toNumber: toNum || callRecord.toNumber,
+        metadata: {
+          ...(callRecord.metadata || {}),
+          provider: 'cloudtelephony',
+          uid: uid || (callRecord.metadata && callRecord.metadata.uid),
+          deskphoneNumber: normalized.deskphoneNumber || (callRecord.metadata && callRecord.metadata.deskphoneNumber)
+        }
+      };
+
+      // Parse timestamps if present
+      const parseDate = (v) => {
+        if (!v) return null;
+        const d = new Date(v);
+        return isNaN(d.getTime()) ? null : d;
+      };
+      const st = parseDate(normalized.startTime);
+      const et = parseDate(normalized.endTime);
+      if (st) update.callStartTime = st;
+      if (et) update.callEndTime = et;
+
+      // Save/update
+      callRecord.set(update);
+      await callRecord.save();
+
+      // Link queue entry to call record for UI retrieval
+      if (queueEntry && (!queueEntry.callRecord || queueEntry.callRecord.toString() !== callRecord._id.toString())) {
+        queueEntry.callRecord = callRecord._id;
+        queueEntry.lastCallProvider = 'cloudtelephony';
+        queueEntry.lastCallProviderUid = uid;
+        queueEntry.lastCallProviderCallId = callId;
+        await queueEntry.save();
+      }
+
+      // If a response already exists for this queue entry, ensure it references the correct provider callId
+      // CRITICAL FIX: Only update responses created within the last 5 hours to prevent updating old responses
+      if (queueEntry?.response) {
+        try {
+          const fiveHoursAgo = new Date(Date.now() - 5 * 60 * 60 * 1000);
+          
+          // First, check if the response exists and was created recently
+          const existingResponse = await SurveyResponse.findById(queueEntry.response)
+            .select('_id responseId call_id createdAt')
+            .lean();
+          
+          if (existingResponse) {
+            const responseAge = existingResponse.createdAt ? new Date(existingResponse.createdAt) : null;
+            const isRecent = responseAge && responseAge >= fiveHoursAgo;
+            
+            // Check if response already has a different call_id (prevent overwriting)
+            const hasDifferentCallId = existingResponse.call_id && 
+                                      existingResponse.call_id !== callId && 
+                                      existingResponse.call_id.trim() !== '';
+            
+            if (!isRecent) {
+              console.warn(`⚠️ [CloudTelephony] Skipping call_id update for old response ${existingResponse.responseId || existingResponse._id} (created: ${responseAge ? responseAge.toISOString() : 'N/A'}, required: within last 5 hours)`);
+            } else if (hasDifferentCallId) {
+              console.warn(`⚠️ [CloudTelephony] Skipping call_id update - response ${existingResponse.responseId || existingResponse._id} already has call_id: ${existingResponse.call_id}`);
+            } else {
+              // Safe to update: response is recent and doesn't have a conflicting call_id
+              await SurveyResponse.updateOne(
+                { _id: queueEntry.response },
+                { $set: { call_id: callId, 'metadata.callProvider': 'cloudtelephony' } }
+              );
+              console.log(`✅ [CloudTelephony] Updated call_id for recent response ${existingResponse.responseId || existingResponse._id}`);
+            }
+          } else {
+            // Response doesn't exist - might have been deleted, try to find most recent response for this queue entry
+            const recentResponse = await SurveyResponse.findOne({
+              'metadata.respondentQueueId': queueEntry._id,
+              createdAt: { $gte: fiveHoursAgo }
+            })
+            .select('_id responseId call_id createdAt')
+            .sort({ createdAt: -1 })
+            .lean();
+            
+            if (recentResponse) {
+              const hasDifferentCallId = recentResponse.call_id && 
+                                        recentResponse.call_id !== callId && 
+                                        recentResponse.call_id.trim() !== '';
+              
+              if (!hasDifferentCallId) {
+                await SurveyResponse.updateOne(
+                  { _id: recentResponse._id },
+                  { $set: { call_id: callId, 'metadata.callProvider': 'cloudtelephony' } }
+                );
+                console.log(`✅ [CloudTelephony] Updated call_id for recent response found by queue entry: ${recentResponse.responseId || recentResponse._id}`);
+              } else {
+                console.warn(`⚠️ [CloudTelephony] Skipping call_id update - recent response ${recentResponse.responseId || recentResponse._id} already has call_id: ${recentResponse.call_id}`);
+              }
+            }
+          }
+        } catch (e) {
+          console.warn('⚠️ [CloudTelephony] Failed to update SurveyResponse.call_id for queueEntry.response:', e.message);
+        }
+      }
+
+      // Background S3 upload (non-blocking, only if URL exists)
+      if (update.recordingUrl && typeof update.recordingUrl === 'string' && update.recordingUrl.startsWith('http')) {
+        const callIdForUpload = callRecord.callId;
+        const recordingUrlForUpload = update.recordingUrl;
+        setImmediate(async () => {
+          try {
+            const callForUpload = await CatiCall.findOne({ callId: callIdForUpload }).select('s3AudioUrl s3AudioUploadStatus').lean();
+            if (callForUpload && (!callForUpload.s3AudioUrl || callForUpload.s3AudioUploadStatus !== 'uploaded')) {
+              const { downloadAndUploadCatiAudio } = require('../utils/cloudStorage');
+              const uploadResult = await downloadAndUploadCatiAudio(recordingUrlForUpload, callIdForUpload, { source: 'cloudtelephony' });
+              if (uploadResult?.s3Key) {
+                await CatiCall.updateOne(
+                  { callId: callIdForUpload },
+                  { $set: { s3AudioUrl: uploadResult.s3Key, s3AudioUploadedAt: new Date(), s3AudioUploadStatus: 'uploaded' } }
+                );
+              }
+            }
+          } catch (e) {
+            console.error('❌ [CloudTelephony] Background S3 upload failed:', e.message);
+            await CatiCall.updateOne(
+              { callId: callIdForUpload },
+              { $set: { s3AudioUploadStatus: 'failed', s3AudioUploadError: e.message, s3AudioUploadedAt: new Date() } }
+            ).catch(() => {});
+          }
+        });
+      }
+
+      if (shouldDebugWebhook()) {
+        console.log(`✅ [CloudTelephony] Webhook processed. callId=${callId}, uid=${uid || 'n/a'}`);
+      }
+    } catch (error) {
+      console.error('❌ [CloudTelephony] Webhook processing error:', error.message);
+    }
+  });
 };
 
 // @desc    Receive webhook from DeepCall
@@ -195,33 +495,37 @@ const receiveWebhook = async (req, res) => {
         fs.mkdirSync(logDir, { recursive: true });
       }
 
-      // Prepare log entry
-      const logEntry = {
-        timestamp: timestamp,
-        ip: req.ip || req.headers['x-real-ip'] || req.headers['x-forwarded-for'] || 'unknown',
-        userAgent: req.headers['user-agent'] || 'unknown',
-        contentType: req.headers['content-type'] || 'unknown',
-        headers: req.headers,
-        body: req.body,
-        query: req.query,
+      const ip = req.ip || req.headers['x-real-ip'] || req.headers['x-forwarded-for'] || 'unknown';
+      const userAgent = req.headers['user-agent'] || 'unknown';
+      const contentType = req.headers['content-type'] || 'unknown';
+
+      // Minimal logs by default (avoid large stringify / sync I/O)
+      console.log('📥 Webhook received:', {
+        ts: timestamp,
+        ip,
+        contentType,
         method: req.method,
         url: req.url
-      };
+      });
 
-      // Write to log file (append mode)
-      const logLine = `\n${'='.repeat(80)}\n[${timestamp}] WEBHOOK REQUEST RECEIVED\n${'='.repeat(80)}\n${JSON.stringify(logEntry, null, 2)}\n${'='.repeat(80)}\n`;
-      fs.appendFileSync(logFile, logLine, 'utf8');
+      // Optional debug logging (truncated, async)
+      if (shouldDebugWebhook()) {
+        const logEntry = {
+          timestamp,
+          ip,
+          userAgent,
+          contentType,
+          method: req.method,
+          url: req.url,
+          bodyKeys: req.body && typeof req.body === 'object' ? Object.keys(req.body).slice(0, 50) : [],
+          queryKeys: req.query && typeof req.query === 'object' ? Object.keys(req.query).slice(0, 50) : [],
+          rawBodyLength: req.rawBody ? req.rawBody.length : 0,
+          rawBodyPreview: req.rawBody ? req.rawBody.substring(0, 500) : undefined
+        };
 
-      // Log raw request for debugging (console)
-      console.log('📥 ========== WEBHOOK RECEIVED ==========');
-      console.log('📥 Timestamp:', timestamp);
-      console.log('📥 IP:', logEntry.ip);
-      console.log('📥 User-Agent:', logEntry.userAgent);
-      console.log('📥 Content-Type:', logEntry.contentType);
-      console.log('📥 Headers:', JSON.stringify(req.headers, null, 2));
-      console.log('📥 Body:', JSON.stringify(req.body, null, 2));
-      console.log('📥 Query:', JSON.stringify(req.query, null, 2));
-      console.log('📥 ======================================');
+        const logLine = `\n${'='.repeat(80)}\n[${timestamp}] WEBHOOK REQUEST RECEIVED\n${safePreview(logEntry, 8000)}\n${'='.repeat(80)}\n`;
+        fs.promises.appendFile(logFile, logLine, 'utf8').catch(() => {});
+      }
 
     // According to DeepCall docs: https://deepcall.com/api/push-report-webhook
     // The webhook sends data in JSON format directly in the request body
@@ -1610,7 +1914,7 @@ const getRecording = async (req, res) => {
       }
     }
 
-    // Fallback to DeepCall URL (backward compatibility)
+    // Fallback to provider recordingUrl (backward compatibility)
     if (!call.recordingUrl) {
       return res.status(404).json({
         success: false,
@@ -1618,19 +1922,52 @@ const getRecording = async (req, res) => {
       });
     }
 
-    console.log(`🎵 [AUDIO URL LOG] Quality Agent - Using DeepCall URL fallback for callId: ${callId}`);
-    console.log(`🎵 [AUDIO URL LOG] DeepCall URL: ${call.recordingUrl}`);
-    console.log(`🎵 [AUDIO URL LOG] Source: DeepCall (not yet migrated to S3)`);
-    console.log(`🎵 [AUDIO URL LOG] ✅ PROXIED - Backend will download from DeepCall and stream to client (NO direct access)`);
+    const recordingUrlStr = String(call.recordingUrl);
+    let recordingHost = '';
+    try {
+      recordingHost = new URL(recordingUrlStr).hostname || '';
+    } catch (_) {
+      recordingHost = '';
+    }
+    const providerName = call?.metadata?.provider || (recordingHost.includes('sarv.com') ? 'deepcall' : 'unknown');
+    const isDeepCallRecording = providerName === 'deepcall' || recordingHost.includes('sarv.com');
 
-    // Fetch the recording from DeepCall
-    // Try multiple authentication methods as DeepCall might use different auth mechanisms
+    console.log(`🎵 [AUDIO URL LOG] Using provider recordingUrl fallback for callId: ${callId}`);
+    console.log(`🎵 [AUDIO URL LOG] Provider: ${providerName}`);
+    console.log(`🎵 [AUDIO URL LOG] URL Host: ${recordingHost || 'unknown'}`);
+    console.log(`🎵 [AUDIO URL LOG] ✅ PROXIED - Backend will download from provider and stream to client (NO direct access)`);
+
+    // Fetch the recording
+    // DeepCall requires auth; CloudTelephony generally provides a direct URL.
     let recordingResponse = null;
     let lastError = null;
 
-    // Method 1: Try with token as query parameter (common for DeepCall)
+    if (!isDeepCallRecording) {
+      // Non-DeepCall: do NOT mutate query params (could break signed URLs)
+      try {
+        recordingResponse = await axios.get(recordingUrlStr, {
+          headers: {
+            'User-Agent': 'OpineCATI/1.0',
+            'Accept': 'audio/*, */*'
+          },
+          responseType: 'stream',
+          timeout: 30000,
+          maxRedirects: 5
+        });
+        console.log('✅ Successfully fetched provider recording (no auth)');
+      } catch (e) {
+        console.error('❌ Failed to fetch provider recording:', e.message);
+        return res.status(500).json({
+          success: false,
+          message: 'Failed to fetch recording from provider',
+          error: e.message,
+          details: e.response?.status ? `HTTP ${e.response.status}` : 'Network error'
+        });
+      }
+    } else {
+      // DeepCall: try multiple authentication methods
     try {
-      const urlWithToken = new URL(call.recordingUrl);
+        const urlWithToken = new URL(recordingUrlStr);
       urlWithToken.searchParams.set('token', DEEPCALL_TOKEN);
       urlWithToken.searchParams.set('user_id', DEEPCALL_USER_ID);
       
@@ -1650,7 +1987,7 @@ const getRecording = async (req, res) => {
       
       // Method 2: Try with Bearer token in header
       try {
-        recordingResponse = await axios.get(call.recordingUrl, {
+          recordingResponse = await axios.get(recordingUrlStr, {
           headers: {
             'Authorization': `Bearer ${DEEPCALL_TOKEN}`,
             'User-Agent': 'SarvCT/1.0',
@@ -1667,7 +2004,7 @@ const getRecording = async (req, res) => {
         
         // Method 3: Try without authentication (URL might be public)
         try {
-          recordingResponse = await axios.get(call.recordingUrl, {
+            recordingResponse = await axios.get(recordingUrlStr, {
             headers: {
               'User-Agent': 'SarvCT/1.0',
               'Accept': 'audio/mpeg, audio/*, */*'
@@ -1687,6 +2024,7 @@ const getRecording = async (req, res) => {
             error: error3.message,
             details: error3.response?.status ? `HTTP ${error3.response.status}` : 'Network error'
           });
+          }
         }
       }
     }
@@ -1735,10 +2073,13 @@ const getRecording = async (req, res) => {
 module.exports = {
   makeCall,
   receiveWebhook,
+  receiveCloudTelephonyWebhook,
   getCalls,
   getCallById,
   getCallStats,
   checkCallStatus,
-  getRecording
+  getRecording,
+  getProviderConfig,
+  updateProviderConfig
 };
 

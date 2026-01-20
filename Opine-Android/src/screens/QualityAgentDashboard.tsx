@@ -26,6 +26,7 @@ import ResponseDetailsModal from '../components/ResponseDetailsModal';
 import { appUpdateService, UpdateInfo } from '../services/appUpdateService';
 import { AppUpdateModal } from '../components/AppUpdateModal';
 import NetInfo from '@react-native-community/netinfo';
+import { analyticsService } from '../services/analyticsService';
 
 // Performance monitoring
 const performanceLog: { [key: string]: number[] } = {};
@@ -304,6 +305,19 @@ export default function QualityAgentDashboard({ navigation, user, onLogout }: Qu
 
   // PERFORMANCE FIX: Debounced and cancellable request handler
   const handleStartQualityCheck = useCallback(async (interviewMode?: 'capi' | 'cati') => {
+    // Track QC button click (lightweight - no overhead)
+    if (interviewMode === 'capi') {
+      analyticsService.track('Button Clicked', {
+        button_name: 'Start CAPI QC',
+        location: 'Quality Agent Dashboard',
+      });
+    } else if (interviewMode === 'cati') {
+      analyticsService.track('Button Clicked', {
+        button_name: 'Start CATI QC',
+        location: 'Quality Agent Dashboard',
+      });
+    }
+    
     // PERFORMANCE FIX: Debounce rapid clicks (300ms)
     const now = Date.now();
     if (now - lastRequestTimeRef.current < 300) {

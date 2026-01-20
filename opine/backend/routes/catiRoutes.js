@@ -3,11 +3,14 @@ const router = express.Router();
 const {
   makeCall,
   receiveWebhook,
+  receiveCloudTelephonyWebhook,
   getCalls,
   getCallById,
   getCallStats,
   checkCallStatus,
-  getRecording
+  getRecording,
+  getProviderConfig,
+  updateProviderConfig
 } = require('../controllers/catiController');
 const { protect, authorize } = require('../middleware/auth');
 
@@ -40,6 +43,10 @@ router.get('/webhook', (req, res) => {
   });
 });
 
+// CloudTelephony webhook endpoint (public, no authentication required)
+// CloudTelephony sends GET requests with query parameters
+router.get('/webhook/cloudtelephony', receiveCloudTelephonyWebhook);
+
 // POST handler for actual webhook data
 // According to DeepCall docs, webhook receives JSON directly
 // But DeepCall may also send as form-encoded, so we handle both
@@ -50,6 +57,10 @@ router.use(protect);
 
 // Make a call (company_admin only)
 router.post('/make-call', authorize('company_admin'), makeCall);
+
+// Provider configuration (company_admin only)
+router.get('/provider-config', authorize('company_admin'), getProviderConfig);
+router.put('/provider-config', authorize('company_admin'), updateProviderConfig);
 
 // Get all calls (company_admin only)
 router.get('/calls', authorize('company_admin'), getCalls);

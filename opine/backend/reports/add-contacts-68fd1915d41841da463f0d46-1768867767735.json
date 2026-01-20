@@ -1,0 +1,23 @@
+{
+  "generatedAt": "2026-01-20T00:09:27.735Z",
+  "surveyId": "68fd1915d41841da463f0d46",
+  "surveyName": "West Bengal Opinion Poll (2025 - 2026)",
+  "acName": "Jorasanko",
+  "excelFile": "/var/www/Report-Generation/ac165_output.xlsx",
+  "totalRowsInExcel": 5000,
+  "validContacts": 5000,
+  "errors": [],
+  "newContactsAdded": 4953,
+  "queueEntriesCreated": 4917,
+  "duplicateCleanup": {
+    "totalEntries": 647956,
+    "uniquePhones": 647763,
+    "duplicateCount": 193,
+    "deleted": 193
+  },
+  "finalStatus": {
+    "pendingTargetAC": 4755,
+    "totalPending": 580942
+  },
+  "durationSeconds": "21.90"
+}

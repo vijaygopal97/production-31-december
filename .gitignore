@@ -9,6 +9,7 @@ package-lock.json
 .env.development
 **/.env
 **/*.env.backup.*
+**/.env.backup-*
 
 # Logs
 *.log
@@ -68,6 +69,10 @@ recovery-*/
 **/*backup*.csv
 **/*_backup_*.json
 **/*_backup_*.csv
+
+# Spreadsheets / exports (not source code)
+Report-Generation/*.xlsx
+Report-Generation/**/*.xlsx
 
 # Node modules in subdirectories (already covered but explicit)
 **/node_modules/

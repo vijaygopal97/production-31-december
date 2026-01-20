@@ -60,3 +60,6 @@ echo "mongodb://${MONGO_USER}:${MONGO_PASS}@${PRIMARY_PRIVATE_IP}:27017,${SECOND
 
 
 
+
+
+

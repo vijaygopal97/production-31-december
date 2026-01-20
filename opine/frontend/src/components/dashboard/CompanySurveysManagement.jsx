@@ -35,9 +35,11 @@ import {
 } from 'lucide-react';
 import SurveyBuilder from './SurveyBuilder';
 import { surveyAPI } from '../../services/api';
+import { useAuth } from '../../contexts/AuthContext';
 
 const CompanySurveysManagement = () => {
   const navigate = useNavigate();
+  const { user } = useAuth();
   const [showSurveyBuilder, setShowSurveyBuilder] = useState(false);
   const [editingSurvey, setEditingSurvey] = useState(null);
   const [surveys, setSurveys] = useState([]);
@@ -206,6 +208,9 @@ const CompanySurveysManagement = () => {
     } else if (action === 'findings') {
       // Navigate to Findings Dashboard page
       navigate(`/company/surveys/${surveyId}/findings`);
+    } else if (action === 'booster-checks') {
+      // Navigate to Booster Checks page
+      navigate(`/company/surveys/${surveyId}/booster-checks`);
     } else {
       // Implement other survey actions
       // Action not implemented yet
@@ -711,6 +716,16 @@ const CompanySurveysManagement = () => {
                     <Brain className="w-4 h-4" />
                     <span>Findings</span>
                   </button>
+                  {user?.userType === 'company_admin' && (
+                    <button
+                      onClick={() => handleSurveyAction(survey._id || survey.id, 'booster-checks')}
+                      className="flex items-center space-x-1 px-3 py-1.5 bg-pink-100 text-pink-700 rounded-lg hover:bg-pink-200 transition-colors text-sm font-medium"
+                      title="Booster Checks"
+                    >
+                      <Zap className="w-4 h-4" />
+                      <span>Booster Checks</span>
+                    </button>
+                  )}
                   <button
                     onClick={() => setDeleteConfirm(survey._id || survey.id)}
                     className="flex items-center space-x-1 px-3 py-1.5 bg-red-100 text-red-700 rounded-lg hover:bg-red-200 transition-colors text-sm font-medium"

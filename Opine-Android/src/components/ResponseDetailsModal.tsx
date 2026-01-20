@@ -1528,6 +1528,7 @@ export default function ResponseDetailsModal({
     switch (questionType) {
       case 'audioStatus':
         // Rejection options: anything that's not "1", "4", or "7"
+        // Note: "9" (Interviewer acting as respondent) is also a rejection option
         return value !== '1' && value !== '4' && value !== '7';
       case 'gender':
         // Rejection options: "2" (Not Matched), "3" (Male answering on behalf of female)
@@ -1583,6 +1584,7 @@ export default function ResponseDetailsModal({
     
     // Q1: Audio Status - if NOT option '1', hide ALL subsequent questions (Q2-Q8)
     // Check this FIRST before anything else
+    // Note: Options '2', '3', '4', '7', '8', '9' are all rejective and hide subsequent questions
     if (audioStatus !== '' && audioStatus !== null && audioStatus !== undefined && audioStatus !== '1') {
       // If audioStatus exists and is not '1', only show audioStatus question itself
       // Hide everything else (Q2-Q8 including Q6 name)
@@ -3437,8 +3439,13 @@ export default function ResponseDetailsModal({
                       style={styles.radioItem}
                     />
                     <RadioButton.Item 
-                      label="8 - Duplicate Audio (ডুপ্লিকেট অডিও)" 
+                      label="8 - Fraud interview (প্রতারণামূলক সাক্ষাৎকার)" 
                       value="8" 
+                      style={styles.radioItem}
+                    />
+                    <RadioButton.Item 
+                      label="9 - Interviewer acting as respondent (সাক্ষাৎকার গ্রহণকারী উত্তরদাতার ভূমিকা পালন করছেন।)" 
+                      value="9" 
                       style={styles.radioItem}
                     />
                   </RadioButton.Group>

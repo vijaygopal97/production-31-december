@@ -1,0 +1,16 @@
+{
+  "reportDate": "2026-01-16",
+  "totalUniqueACsInReport": 49,
+  "totalACsInFile": 294,
+  "missingACs": {
+    "count": 6,
+    "acNames": [
+      "Asnsol Dakshin",
+      "JALPAIGURI (SC)",
+      "MEKLIGANJ (SC)",
+      "Mongalkote",
+      "Pandabeswar",
+      "Raipur"
+    ]
+  }
+}

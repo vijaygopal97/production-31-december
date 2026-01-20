@@ -91,16 +91,38 @@ const getOrCreateBatch = async (surveyId, interviewerId) => {
  */
 const addResponseToBatch = async (responseId, surveyId, interviewerId) => {
   try {
-    // CRITICAL: Check if response is auto-rejected or rejected before adding to batch
-    const response = await SurveyResponse.findById(responseId).select('status verificationData interviewer');
+    // CRITICAL: Check if response is auto-rejected, rejected, or abandoned before adding to batch
+    // These responses should NEVER be added to QC batches as they are already in final states
+    const response = await SurveyResponse.findById(responseId).select('status verificationData interviewer abandonedReason');
     if (!response) {
       throw new Error(`Response ${responseId} not found`);
     }
     
-    // Skip if response is rejected (auto-rejected or manually rejected)
+    // CRITICAL FIX: Skip if response is rejected (auto-rejected or manually rejected)
     if (response.status === 'Rejected' || response.verificationData?.autoRejected === true) {
       console.log(`⏭️  Skipping batch addition for rejected response ${responseId} (status: ${response.status}, autoRejected: ${response.verificationData?.autoRejected})`);
       return; // Don't add rejected responses to batches
+    }
+    
+    // CRITICAL FIX: Skip if response is abandoned (has abandonedReason or status is abandoned)
+    // Abandoned responses must remain in 'abandoned' status and should NOT be processed by QC
+    const hasAbandonedReason = response.abandonedReason && 
+                               typeof response.abandonedReason === 'string' &&
+                               response.abandonedReason.trim() !== '' &&
+                               response.abandonedReason !== 'No reason specified' &&
+                               response.abandonedReason.toLowerCase() !== 'null' &&
+                               response.abandonedReason.toLowerCase() !== 'undefined';
+    
+    if (response.status === 'abandoned' || hasAbandonedReason) {
+      console.log(`⏭️  Skipping batch addition for abandoned response ${responseId} (status: ${response.status}, abandonedReason: ${response.abandonedReason || 'none'})`);
+      return; // Don't add abandoned responses to batches - they must remain abandoned
+    }
+    
+    // CRITICAL FIX: Skip if response has any final status (Terminated, Approved)
+    const finalStatuses = ['Terminated', 'Approved'];
+    if (finalStatuses.includes(response.status)) {
+      console.log(`⏭️  Skipping batch addition for response with final status ${responseId} (status: ${response.status})`);
+      return; // Don't add final status responses to batches
     }
     
     if (!interviewerId) {

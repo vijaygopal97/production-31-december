@@ -1,0 +1,67 @@
+CAPI RESPONSES WITH NO AUDIO - SUMMARY REPORT
+Generated: 2026-01-18T01:22:27.905Z
+
+================================================================================
+SUMMARY STATISTICS
+================================================================================
+
+Current Queue (AvailableAssignment):
+  Total responses with no audio: 507
+  Percentage of queue: 81.9%
+
+All Matching Filter (Last 30 Days):
+  Total responses with no audio: 1909
+  Percentage of matching responses: 54.4%
+
+================================================================================
+DATE DISTRIBUTION
+================================================================================
+
+2026-01-20: 108 responses
+2026-01-07: 39 responses
+2026-01-06: 24 responses
+2026-01-05: 100 responses
+2026-01-04: 296 responses
+2026-01-03: 221 responses
+2026-01-02: 202 responses
+2026-01-01: 114 responses
+2025-12-31: 161 responses
+2025-12-30: 69 responses
+2025-12-29: 211 responses
+2025-12-28: 9 responses
+2025-12-26: 45 responses
+2025-12-25: 139 responses
+2025-12-24: 161 responses
+2025-12-23: 6 responses
+2025-12-22: 4 responses
+
+================================================================================
+FILES GENERATED
+================================================================================
+
+1. capi_queue_no_audio.csv
+   - Responses currently in queue with no audio
+   - Total: 507 responses
+   - Location: /var/www/opine/backend/reports/capi_queue_no_audio.csv
+
+2. capi_all_no_audio.csv
+   - All responses matching filter with no audio (last 30 days)
+   - Total: 1909 responses
+   - Location: /var/www/opine/backend/reports/capi_all_no_audio.csv
+   - Includes "In Queue" column to identify queue entries
+
+3. capi_no_audio_summary.txt
+   - This summary file
+   - Location: /var/www/opine/backend/reports/capi_no_audio_summary.txt
+
+================================================================================
+NOTES
+================================================================================
+
+- These responses have no audioRecording.audioUrl (null or missing)
+- All are CAPI (Face To Face) interview mode
+- All are in 'Pending_Approval' status
+- All match the current QC queue filter (excluding corrupted local paths)
+- Date filter: Last 30 days only
+
+================================================================================

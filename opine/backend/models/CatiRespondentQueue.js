@@ -57,6 +57,23 @@ const catiRespondentQueueSchema = new mongoose.Schema({
     ref: 'CatiCall'
   },
   
+  // Latest provider metadata for robust webhook correlation (especially for GET-webhook providers)
+  lastCallProvider: {
+    type: String,
+    enum: ['deepcall', 'cloudtelephony'],
+    default: null,
+    index: true
+  },
+  lastCallProviderUid: {
+    type: String,
+    default: null,
+    index: true
+  },
+  lastCallProviderCallId: {
+    type: String,
+    default: null
+  },
+  
   // Call attempt tracking
   callAttempts: [{
     attemptNumber: { type: Number, required: true },
@@ -65,7 +82,9 @@ const catiRespondentQueueSchema = new mongoose.Schema({
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User'
     },
-    callId: { type: String }, // DeepCall callId
+    callId: { type: String }, // Provider callId (DeepCall callId / CloudTelephony CallSid)
+    provider: { type: String }, // 'deepcall' | 'cloudtelephony'
+    providerUid: { type: String }, // CloudTelephony uid (optional)
     status: { type: String },
     reason: { type: String }, // Abandonment reason if applicable
     scheduledFor: { type: Date }, // If call_later, when to call again

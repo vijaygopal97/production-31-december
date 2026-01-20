@@ -1,0 +1,23 @@
+{
+  "generatedAt": "2026-01-16T20:19:52.978Z",
+  "surveyId": "68fd1915d41841da463f0d46",
+  "surveyName": "West Bengal Opinion Poll (2025 - 2026)",
+  "acName": "Mahisadal",
+  "excelFile": "/var/www/Report-Generation/ac208_output.xlsx",
+  "totalRowsInExcel": 5000,
+  "validContacts": 5000,
+  "errors": [],
+  "newContactsAdded": 4996,
+  "queueEntriesCreated": 4992,
+  "duplicateCleanup": {
+    "totalEntries": 629075,
+    "uniquePhones": 628946,
+    "duplicateCount": 129,
+    "deleted": 129
+  },
+  "finalStatus": {
+    "pendingTargetAC": 4869,
+    "totalPending": 528222
+  },
+  "durationSeconds": "20.96"
+}

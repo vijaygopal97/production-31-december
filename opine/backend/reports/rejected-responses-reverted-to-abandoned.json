@@ -1,0 +1,2008 @@
+{
+  "totalReverted": 286,
+  "revertedAt": "2026-01-13T12:38:02.156Z",
+  "responses": [
+    {
+      "responseId": "ea44dfdb-07dc-4db8-8398-fc536957eb94",
+      "status": "Rejected",
+      "abandonedReason": "respondent_not_available",
+      "createdAt": "2026-01-02T10:48:28.440Z",
+      "updatedAt": "2026-01-04T10:02:51.297Z"
+    },
+    {
+      "responseId": "addd1280-1054-40b1-8344-2421dc8a50ff",
+      "status": "Rejected",
+      "abandonedReason": "not_reachable",
+      "createdAt": "2025-12-31T06:06:39.628Z",
+      "updatedAt": "2026-01-02T23:34:13.523Z"
+    },
+    {
+      "responseId": "6b504375-6dc7-4dc0-a7d3-f1a81d059d6b",
+      "status": "Rejected",
+      "abandonedReason": "rejected",
+      "createdAt": "2025-12-31T06:19:12.019Z",
+      "updatedAt": "2026-01-02T23:34:13.522Z"
+    },
+    {
+      "responseId": "27b92775-7150-4e87-9a3b-63047c1fe5f5",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-08T08:21:43.178Z",
+      "updatedAt": "2026-01-08T08:21:43.180Z"
+    },
+    {
+      "responseId": "95622b7b-6675-43b2-9bd0-a5f14841cfac",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2025-12-31T14:14:34.946Z",
+      "updatedAt": "2026-01-02T23:34:13.523Z"
+    },
+    {
+      "responseId": "e49b6d01-b299-4267-9028-35aa3a2b7478",
+      "status": "Rejected",
+      "abandonedReason": "Interview_Abandoned_Early",
+      "createdAt": "2026-01-08T04:21:46.663Z",
+      "updatedAt": "2026-01-08T04:21:51.137Z"
+    },
+    {
+      "responseId": "b6274efa-5a89-4b22-94f9-650b5ae14bb8",
+      "status": "Rejected",
+      "abandonedReason": "Interview_Abandoned_Early",
+      "createdAt": "2026-01-08T04:24:57.175Z",
+      "updatedAt": "2026-01-08T04:24:59.566Z"
+    },
+    {
+      "responseId": "d765f363-34cf-4091-9904-e35e59b9b7fd",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-08T04:32:41.323Z",
+      "updatedAt": "2026-01-08T04:32:46.127Z"
+    },
+    {
+      "responseId": "1d31e8ce-1749-4950-8bdb-0c36a0829226",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-08T05:14:31.597Z",
+      "updatedAt": "2026-01-08T05:14:31.702Z"
+    },
+    {
+      "responseId": "061d24a3-6dc9-4820-a188-0b54f7de46d3",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-08T05:15:37.898Z",
+      "updatedAt": "2026-01-08T05:15:39.930Z"
+    },
+    {
+      "responseId": "a7e5b6ce-c2fc-4d91-96a5-6a8c246c58e4",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-08T05:36:28.664Z",
+      "updatedAt": "2026-01-08T05:36:32.216Z"
+    },
+    {
+      "responseId": "d04889b3-ea88-425d-90f5-69755d5523c7",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-08T05:49:12.752Z",
+      "updatedAt": "2026-01-08T05:49:22.561Z"
+    },
+    {
+      "responseId": "a1f23396-b479-4a8a-ae01-80199a9ef724",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-08T05:49:56.079Z",
+      "updatedAt": "2026-01-08T05:51:03.188Z"
+    },
+    {
+      "responseId": "9cdcc3a6-a660-4087-9f5d-b67c890f9674",
+      "status": "Rejected",
+      "abandonedReason": "Interview_Abandoned_Early",
+      "createdAt": "2026-01-08T05:51:36.195Z",
+      "updatedAt": "2026-01-08T05:51:38.605Z"
+    },
+    {
+      "responseId": "f0606daa-414b-4849-b91a-b2a89bf29af9",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-08T05:52:13.070Z",
+      "updatedAt": "2026-01-08T05:52:13.177Z"
+    },
+    {
+      "responseId": "436c8f1b-d694-40f4-97c1-95377a6603d1",
+      "status": "Rejected",
+      "abandonedReason": "Interview_Abandoned_Early",
+      "createdAt": "2026-01-08T05:53:06.185Z",
+      "updatedAt": "2026-01-08T05:53:07.659Z"
+    },
+    {
+      "responseId": "aa73210f-b662-459a-ac7a-a19dcbb4cd6b",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-08T05:54:14.343Z",
+      "updatedAt": "2026-01-08T05:54:16.526Z"
+    },
+    {
+      "responseId": "92dd6399-1575-4252-a7af-e7c90ee6d23c",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-08T05:55:32.465Z",
+      "updatedAt": "2026-01-08T05:55:39.486Z"
+    },
+    {
+      "responseId": "3ff3d51c-bd6a-42ad-ba08-21a36a78770b",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-08T05:56:28.930Z",
+      "updatedAt": "2026-01-08T05:56:32.443Z"
+    },
+    {
+      "responseId": "179ebe2b-042b-430d-99e1-7b12db21cc01",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-08T06:23:46.243Z",
+      "updatedAt": "2026-01-08T06:23:47.396Z"
+    },
+    {
+      "responseId": "11e48fb8-e197-4c9c-a4af-b711382bc0bb",
+      "status": "Rejected",
+      "abandonedReason": "Interview_Abandoned_Early",
+      "createdAt": "2026-01-08T06:26:09.600Z",
+      "updatedAt": "2026-01-08T06:26:09.669Z"
+    },
+    {
+      "responseId": "fb928034-0a3e-453f-922a-8e56d3404af7",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-08T07:14:12.946Z",
+      "updatedAt": "2026-01-08T07:14:14.121Z"
+    },
+    {
+      "responseId": "cad03bce-38d4-4edc-857f-3378181eda47",
+      "status": "Rejected",
+      "abandonedReason": "Interview_Abandoned_Early",
+      "createdAt": "2026-01-08T07:16:08.598Z",
+      "updatedAt": "2026-01-08T07:16:09.462Z"
+    },
+    {
+      "responseId": "23cd4d93-bed8-47bf-9340-9c22cd838b09",
+      "status": "Rejected",
+      "abandonedReason": "Interview_Abandoned_Early",
+      "createdAt": "2026-01-08T08:15:43.066Z",
+      "updatedAt": "2026-01-08T08:15:44.326Z"
+    },
+    {
+      "responseId": "d8bf2d19-4403-4f8a-b704-a6e929116a14",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-08T08:16:29.022Z",
+      "updatedAt": "2026-01-08T08:17:12.141Z"
+    },
+    {
+      "responseId": "16a0bc89-08c1-487c-bf05-6fbc5607da48",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-08T08:17:54.361Z",
+      "updatedAt": "2026-01-08T08:17:55.725Z"
+    },
+    {
+      "responseId": "4ea5e4e8-f9ed-4dd0-91d4-de049f02e2d8",
+      "status": "Rejected",
+      "abandonedReason": "Interview_Abandoned_Early",
+      "createdAt": "2026-01-08T08:18:44.924Z",
+      "updatedAt": "2026-01-08T08:18:47.121Z"
+    },
+    {
+      "responseId": "89207186-a610-449f-bf1b-04efd86600f9",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-08T08:19:58.966Z",
+      "updatedAt": "2026-01-08T08:21:16.990Z"
+    },
+    {
+      "responseId": "1e2c1ae7-be4f-41ac-a694-f09c80aac57d",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-08T08:20:02.982Z",
+      "updatedAt": "2026-01-08T08:20:03.117Z"
+    },
+    {
+      "responseId": "8a2a5d7b-f125-4a42-9074-319dcb5d09ba",
+      "status": "Rejected",
+      "abandonedReason": "Interview_Abandoned_Early",
+      "createdAt": "2026-01-08T08:20:18.232Z",
+      "updatedAt": "2026-01-08T08:20:18.233Z"
+    },
+    {
+      "responseId": "b9764be5-01b3-44c1-8a08-ac869a05055a",
+      "status": "Rejected",
+      "abandonedReason": "Not_Registered_Voter_In_AC",
+      "createdAt": "2026-01-08T08:20:38.866Z",
+      "updatedAt": "2026-01-08T08:20:38.869Z"
+    },
+    {
+      "responseId": "b802730b-8fc8-4cba-8db9-c7743d685eb1",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-08T08:20:42.587Z",
+      "updatedAt": "2026-01-08T08:20:42.589Z"
+    },
+    {
+      "responseId": "d95efed8-a991-4ea7-a2b4-a8f6833c07b0",
+      "status": "Rejected",
+      "abandonedReason": "Interview_Abandoned_Early",
+      "createdAt": "2026-01-08T08:20:56.856Z",
+      "updatedAt": "2026-01-08T08:20:56.857Z"
+    },
+    {
+      "responseId": "32ac6600-f73a-434e-b4c4-d34e102d0cf3",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-08T08:21:06.283Z",
+      "updatedAt": "2026-01-08T08:21:06.285Z"
+    },
+    {
+      "responseId": "f25801c8-f490-4876-ada9-08c47642f085",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-08T08:21:09.558Z",
+      "updatedAt": "2026-01-08T08:21:09.561Z"
+    },
+    {
+      "responseId": "16df7526-e78d-47af-a5ab-3aa862327050",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-08T08:21:13.694Z",
+      "updatedAt": "2026-01-08T08:21:13.696Z"
+    },
+    {
+      "responseId": "09f18438-ae00-4ccf-9e63-9e64d99c8a55",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-08T08:21:19.252Z",
+      "updatedAt": "2026-01-08T08:21:21.129Z"
+    },
+    {
+      "responseId": "94583551-1046-48cb-bbc2-44695d7d820b",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-08T10:47:44.866Z",
+      "updatedAt": "2026-01-08T10:47:44.949Z"
+    },
+    {
+      "responseId": "dbda691d-3d2e-473b-86d4-8f281d0e9dd9",
+      "status": "Rejected",
+      "abandonedReason": "Interview_Abandoned_Early",
+      "createdAt": "2026-01-08T10:48:46.647Z",
+      "updatedAt": "2026-01-08T10:48:46.709Z"
+    },
+    {
+      "responseId": "0be955c3-db59-450e-8b20-7acae4750410",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-08T10:49:24.079Z",
+      "updatedAt": "2026-01-08T10:49:24.146Z"
+    },
+    {
+      "responseId": "aeb15ba2-f25f-4562-82c3-e1419ef77554",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-08T11:02:29.863Z",
+      "updatedAt": "2026-01-08T11:02:29.961Z"
+    },
+    {
+      "responseId": "116c4676-85e4-40ef-b7bd-da5415bc57cc",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-08T11:03:31.819Z",
+      "updatedAt": "2026-01-08T11:03:31.886Z"
+    },
+    {
+      "responseId": "2063752b-9496-41d9-bba6-1533e7bd4381",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-08T11:05:03.335Z",
+      "updatedAt": "2026-01-08T11:05:03.408Z"
+    },
+    {
+      "responseId": "a1e4aa97-69f7-4a01-9dcd-980790359396",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-08T11:05:48.551Z",
+      "updatedAt": "2026-01-08T11:05:50.287Z"
+    },
+    {
+      "responseId": "f6e67eb7-50a5-43a4-aa99-7006cc5c3b8d",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-08T11:13:13.544Z",
+      "updatedAt": "2026-01-08T11:13:13.609Z"
+    },
+    {
+      "responseId": "c9430905-a170-4beb-8363-4dbef1d96fa6",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-08T11:19:41.702Z",
+      "updatedAt": "2026-01-08T11:19:43.475Z"
+    },
+    {
+      "responseId": "ef1a7242-d6da-4d58-98c9-a17a7384cfb6",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-08T11:37:00.301Z",
+      "updatedAt": "2026-01-08T11:37:00.886Z"
+    },
+    {
+      "responseId": "9761eee5-63a7-4560-89ae-a6c0463accf2",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-08T11:50:52.992Z",
+      "updatedAt": "2026-01-08T11:50:53.054Z"
+    },
+    {
+      "responseId": "c536dc09-e3aa-47c0-b5c9-421c3f46533f",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-08T12:10:30.772Z",
+      "updatedAt": "2026-01-08T12:10:30.828Z"
+    },
+    {
+      "responseId": "b616348e-e871-486d-a0f3-4a2ed1f72215",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-08T12:11:32.180Z",
+      "updatedAt": "2026-01-08T12:11:32.235Z"
+    },
+    {
+      "responseId": "3cc9eefe-a00f-4b0a-bd45-a405eda6d0f8",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-08T12:12:22.049Z",
+      "updatedAt": "2026-01-08T12:12:22.105Z"
+    },
+    {
+      "responseId": "37e9b1f9-84fe-4929-a224-7fefed7f046a",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-08T12:12:54.364Z",
+      "updatedAt": "2026-01-08T12:12:54.422Z"
+    },
+    {
+      "responseId": "1326f8ea-5d6e-4fa3-a5ab-d16d0b58219b",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-08T12:15:10.890Z",
+      "updatedAt": "2026-01-08T12:15:11.358Z"
+    },
+    {
+      "responseId": "81e5e784-501a-40cb-bd25-70047c16d7e2",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-08T12:15:44.041Z",
+      "updatedAt": "2026-01-08T12:15:44.501Z"
+    },
+    {
+      "responseId": "8037a889-3869-4b4b-ba46-d0fb6d4b1ac6",
+      "status": "Rejected",
+      "abandonedReason": "Interview_Abandoned_Early",
+      "createdAt": "2026-01-08T12:16:15.616Z",
+      "updatedAt": "2026-01-08T12:16:17.453Z"
+    },
+    {
+      "responseId": "b3b264e0-df44-4fd3-a9fc-3bbd04080576",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-08T12:17:29.243Z",
+      "updatedAt": "2026-01-08T12:17:31.556Z"
+    },
+    {
+      "responseId": "34322281-ef8b-4578-92c4-2259d4b82c12",
+      "status": "Rejected",
+      "abandonedReason": "Not_Registered_Voter_In_AC",
+      "createdAt": "2026-01-09T04:28:12.546Z",
+      "updatedAt": "2026-01-09T04:28:12.606Z"
+    },
+    {
+      "responseId": "47b9b6d9-72ab-4018-b45d-c4e8fed2f787",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-09T05:30:24.186Z",
+      "updatedAt": "2026-01-09T05:30:24.243Z"
+    },
+    {
+      "responseId": "ab1e7f76-a8dd-434c-aafa-70bd5a48c5ed",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-09T05:31:05.728Z",
+      "updatedAt": "2026-01-09T05:31:05.784Z"
+    },
+    {
+      "responseId": "6a11a797-fd18-4d24-8ac7-247f8322f663",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-09T05:52:55.659Z",
+      "updatedAt": "2026-01-09T05:52:55.710Z"
+    },
+    {
+      "responseId": "69e80960-39e0-4d20-b339-30126a2d1ebc",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-09T05:54:24.730Z",
+      "updatedAt": "2026-01-09T05:54:25.320Z"
+    },
+    {
+      "responseId": "93d009a6-a2f7-40a2-b725-326a9cf28407",
+      "status": "Rejected",
+      "abandonedReason": "Interview_Abandoned_Early",
+      "createdAt": "2026-01-09T05:58:02.061Z",
+      "updatedAt": "2026-01-09T05:58:02.116Z"
+    },
+    {
+      "responseId": "c5ebc87b-79bb-4a04-ab73-6ba71cf5b14d",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-09T06:10:20.916Z",
+      "updatedAt": "2026-01-09T06:10:20.974Z"
+    },
+    {
+      "responseId": "95d8e901-f5f7-4075-8d2f-d7b45d699168",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-09T06:19:11.853Z",
+      "updatedAt": "2026-01-09T06:19:11.909Z"
+    },
+    {
+      "responseId": "6fddf83b-997d-4731-84aa-bc2f00454652",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-09T06:20:15.463Z",
+      "updatedAt": "2026-01-09T06:20:15.519Z"
+    },
+    {
+      "responseId": "b4eae9b3-3d6a-43a1-bcaa-eddd36cecc95",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-09T06:21:18.737Z",
+      "updatedAt": "2026-01-09T06:21:18.790Z"
+    },
+    {
+      "responseId": "25231991-fb68-4fa8-9da8-6ae136df9027",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-09T06:21:51.648Z",
+      "updatedAt": "2026-01-09T06:21:51.707Z"
+    },
+    {
+      "responseId": "4c9138bf-3f98-4961-91fa-7b35da4cbcde",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-09T06:22:53.771Z",
+      "updatedAt": "2026-01-09T06:22:54.409Z"
+    },
+    {
+      "responseId": "26d23acf-4c9c-4ce2-8c35-a0d79a50ee0b",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-09T06:23:44.418Z",
+      "updatedAt": "2026-01-09T06:23:45.351Z"
+    },
+    {
+      "responseId": "78852691-a999-4c90-a4c6-ad88310f7483",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-09T06:34:18.200Z",
+      "updatedAt": "2026-01-09T06:34:18.257Z"
+    },
+    {
+      "responseId": "e96e23b2-5d6a-4b11-84a0-db26ca2ce6f9",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-09T06:35:13.211Z",
+      "updatedAt": "2026-01-09T06:35:13.571Z"
+    },
+    {
+      "responseId": "a0643b2a-6972-40a3-996c-6d3b140a7f9f",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-09T06:35:50.060Z",
+      "updatedAt": "2026-01-09T06:35:50.114Z"
+    },
+    {
+      "responseId": "df71cdca-81cd-4064-8f3f-92b230b7ddce",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-09T06:36:17.325Z",
+      "updatedAt": "2026-01-09T06:36:17.868Z"
+    },
+    {
+      "responseId": "13958798-ab25-455c-bbcd-47754aa0cfeb",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-09T06:36:19.187Z",
+      "updatedAt": "2026-01-09T06:36:19.681Z"
+    },
+    {
+      "responseId": "6d95df2f-11aa-412e-af1b-1449f623a8b5",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-09T06:37:06.171Z",
+      "updatedAt": "2026-01-09T06:37:06.226Z"
+    },
+    {
+      "responseId": "9ceac222-4a94-47bd-8592-2974af946e26",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-09T06:38:32.730Z",
+      "updatedAt": "2026-01-09T06:38:32.787Z"
+    },
+    {
+      "responseId": "d0d1bf0f-448e-4db3-bd29-bd6794473257",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-09T07:25:39.379Z",
+      "updatedAt": "2026-01-09T07:25:39.668Z"
+    },
+    {
+      "responseId": "d7c76e5a-b1af-4a57-a8b9-e7bad2d29e18",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-09T07:34:22.395Z",
+      "updatedAt": "2026-01-09T07:34:22.470Z"
+    },
+    {
+      "responseId": "ae9e8149-4c59-4be1-bbd1-8475a8a2e1f4",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-09T07:34:55.777Z",
+      "updatedAt": "2026-01-09T07:34:55.844Z"
+    },
+    {
+      "responseId": "40826ca2-9ad7-42d5-aaab-d6748d2da785",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-09T07:35:29.596Z",
+      "updatedAt": "2026-01-09T07:35:29.658Z"
+    },
+    {
+      "responseId": "e2f58ae0-ae66-482b-8e40-31d9334846af",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-09T07:41:30.994Z",
+      "updatedAt": "2026-01-09T07:41:31.047Z"
+    },
+    {
+      "responseId": "82272b42-fe97-4511-9518-afb2493bb4d5",
+      "status": "Rejected",
+      "abandonedReason": "Interview_Abandoned_Early",
+      "createdAt": "2026-01-09T09:50:41.997Z",
+      "updatedAt": "2026-01-09T09:50:42.062Z"
+    },
+    {
+      "responseId": "d697b06c-8feb-45ed-a0c9-9401f090e624",
+      "status": "Rejected",
+      "abandonedReason": "Interview_Abandoned_Early",
+      "createdAt": "2026-01-09T09:51:31.001Z",
+      "updatedAt": "2026-01-09T09:51:31.069Z"
+    },
+    {
+      "responseId": "51f22a0b-28dd-4bcc-abe2-d14b9c3d20d2",
+      "status": "Rejected",
+      "abandonedReason": "Not_Registered_Voter_In_AC",
+      "createdAt": "2026-01-09T09:52:59.732Z",
+      "updatedAt": "2026-01-09T09:52:59.787Z"
+    },
+    {
+      "responseId": "5802a386-4a4a-48f5-9388-a9d1158972ed",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-09T09:53:31.729Z",
+      "updatedAt": "2026-01-09T09:53:31.788Z"
+    },
+    {
+      "responseId": "badefced-7a56-49ab-8670-077de900b7dc",
+      "status": "Rejected",
+      "abandonedReason": "Interview_Abandoned_Early",
+      "createdAt": "2026-01-09T09:54:55.078Z",
+      "updatedAt": "2026-01-09T09:54:55.130Z"
+    },
+    {
+      "responseId": "e34a19ea-8eb1-4b01-b12e-dc0c071235fe",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-09T09:55:27.836Z",
+      "updatedAt": "2026-01-09T09:55:27.893Z"
+    },
+    {
+      "responseId": "c787d08b-4d20-425e-b2a2-d8098e28ae5f",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-09T09:56:40.180Z",
+      "updatedAt": "2026-01-09T09:56:40.232Z"
+    },
+    {
+      "responseId": "d2ddda91-600a-45c3-97f1-121b4db9b53b",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-09T09:58:56.426Z",
+      "updatedAt": "2026-01-09T09:58:56.476Z"
+    },
+    {
+      "responseId": "c9818e59-279f-41e7-8c99-f31a1643d204",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-09T09:59:27.950Z",
+      "updatedAt": "2026-01-09T09:59:28.003Z"
+    },
+    {
+      "responseId": "53ef95cb-8069-4a57-ae6f-23ec48ea3c26",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-09T10:09:15.828Z",
+      "updatedAt": "2026-01-09T10:09:15.884Z"
+    },
+    {
+      "responseId": "b0b60456-37a9-42a1-919e-a62b441c8e1d",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-09T10:09:48.224Z",
+      "updatedAt": "2026-01-09T10:09:48.276Z"
+    },
+    {
+      "responseId": "ea58a73d-fda8-4f90-87a1-7f5ab183ee03",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-09T10:11:56.855Z",
+      "updatedAt": "2026-01-09T10:11:56.910Z"
+    },
+    {
+      "responseId": "a80ddc56-a20e-46ec-b778-d88991ccc764",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-09T10:13:21.767Z",
+      "updatedAt": "2026-01-09T10:13:21.821Z"
+    },
+    {
+      "responseId": "3699ecb2-f0d9-46f2-addb-f21a6d35d182",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-09T10:18:03.780Z",
+      "updatedAt": "2026-01-09T10:18:03.836Z"
+    },
+    {
+      "responseId": "b0f0230f-91bb-41c8-966e-56304806c444",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-09T10:24:11.678Z",
+      "updatedAt": "2026-01-09T10:24:11.744Z"
+    },
+    {
+      "responseId": "3d0f5edc-942c-4906-8913-f1e2c1b8e9f2",
+      "status": "Rejected",
+      "abandonedReason": "Interview_Abandoned_Early",
+      "createdAt": "2026-01-09T10:25:02.140Z",
+      "updatedAt": "2026-01-09T10:25:02.197Z"
+    },
+    {
+      "responseId": "5187c65d-e4aa-469c-b7b2-83b8aa5cffea",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-09T10:25:56.539Z",
+      "updatedAt": "2026-01-09T10:25:56.600Z"
+    },
+    {
+      "responseId": "2a879505-c376-4186-b244-9ebd52f1b27d",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-09T10:29:32.922Z",
+      "updatedAt": "2026-01-09T10:29:32.983Z"
+    },
+    {
+      "responseId": "b8288bfe-2a70-4728-962a-e22827440073",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-09T10:30:05.542Z",
+      "updatedAt": "2026-01-09T10:30:05.886Z"
+    },
+    {
+      "responseId": "289cd17c-8f81-4bc7-882a-c1bb3a764994",
+      "status": "Rejected",
+      "abandonedReason": "Interview_Abandoned_Early",
+      "createdAt": "2026-01-09T10:33:11.731Z",
+      "updatedAt": "2026-01-09T10:33:11.784Z"
+    },
+    {
+      "responseId": "18a91f41-5b28-46d7-89cc-748effeb1ed6",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-09T11:15:34.394Z",
+      "updatedAt": "2026-01-09T11:15:34.447Z"
+    },
+    {
+      "responseId": "12cc07c9-30f0-4958-8319-b61f3bea4510",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-09T11:16:06.569Z",
+      "updatedAt": "2026-01-09T11:16:06.619Z"
+    },
+    {
+      "responseId": "57725b4c-449f-4335-b5a8-2aac37f950db",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-09T11:16:54.581Z",
+      "updatedAt": "2026-01-09T11:16:54.633Z"
+    },
+    {
+      "responseId": "d094f78e-21a1-4154-8995-2a9ff597bbd7",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-09T11:17:26.180Z",
+      "updatedAt": "2026-01-09T11:17:26.230Z"
+    },
+    {
+      "responseId": "f0de414f-45d0-4a82-93c1-3febaa6431fe",
+      "status": "Rejected",
+      "abandonedReason": "Interview_Abandoned_Early",
+      "createdAt": "2026-01-09T11:21:50.590Z",
+      "updatedAt": "2026-01-09T11:21:50.641Z"
+    },
+    {
+      "responseId": "3d21bed2-a62f-4a97-9919-3531b580b0a6",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-09T11:39:47.254Z",
+      "updatedAt": "2026-01-09T11:39:47.308Z"
+    },
+    {
+      "responseId": "a8af2224-6ace-4039-b83f-127f0cd913b0",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-09T13:23:07.115Z",
+      "updatedAt": "2026-01-09T13:23:07.166Z"
+    },
+    {
+      "responseId": "2e7e7db7-d7d9-4ab4-8da3-cb98a3f66128",
+      "status": "Rejected",
+      "abandonedReason": "Interview_Abandoned_Early",
+      "createdAt": "2026-01-09T13:24:05.889Z",
+      "updatedAt": "2026-01-09T13:24:05.948Z"
+    },
+    {
+      "responseId": "7cdb7b60-8fae-4830-b99f-a88d3b13111c",
+      "status": "Rejected",
+      "abandonedReason": "Interview_Abandoned_Early",
+      "createdAt": "2026-01-09T13:24:53.581Z",
+      "updatedAt": "2026-01-09T13:24:53.637Z"
+    },
+    {
+      "responseId": "d9f5b09e-0253-425c-b8ad-1a99a8ba24d6",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-09T13:29:33.583Z",
+      "updatedAt": "2026-01-09T13:29:33.636Z"
+    },
+    {
+      "responseId": "cdb8c7f8-7679-4563-a28c-b46dfe050149",
+      "status": "Rejected",
+      "abandonedReason": "Interview_Abandoned_Early",
+      "createdAt": "2026-01-09T13:30:22.319Z",
+      "updatedAt": "2026-01-09T13:30:22.374Z"
+    },
+    {
+      "responseId": "b32dd825-d39d-4f8b-9538-125a0738f1e6",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-09T13:30:53.210Z",
+      "updatedAt": "2026-01-09T13:30:53.264Z"
+    },
+    {
+      "responseId": "b042fa74-3579-40a0-87f6-d132044b7257",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-09T13:31:31.663Z",
+      "updatedAt": "2026-01-09T13:31:31.716Z"
+    },
+    {
+      "responseId": "3a561fe1-36a0-48a4-92b3-50bd21c3d4e5",
+      "status": "Rejected",
+      "abandonedReason": "Interview_Abandoned_Early",
+      "createdAt": "2026-01-09T13:31:32.600Z",
+      "updatedAt": "2026-01-09T13:31:32.653Z"
+    },
+    {
+      "responseId": "466c2bd4-175f-4e8d-9098-700d92873b6d",
+      "status": "Rejected",
+      "abandonedReason": "Not_Registered_Voter_In_AC",
+      "createdAt": "2026-01-09T13:32:43.969Z",
+      "updatedAt": "2026-01-09T13:32:44.023Z"
+    },
+    {
+      "responseId": "6e56f465-8715-408a-a71d-f7ff77b3b59e",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-09T13:34:00.222Z",
+      "updatedAt": "2026-01-09T13:34:00.277Z"
+    },
+    {
+      "responseId": "4db3dfd1-fefb-4db1-991d-f226fa90cdca",
+      "status": "Rejected",
+      "abandonedReason": "Interview_Abandoned_Early",
+      "createdAt": "2026-01-09T13:34:32.011Z",
+      "updatedAt": "2026-01-09T13:34:32.616Z"
+    },
+    {
+      "responseId": "96aa1ee9-9a76-46ca-8b21-9a87dbb2202a",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-09T13:40:51.756Z",
+      "updatedAt": "2026-01-09T13:40:51.812Z"
+    },
+    {
+      "responseId": "70402a65-9675-437f-85c9-ff989e9872bf",
+      "status": "Rejected",
+      "abandonedReason": "Interview_Abandoned_Early",
+      "createdAt": "2026-01-09T13:41:30.221Z",
+      "updatedAt": "2026-01-09T13:41:30.276Z"
+    },
+    {
+      "responseId": "efa27c16-0650-4b25-bc2f-f9dcd091a618",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-09T13:43:39.896Z",
+      "updatedAt": "2026-01-09T13:43:39.951Z"
+    },
+    {
+      "responseId": "433fe53a-e575-474a-af44-a827b0db3d6e",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-09T13:51:10.600Z",
+      "updatedAt": "2026-01-09T13:51:10.653Z"
+    },
+    {
+      "responseId": "1cb56b38-a763-4b63-8040-3f67fe79fb6a",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-09T13:57:33.671Z",
+      "updatedAt": "2026-01-09T13:57:33.726Z"
+    },
+    {
+      "responseId": "ac158ef3-2cb3-4a4a-92ad-ba6c8317fc72",
+      "status": "Rejected",
+      "abandonedReason": "Interview_Abandoned_Early",
+      "createdAt": "2026-01-09T14:09:00.934Z",
+      "updatedAt": "2026-01-09T14:09:00.983Z"
+    },
+    {
+      "responseId": "431d8a44-d231-4bee-b932-e76efa2b3fd1",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-09T14:09:32.589Z",
+      "updatedAt": "2026-01-09T14:09:32.641Z"
+    },
+    {
+      "responseId": "749af23e-498a-4972-8f39-3dfe57ff5339",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-09T14:10:25.651Z",
+      "updatedAt": "2026-01-09T14:10:25.703Z"
+    },
+    {
+      "responseId": "069d5df3-2aaa-4945-90b4-36ffec19aa01",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-09T14:10:27.127Z",
+      "updatedAt": "2026-01-09T14:10:27.182Z"
+    },
+    {
+      "responseId": "a193a543-90d5-4bf8-937c-be4f7bad7e98",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-09T14:10:59.729Z",
+      "updatedAt": "2026-01-09T14:10:59.783Z"
+    },
+    {
+      "responseId": "22df2803-54ef-4bb3-9733-5251bad5f19d",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-09T15:45:52.863Z",
+      "updatedAt": "2026-01-09T15:45:52.918Z"
+    },
+    {
+      "responseId": "0faa2674-8a08-41a3-99ac-73243534eed7",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-10T05:15:50.779Z",
+      "updatedAt": "2026-01-10T05:15:50.815Z"
+    },
+    {
+      "responseId": "32ad6dad-60c7-4d95-92bd-1e6d20740422",
+      "status": "Rejected",
+      "abandonedReason": "Interview_Abandoned_Early",
+      "createdAt": "2026-01-10T05:19:53.512Z",
+      "updatedAt": "2026-01-10T05:19:53.551Z"
+    },
+    {
+      "responseId": "ed624d9e-caaf-4eae-b524-0744c7ff9d05",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-10T07:59:11.875Z",
+      "updatedAt": "2026-01-10T07:59:11.914Z"
+    },
+    {
+      "responseId": "b4c07f63-df0d-41d4-92f4-b054d5e7cadb",
+      "status": "Rejected",
+      "abandonedReason": "Interview_Abandoned_Early",
+      "createdAt": "2026-01-10T08:18:54.874Z",
+      "updatedAt": "2026-01-10T08:18:54.912Z"
+    },
+    {
+      "responseId": "eeb29bdd-0d78-4b55-95a5-cff57471ca42",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-10T10:03:12.853Z",
+      "updatedAt": "2026-01-10T10:03:18.210Z"
+    },
+    {
+      "responseId": "be25de3b-2e28-438e-9b2b-f08ba3b95cdf",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-10T10:03:42.799Z",
+      "updatedAt": "2026-01-10T10:03:42.834Z"
+    },
+    {
+      "responseId": "2aa87be4-49eb-465b-b5ce-eb255f7a03ad",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-10T10:04:34.148Z",
+      "updatedAt": "2026-01-10T10:04:34.193Z"
+    },
+    {
+      "responseId": "4e5f1160-173d-443d-b4ff-b727ea637177",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-10T10:05:05.856Z",
+      "updatedAt": "2026-01-10T10:05:05.894Z"
+    },
+    {
+      "responseId": "09d86ad5-7402-4b6b-aaa7-00b801d93c09",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-10T10:06:01.792Z",
+      "updatedAt": "2026-01-10T10:06:01.829Z"
+    },
+    {
+      "responseId": "6924f18d-b51d-4f66-b4a8-bc6d561b678a",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-10T10:10:07.799Z",
+      "updatedAt": "2026-01-10T10:10:07.836Z"
+    },
+    {
+      "responseId": "c5218911-bde9-428c-96eb-68ed7903dcea",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-10T11:38:58.410Z",
+      "updatedAt": "2026-01-10T11:38:58.450Z"
+    },
+    {
+      "responseId": "f0a3cb6a-72d4-4fb9-a5e3-9023d65a79ce",
+      "status": "Rejected",
+      "abandonedReason": "Interview_Abandoned_Early",
+      "createdAt": "2026-01-10T13:16:29.818Z",
+      "updatedAt": "2026-01-10T13:16:29.862Z"
+    },
+    {
+      "responseId": "18cdb1d8-9b98-4f71-b5e6-8ec68ee8a72f",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-10T13:31:24.365Z",
+      "updatedAt": "2026-01-10T13:31:24.408Z"
+    },
+    {
+      "responseId": "3d7c5203-4e06-4022-8e21-135001d0930d",
+      "status": "Rejected",
+      "abandonedReason": "Interview_Abandoned_Early",
+      "createdAt": "2026-01-11T05:17:45.951Z",
+      "updatedAt": "2026-01-11T05:17:46.018Z"
+    },
+    {
+      "responseId": "373e02aa-665b-4ef2-8599-2fae0cba48c8",
+      "status": "Rejected",
+      "abandonedReason": "Interview_Abandoned_Early",
+      "createdAt": "2026-01-11T05:18:57.211Z",
+      "updatedAt": "2026-01-11T05:18:57.272Z"
+    },
+    {
+      "responseId": "bc9f48c5-6f27-4b7f-8232-d3a42d0506ad",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-11T05:19:28.438Z",
+      "updatedAt": "2026-01-11T05:19:28.503Z"
+    },
+    {
+      "responseId": "8682b071-8b4e-4a41-9d4d-947d7676635b",
+      "status": "Rejected",
+      "abandonedReason": "Interview_Abandoned_Early",
+      "createdAt": "2026-01-11T05:20:33.925Z",
+      "updatedAt": "2026-01-11T05:20:33.984Z"
+    },
+    {
+      "responseId": "6fc9243d-eb92-471a-aa60-f11c16595851",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-11T05:21:29.413Z",
+      "updatedAt": "2026-01-11T05:21:29.467Z"
+    },
+    {
+      "responseId": "00a2a445-94fc-4f0c-82e4-6189ca65d16a",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-11T05:25:15.497Z",
+      "updatedAt": "2026-01-11T05:25:15.560Z"
+    },
+    {
+      "responseId": "b795f45b-4cb4-41bd-8839-ba1eeb501e5a",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-11T05:26:44.953Z",
+      "updatedAt": "2026-01-11T05:26:45.011Z"
+    },
+    {
+      "responseId": "10b71e79-69db-4500-848e-b64da36ea94a",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-11T05:27:17.775Z",
+      "updatedAt": "2026-01-11T05:27:17.835Z"
+    },
+    {
+      "responseId": "11ed0bd8-7b5c-4d58-b50c-0eb233c41453",
+      "status": "Rejected",
+      "abandonedReason": "Interview_Abandoned_Early",
+      "createdAt": "2026-01-11T05:27:48.273Z",
+      "updatedAt": "2026-01-11T05:27:48.328Z"
+    },
+    {
+      "responseId": "ac8f4f3a-6ead-4d00-9e79-09e547f928e1",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-11T05:39:03.709Z",
+      "updatedAt": "2026-01-11T05:39:03.769Z"
+    },
+    {
+      "responseId": "abfde7db-5067-4a4b-b78e-1e6f5040a99e",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-11T05:53:49.564Z",
+      "updatedAt": "2026-01-11T05:53:49.622Z"
+    },
+    {
+      "responseId": "5b1490fc-8d69-421e-b639-ab7624fb2f5f",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-11T05:57:31.142Z",
+      "updatedAt": "2026-01-11T05:57:31.199Z"
+    },
+    {
+      "responseId": "94f791fe-9803-48c1-8528-b201ac69db13",
+      "status": "Rejected",
+      "abandonedReason": "Interview_Abandoned_Early",
+      "createdAt": "2026-01-11T05:59:28.228Z",
+      "updatedAt": "2026-01-11T05:59:28.287Z"
+    },
+    {
+      "responseId": "edc486e3-83d9-4241-94fd-542bb16f80b7",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-11T06:01:49.043Z",
+      "updatedAt": "2026-01-11T06:01:49.103Z"
+    },
+    {
+      "responseId": "f8e6d269-0f8b-415a-9cb9-dd6a7ee8ea6b",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-11T06:03:53.239Z",
+      "updatedAt": "2026-01-11T06:03:53.304Z"
+    },
+    {
+      "responseId": "df75ceda-61f2-43ef-9ea5-8280a9c5fbf0",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-11T06:05:42.239Z",
+      "updatedAt": "2026-01-11T06:05:42.303Z"
+    },
+    {
+      "responseId": "da22e71c-92d4-4083-9249-1970c59139ad",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-11T06:06:52.105Z",
+      "updatedAt": "2026-01-11T06:06:52.164Z"
+    },
+    {
+      "responseId": "fda8c6c5-7320-427c-92ce-8ba3fa560028",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-11T06:09:11.444Z",
+      "updatedAt": "2026-01-11T06:09:11.501Z"
+    },
+    {
+      "responseId": "a3ec8652-64d9-49ca-b3aa-77446ad641fd",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-11T06:24:07.132Z",
+      "updatedAt": "2026-01-11T06:24:07.196Z"
+    },
+    {
+      "responseId": "b6bf0590-b17c-4b15-9c81-61f066dbac7b",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-11T06:27:33.149Z",
+      "updatedAt": "2026-01-11T06:27:33.207Z"
+    },
+    {
+      "responseId": "d15ad655-7dc3-4c23-bba9-da02494179eb",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-11T06:28:19.291Z",
+      "updatedAt": "2026-01-11T06:28:19.351Z"
+    },
+    {
+      "responseId": "a3002d2c-7b97-4d9b-8499-1bc6526d3294",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-11T06:28:54.631Z",
+      "updatedAt": "2026-01-11T06:28:54.687Z"
+    },
+    {
+      "responseId": "4377a4e7-74fb-4684-a689-e2183f0b72f4",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-11T06:29:33.031Z",
+      "updatedAt": "2026-01-11T06:29:33.087Z"
+    },
+    {
+      "responseId": "a273084a-83e0-4ce3-b0a3-e716e0a4f802",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-11T06:30:43.611Z",
+      "updatedAt": "2026-01-11T06:30:43.667Z"
+    },
+    {
+      "responseId": "be45a389-64e8-4e9c-8cbf-bdf71624d575",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-12T07:57:00.975Z",
+      "updatedAt": "2026-01-12T07:57:01.047Z"
+    },
+    {
+      "responseId": "31969331-6fa6-4a2e-9c84-5ccf4e004d77",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-08T04:19:46.107Z",
+      "updatedAt": "2026-01-08T04:19:46.837Z"
+    },
+    {
+      "responseId": "bf9e3389-bafc-444e-b133-09f6ca688233",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-08T04:20:24.424Z",
+      "updatedAt": "2026-01-08T04:20:24.515Z"
+    },
+    {
+      "responseId": "4efe7c6f-e6b0-42c5-957a-33735c210f5a",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-08T04:23:31.926Z",
+      "updatedAt": "2026-01-08T04:23:31.990Z"
+    },
+    {
+      "responseId": "31d34b04-c82b-4147-98d9-bde5959bb1fc",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-08T04:23:34.337Z",
+      "updatedAt": "2026-01-08T04:23:35.171Z"
+    },
+    {
+      "responseId": "f399c37e-8eb4-4692-b301-d4b6f784c188",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-08T04:24:17.583Z",
+      "updatedAt": "2026-01-08T04:24:19.832Z"
+    },
+    {
+      "responseId": "177dd543-f0fd-43da-b853-04b5e7d75d7c",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-08T04:24:22.219Z",
+      "updatedAt": "2026-01-08T04:24:24.711Z"
+    },
+    {
+      "responseId": "c0d18327-eab6-49a6-a88c-4c7835dcd592",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-08T04:32:34.814Z",
+      "updatedAt": "2026-01-08T04:32:37.777Z"
+    },
+    {
+      "responseId": "e64c09a5-f735-4b19-9e70-2a65371a7930",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-08T05:02:10.825Z",
+      "updatedAt": "2026-01-08T05:02:13.196Z"
+    },
+    {
+      "responseId": "5e737d35-01bb-4a64-b0ee-dbc03b3c24b2",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-08T05:08:36.923Z",
+      "updatedAt": "2026-01-08T05:08:36.999Z"
+    },
+    {
+      "responseId": "d49b2c58-47a1-488d-86fc-9985e8fab52d",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-08T05:11:11.438Z",
+      "updatedAt": "2026-01-08T05:11:15.122Z"
+    },
+    {
+      "responseId": "d6eb48ec-168a-4429-a8f3-2e9432bc39ac",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-08T05:11:40.723Z",
+      "updatedAt": "2026-01-08T05:11:40.831Z"
+    },
+    {
+      "responseId": "e151ebfe-f167-43c3-a03c-47afd7bef4ea",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-08T05:13:11.132Z",
+      "updatedAt": "2026-01-08T05:13:16.402Z"
+    },
+    {
+      "responseId": "674e4799-b780-4e78-85c0-9427db287018",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-08T05:26:03.182Z",
+      "updatedAt": "2026-01-08T05:26:07.489Z"
+    },
+    {
+      "responseId": "855427ac-d5bc-4aaf-9c5c-7ea8bf323814",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-08T05:34:01.892Z",
+      "updatedAt": "2026-01-08T05:34:06.261Z"
+    },
+    {
+      "responseId": "3f725134-f71e-4a6d-becf-abdbc5f409d7",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-08T06:02:30.516Z",
+      "updatedAt": "2026-01-08T06:02:30.576Z"
+    },
+    {
+      "responseId": "a3f1a50f-7a30-4c16-bebc-a434026e3aa9",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-08T06:05:04.692Z",
+      "updatedAt": "2026-01-08T06:05:08.508Z"
+    },
+    {
+      "responseId": "a550cd4f-42cb-40bf-9d6c-e1c1455ddd20",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-08T06:19:13.581Z",
+      "updatedAt": "2026-01-08T06:19:13.672Z"
+    },
+    {
+      "responseId": "443282b5-295a-4fde-ace5-4506bbda5996",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-08T06:20:47.747Z",
+      "updatedAt": "2026-01-08T06:20:49.029Z"
+    },
+    {
+      "responseId": "4cfd3808-7fdf-4ec4-aa02-cae59014cb55",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-08T06:20:56.932Z",
+      "updatedAt": "2026-01-08T06:21:00.667Z"
+    },
+    {
+      "responseId": "c8a35f3f-2bb9-4ca3-a4c8-29243aa8be7e",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-08T06:21:41.291Z",
+      "updatedAt": "2026-01-08T06:21:48.020Z"
+    },
+    {
+      "responseId": "eebadcc7-bedf-466f-abc3-a6507e9feb60",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-08T06:27:09.782Z",
+      "updatedAt": "2026-01-08T06:27:09.869Z"
+    },
+    {
+      "responseId": "7bb966aa-08d9-4bd0-ace1-8c5c1bf54a3c",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-08T06:44:19.282Z",
+      "updatedAt": "2026-01-08T06:44:23.583Z"
+    },
+    {
+      "responseId": "a9690fd1-7b42-47fd-a12c-85ad8b560825",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-08T08:20:21.780Z",
+      "updatedAt": "2026-01-08T08:20:21.781Z"
+    },
+    {
+      "responseId": "ce24804a-6f2e-4b60-ab12-853932cadcdb",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-08T08:20:31.743Z",
+      "updatedAt": "2026-01-08T08:20:31.744Z"
+    },
+    {
+      "responseId": "24726d29-9c54-436f-9211-d85142802461",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-08T08:21:24.377Z",
+      "updatedAt": "2026-01-08T08:21:25.647Z"
+    },
+    {
+      "responseId": "17b4c3e7-1f2a-4115-8cb0-6e381e48ca7b",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-08T08:22:35.826Z",
+      "updatedAt": "2026-01-08T08:22:37.145Z"
+    },
+    {
+      "responseId": "bf8da025-7458-4038-81a5-f7090511e496",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-08T11:08:03.602Z",
+      "updatedAt": "2026-01-08T11:08:03.866Z"
+    },
+    {
+      "responseId": "f3b41d58-a9f9-48c2-ac7b-f3edb969ec27",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-08T11:13:49.295Z",
+      "updatedAt": "2026-01-08T11:13:53.682Z"
+    },
+    {
+      "responseId": "44c24049-3369-404d-8e40-992b24b4bb65",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-08T11:36:27.768Z",
+      "updatedAt": "2026-01-08T11:36:27.846Z"
+    },
+    {
+      "responseId": "5b14192a-76e1-455e-9874-b38217d38e1b",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-08T12:18:01.332Z",
+      "updatedAt": "2026-01-08T12:18:05.452Z"
+    },
+    {
+      "responseId": "18d97bff-9196-4e9c-9d41-56f7bb1ebc33",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-08T12:25:48.266Z",
+      "updatedAt": "2026-01-08T12:25:48.319Z"
+    },
+    {
+      "responseId": "dce1435e-2dbf-4d6b-9ff4-c11f00b90d94",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-08T12:26:20.939Z",
+      "updatedAt": "2026-01-08T12:26:20.989Z"
+    },
+    {
+      "responseId": "f8b81cbe-e1cd-47ee-843a-971387c78d70",
+      "status": "Rejected",
+      "abandonedReason": "Interview_Abandoned_Early",
+      "createdAt": "2026-01-09T04:29:03.130Z",
+      "updatedAt": "2026-01-09T04:29:03.183Z"
+    },
+    {
+      "responseId": "f5609338-8fd9-4c11-82a1-8b86e0257438",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-09T04:31:47.551Z",
+      "updatedAt": "2026-01-09T04:31:47.605Z"
+    },
+    {
+      "responseId": "d05f9a5c-37c4-4773-953f-8cabc87bcf1a",
+      "status": "Rejected",
+      "abandonedReason": "Interview_Abandoned_Early",
+      "createdAt": "2026-01-09T04:34:59.421Z",
+      "updatedAt": "2026-01-09T04:34:59.481Z"
+    },
+    {
+      "responseId": "b9a605c0-3764-4d27-bedb-44c42863c6a6",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-09T04:35:30.506Z",
+      "updatedAt": "2026-01-09T04:35:30.586Z"
+    },
+    {
+      "responseId": "29047341-a3fb-4751-8095-813a07659848",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-09T04:36:02.648Z",
+      "updatedAt": "2026-01-09T04:36:02.701Z"
+    },
+    {
+      "responseId": "30cd74fe-e97a-40aa-9602-96cac8f05466",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-09T04:36:03.377Z",
+      "updatedAt": "2026-01-09T04:36:03.428Z"
+    },
+    {
+      "responseId": "a52a67b0-ccb4-4a18-96f2-5918a22ced63",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-09T05:29:47.979Z",
+      "updatedAt": "2026-01-09T05:29:48.039Z"
+    },
+    {
+      "responseId": "70df8698-e4e1-4044-aa3e-d58f437b9376",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-09T05:51:05.606Z",
+      "updatedAt": "2026-01-09T05:51:05.665Z"
+    },
+    {
+      "responseId": "e4e8afb5-4cf3-43e8-a59f-54a28d68b6c0",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-09T05:51:51.888Z",
+      "updatedAt": "2026-01-09T05:51:51.946Z"
+    },
+    {
+      "responseId": "f2409aa9-9b2c-4ddf-bed1-b5866d8e4470",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-09T05:53:33.025Z",
+      "updatedAt": "2026-01-09T05:53:33.076Z"
+    },
+    {
+      "responseId": "2e929ec0-f450-46b9-8a40-7038f0f01c1c",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-09T05:54:57.676Z",
+      "updatedAt": "2026-01-09T05:54:57.728Z"
+    },
+    {
+      "responseId": "6d2b356c-a9dd-49a3-a41f-c0595dcf1201",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-09T05:55:29.323Z",
+      "updatedAt": "2026-01-09T05:55:29.377Z"
+    },
+    {
+      "responseId": "8a0d02a5-31fc-4bab-8bdd-fbc035dc9c1a",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-09T05:55:30.121Z",
+      "updatedAt": "2026-01-09T05:55:30.173Z"
+    },
+    {
+      "responseId": "7debb23e-ef27-4ce4-bb08-3113f8dc34bf",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-09T05:56:18.050Z",
+      "updatedAt": "2026-01-09T05:56:18.209Z"
+    },
+    {
+      "responseId": "1a3f3b1a-7605-4524-8dee-0658d4f7e75c",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-09T05:56:50.883Z",
+      "updatedAt": "2026-01-09T05:56:50.944Z"
+    },
+    {
+      "responseId": "5626da70-6cfd-4051-bd08-3619aeb1b0d9",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-09T07:39:06.365Z",
+      "updatedAt": "2026-01-09T07:39:06.419Z"
+    },
+    {
+      "responseId": "866bacf6-84f9-4f7c-8d39-0b4f04085585",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-09T07:39:59.163Z",
+      "updatedAt": "2026-01-09T07:39:59.228Z"
+    },
+    {
+      "responseId": "e66bdc29-7563-4727-8e24-6addf7940a8b",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-09T09:58:24.381Z",
+      "updatedAt": "2026-01-09T09:58:24.443Z"
+    },
+    {
+      "responseId": "41250780-723a-470b-89b2-b89bd51f7f22",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-09T09:59:59.480Z",
+      "updatedAt": "2026-01-09T09:59:59.551Z"
+    },
+    {
+      "responseId": "326df815-83ac-475a-afc8-99999515b407",
+      "status": "Rejected",
+      "abandonedReason": "Interview_Abandoned_Early",
+      "createdAt": "2026-01-09T10:02:50.684Z",
+      "updatedAt": "2026-01-09T10:02:50.746Z"
+    },
+    {
+      "responseId": "0fbd1fcb-373e-4556-8494-9830dd71e7f6",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-09T10:08:42.541Z",
+      "updatedAt": "2026-01-09T10:08:42.596Z"
+    },
+    {
+      "responseId": "88a2ca00-69af-4928-834a-c3bc02fabf4a",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-09T10:09:17.268Z",
+      "updatedAt": "2026-01-09T10:09:17.321Z"
+    },
+    {
+      "responseId": "2041cc50-1840-4316-b72a-4d014d5cc188",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-09T11:17:57.893Z",
+      "updatedAt": "2026-01-09T11:17:57.947Z"
+    },
+    {
+      "responseId": "6fd3bb68-3956-4ac0-ae3d-6ab17bdbe98f",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-09T11:18:31.146Z",
+      "updatedAt": "2026-01-09T11:18:31.768Z"
+    },
+    {
+      "responseId": "2dab3de7-2ea1-4ad6-8eaa-3244c81a2840",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-09T11:19:01.504Z",
+      "updatedAt": "2026-01-09T11:19:01.551Z"
+    },
+    {
+      "responseId": "2deb66bc-7716-4a86-b22c-596741522711",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-09T11:20:58.653Z",
+      "updatedAt": "2026-01-09T11:20:58.704Z"
+    },
+    {
+      "responseId": "e0fea456-b19d-4d95-820c-39360c4edf81",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-09T11:27:57.454Z",
+      "updatedAt": "2026-01-09T11:27:57.514Z"
+    },
+    {
+      "responseId": "a4dfb1fd-816f-4ae6-b699-d9b34698ac1d",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-09T11:36:44.297Z",
+      "updatedAt": "2026-01-09T11:36:44.351Z"
+    },
+    {
+      "responseId": "db7f5a9f-0491-4620-af36-132bb1980ea8",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-09T11:38:30.163Z",
+      "updatedAt": "2026-01-09T11:38:30.219Z"
+    },
+    {
+      "responseId": "2cb4f16b-9ae7-4ad6-939b-2a28fcbe08c2",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-09T11:49:46.796Z",
+      "updatedAt": "2026-01-09T11:49:46.866Z"
+    },
+    {
+      "responseId": "584b3ae1-dd24-48a3-a280-e476fef57c3f",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-09T11:51:11.703Z",
+      "updatedAt": "2026-01-09T11:51:11.762Z"
+    },
+    {
+      "responseId": "ed770165-1f19-4e17-9614-aeb6d09000da",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-09T11:52:44.325Z",
+      "updatedAt": "2026-01-09T11:52:44.387Z"
+    },
+    {
+      "responseId": "c0b8a0a7-523e-49f9-ab32-b47bd79c688c",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-09T11:53:31.904Z",
+      "updatedAt": "2026-01-09T11:53:31.957Z"
+    },
+    {
+      "responseId": "fc043cdd-efbf-4dd0-a2b9-8641240e0c12",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-09T11:56:45.281Z",
+      "updatedAt": "2026-01-09T11:56:45.343Z"
+    },
+    {
+      "responseId": "86dca7b3-02dc-4e06-9e5f-210c8a27b4f0",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-10T04:58:34.036Z",
+      "updatedAt": "2026-01-10T04:58:34.074Z"
+    },
+    {
+      "responseId": "e404b686-52eb-457c-9c31-d5b7612238b6",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-10T05:20:36.378Z",
+      "updatedAt": "2026-01-10T05:20:36.415Z"
+    },
+    {
+      "responseId": "d7c59f9f-e655-45cb-9e15-7fb232a3887a",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-10T05:23:46.696Z",
+      "updatedAt": "2026-01-10T05:23:47.178Z"
+    },
+    {
+      "responseId": "f2e137f5-ae39-4bed-af39-2a337fffcb6f",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-10T05:29:39.140Z",
+      "updatedAt": "2026-01-10T05:29:39.186Z"
+    },
+    {
+      "responseId": "30d5aa52-218b-48b2-ac8d-549f830bf95d",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-10T05:31:03.957Z",
+      "updatedAt": "2026-01-10T05:31:03.993Z"
+    },
+    {
+      "responseId": "41a36a36-f4f0-4f32-b844-4b2a20133361",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-10T05:31:38.011Z",
+      "updatedAt": "2026-01-10T05:31:38.047Z"
+    },
+    {
+      "responseId": "c038be10-caae-4dec-91f9-22b00330516e",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-10T05:32:08.675Z",
+      "updatedAt": "2026-01-10T05:32:08.717Z"
+    },
+    {
+      "responseId": "230b9359-d22e-4bd5-aceb-401f196e8658",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-10T05:32:39.725Z",
+      "updatedAt": "2026-01-10T05:32:39.760Z"
+    },
+    {
+      "responseId": "4f438307-9d27-41f5-a879-eb5627e183d4",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-10T05:33:18.034Z",
+      "updatedAt": "2026-01-10T05:33:18.076Z"
+    },
+    {
+      "responseId": "827a95a3-18c5-40de-a37b-88653586f91d",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-10T05:34:19.844Z",
+      "updatedAt": "2026-01-10T05:34:19.881Z"
+    },
+    {
+      "responseId": "4297510d-69c5-4c92-824a-e0e7a6b1d296",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-10T05:35:21.829Z",
+      "updatedAt": "2026-01-10T05:35:21.867Z"
+    },
+    {
+      "responseId": "bf007086-2e77-43fe-a73b-2d1e04f75046",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-10T05:36:00.261Z",
+      "updatedAt": "2026-01-10T05:36:00.308Z"
+    },
+    {
+      "responseId": "674aa068-b1ee-4c77-bf31-d37028dea9bf",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-10T05:37:17.239Z",
+      "updatedAt": "2026-01-10T05:37:17.280Z"
+    },
+    {
+      "responseId": "f60aded7-5517-45fb-9680-5b9efb9ea438",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-10T06:07:04.882Z",
+      "updatedAt": "2026-01-10T06:07:04.931Z"
+    },
+    {
+      "responseId": "b5f39c23-9984-4b9b-aaa7-98d04f8bb94d",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-10T06:07:40.942Z",
+      "updatedAt": "2026-01-10T06:07:40.987Z"
+    },
+    {
+      "responseId": "358e5532-8475-4123-9c20-76526e923f3f",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-10T06:08:42.278Z",
+      "updatedAt": "2026-01-10T06:08:42.328Z"
+    },
+    {
+      "responseId": "da7489cc-642b-45e3-8d5b-f0a0c643bfb5",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-10T06:09:14.170Z",
+      "updatedAt": "2026-01-10T06:09:14.208Z"
+    },
+    {
+      "responseId": "8d2f8f0b-4c74-4b8c-8b9d-3916f5545683",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-10T06:10:12.977Z",
+      "updatedAt": "2026-01-10T06:10:13.034Z"
+    },
+    {
+      "responseId": "043e5fff-ba80-4018-9827-a27e9452de74",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-10T06:10:44.760Z",
+      "updatedAt": "2026-01-10T06:10:44.801Z"
+    },
+    {
+      "responseId": "a644a442-cb30-447e-89e5-e6e8f81af9c9",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-10T06:11:36.075Z",
+      "updatedAt": "2026-01-10T06:11:36.120Z"
+    },
+    {
+      "responseId": "38fe2ba9-c52e-4e70-9ea7-63ab25ab9f4c",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-10T06:12:51.090Z",
+      "updatedAt": "2026-01-10T06:12:51.134Z"
+    },
+    {
+      "responseId": "080f7698-5c28-4b62-8866-d239f215ef59",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-10T06:13:40.237Z",
+      "updatedAt": "2026-01-10T06:13:40.278Z"
+    },
+    {
+      "responseId": "86225dce-0ae4-4873-94e7-673ec78ffebb",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-10T06:14:12.096Z",
+      "updatedAt": "2026-01-10T06:14:12.135Z"
+    },
+    {
+      "responseId": "ea67d260-1c2e-4e23-8657-09545140cdac",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-10T06:20:11.131Z",
+      "updatedAt": "2026-01-10T06:20:11.174Z"
+    },
+    {
+      "responseId": "c61d4ba1-7faa-4d8d-9173-b612c766e863",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-10T06:26:16.576Z",
+      "updatedAt": "2026-01-10T06:26:16.615Z"
+    },
+    {
+      "responseId": "8be3758e-c075-4715-9284-8f53b3b3d775",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-10T06:26:48.570Z",
+      "updatedAt": "2026-01-10T06:26:48.607Z"
+    },
+    {
+      "responseId": "55b5d09b-0bee-4943-8a26-22d754b72495",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-10T06:27:48.045Z",
+      "updatedAt": "2026-01-10T06:27:48.086Z"
+    },
+    {
+      "responseId": "8c41d599-c1a2-4af1-a016-4e62276d2209",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-10T06:29:01.811Z",
+      "updatedAt": "2026-01-10T06:29:01.851Z"
+    },
+    {
+      "responseId": "381b0ad4-0677-4227-abb3-0bbd198c5b34",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-10T06:30:02.475Z",
+      "updatedAt": "2026-01-10T06:30:02.511Z"
+    },
+    {
+      "responseId": "f482a5c7-adec-4a2a-ae56-7a832b671f25",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-10T06:40:33.963Z",
+      "updatedAt": "2026-01-10T06:40:33.999Z"
+    },
+    {
+      "responseId": "4aa6aa1b-ee5d-4ec9-8098-bd006d57d1ed",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-10T06:41:06.338Z",
+      "updatedAt": "2026-01-10T06:41:06.378Z"
+    },
+    {
+      "responseId": "beb140c8-a7c5-4df6-bbf0-c103e384b8ad",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-10T06:41:38.984Z",
+      "updatedAt": "2026-01-10T06:41:39.019Z"
+    },
+    {
+      "responseId": "537e2a99-3c96-40a0-bc54-bc831ada6c9f",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-10T06:42:09.553Z",
+      "updatedAt": "2026-01-10T06:42:09.828Z"
+    },
+    {
+      "responseId": "cf323be7-c56d-43b6-91b3-b1faa9fd1ff0",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-10T06:48:50.520Z",
+      "updatedAt": "2026-01-10T06:48:50.869Z"
+    },
+    {
+      "responseId": "0e03ec24-ea22-4da7-80c8-7701645869b0",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-10T06:49:39.805Z",
+      "updatedAt": "2026-01-10T06:49:39.843Z"
+    },
+    {
+      "responseId": "9512c617-05e9-4c60-979a-42b556fd019d",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-10T06:57:49.349Z",
+      "updatedAt": "2026-01-10T06:57:49.392Z"
+    },
+    {
+      "responseId": "3391bfa5-2caf-4bde-a878-765fff9f529e",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-10T07:59:49.515Z",
+      "updatedAt": "2026-01-10T07:59:49.553Z"
+    },
+    {
+      "responseId": "60d93d05-3c31-44ef-817b-524a98a759c3",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-10T09:31:32.005Z",
+      "updatedAt": "2026-01-10T09:31:32.049Z"
+    },
+    {
+      "responseId": "4f1dba0a-7aa2-4a04-a7ff-4d752e7c5bf1",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-10T09:32:45.957Z",
+      "updatedAt": "2026-01-10T09:32:45.998Z"
+    },
+    {
+      "responseId": "85fca1bf-7654-4f5e-85c9-d4221da3c941",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-10T09:35:57.496Z",
+      "updatedAt": "2026-01-10T09:35:57.535Z"
+    },
+    {
+      "responseId": "9afbd525-2b2a-4cb0-901f-4a2ea98b23ed",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-10T09:36:29.501Z",
+      "updatedAt": "2026-01-10T09:36:29.553Z"
+    },
+    {
+      "responseId": "3ef37c28-7f01-4ec1-82e3-4c8404f3170c",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-10T09:37:00.080Z",
+      "updatedAt": "2026-01-10T09:37:00.123Z"
+    },
+    {
+      "responseId": "2f2229ba-a228-4d6c-bad2-c72623cee273",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-10T09:38:55.887Z",
+      "updatedAt": "2026-01-10T09:38:55.922Z"
+    },
+    {
+      "responseId": "4625e53e-d41e-41e5-be07-f0a28e5d548b",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-10T09:39:28.300Z",
+      "updatedAt": "2026-01-10T09:39:28.335Z"
+    },
+    {
+      "responseId": "de685936-c274-40e1-b1ee-2683e668edde",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-10T09:40:15.590Z",
+      "updatedAt": "2026-01-10T09:40:15.627Z"
+    },
+    {
+      "responseId": "8e2f0097-db80-479e-8fbc-4a8991ff835f",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-10T09:41:06.833Z",
+      "updatedAt": "2026-01-10T09:41:06.875Z"
+    },
+    {
+      "responseId": "49c39283-049a-4243-8360-5cef8209e517",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-10T09:48:47.325Z",
+      "updatedAt": "2026-01-10T09:48:47.364Z"
+    },
+    {
+      "responseId": "3e9b5310-1618-4abc-ba54-97cb817a360c",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-10T09:50:53.848Z",
+      "updatedAt": "2026-01-10T09:50:53.894Z"
+    },
+    {
+      "responseId": "26b7a163-6db9-443c-9542-69fdc46f48d5",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-10T09:55:22.158Z",
+      "updatedAt": "2026-01-10T09:55:22.197Z"
+    },
+    {
+      "responseId": "0e065a16-2bb8-4795-89aa-f3ced9ae68ec",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-10T09:55:57.431Z",
+      "updatedAt": "2026-01-10T09:55:57.498Z"
+    },
+    {
+      "responseId": "6ed58bca-238b-4bef-b3ba-c1b08696c86e",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-10T09:56:27.954Z",
+      "updatedAt": "2026-01-10T09:56:27.990Z"
+    },
+    {
+      "responseId": "bda794e5-8478-4e38-9fe6-4990371dcc1b",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-10T09:56:29.047Z",
+      "updatedAt": "2026-01-10T09:56:29.086Z"
+    },
+    {
+      "responseId": "9399fa4d-28db-4a5b-a3fe-3d3eec526c4c",
+      "status": "Rejected",
+      "abandonedReason": "Call_Not_Connected",
+      "createdAt": "2026-01-10T09:57:01.196Z",
+      "updatedAt": "2026-01-10T09:57:01.389Z"
+    }
+  ]
+}

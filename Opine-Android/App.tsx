@@ -21,6 +21,7 @@ import { theme } from './src/theme/theme';
 // Import API service
 import { apiService } from './src/services/api';
 import { appLoggingService } from './src/services/appLoggingService';
+import { analyticsService } from './src/services/analyticsService';
 
 const Stack = createStackNavigator();
 
@@ -34,6 +35,14 @@ export default function App() {
     appLoggingService.initialize().catch(err => {
       console.error('Failed to initialize logging service:', err);
     });
+    
+    // Initialize analytics service
+    analyticsService.initialize().catch(err => {
+      console.error('Failed to initialize analytics service:', err);
+    });
+    
+    // Track app open
+    analyticsService.trackAppOpen();
     
     checkAuthStatus();
   }, []);
@@ -171,6 +180,16 @@ export default function App() {
       setIsAuthenticated(true);
       console.log('✅ User state updated, authentication complete');
       
+      // Track login in analytics
+      analyticsService.trackLogin(
+        userData._id || userData.id || 'unknown',
+        userData.userType || 'unknown',
+        {
+          firstName: userData.firstName,
+          lastName: userData.lastName,
+        }
+      );
+      
       // Download surveys and dependent data for offline use (completely async, non-blocking)
       // Do this in the background so login completes immediately
       // Use setTimeout with longer delay to ensure login completes first
@@ -224,6 +243,9 @@ export default function App() {
       // Clear local storage
       await AsyncStorage.multiRemove(['authToken', 'userData']);
       console.log('Local storage cleared');
+      
+      // Track logout in analytics
+      analyticsService.trackLogout();
       
       // Update state
       setUser(null);

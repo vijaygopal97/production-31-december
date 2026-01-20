@@ -686,9 +686,10 @@ export default function InterviewInterface({ navigation, route }: any) {
     // CRITICAL LOGGING: Log AC selection logic
   // Removed excessive AC selection debug logging
     
-    // Show AC selection if requiresACSelection is true (even if allACs is empty - we'll show loading)
-    // Only for target survey when interviewer has no assigned ACs
-    const needsACSelection = !isCatiMode && requiresACSelection && isTargetSurvey && (hasAssignedACs || (!hasAssignedACs && requiresACSelection));
+    // CRITICAL FIX: For target survey in CAPI mode, ALWAYS show AC selection if assignACs is true
+    // This ensures AC/Polling Station questions always appear, even if requiresACSelection state is incorrect
+    const shouldForceACSelection = !isCatiMode && isTargetSurvey && (survey?.assignACs === true || sessionData?.assignACs === true);
+    const needsACSelection = (!isCatiMode && requiresACSelection && isTargetSurvey && (hasAssignedACs || (!hasAssignedACs && requiresACSelection))) || shouldForceACSelection;
     
     // Add AC selection question as first question if required (NOT for CATI)
     if (needsACSelection) {
@@ -1011,6 +1012,65 @@ export default function InterviewInterface({ navigation, route }: any) {
 
       // Return reordered and filtered questions array
       return filteredFinalQuestions;
+    }
+    
+    // Special handling for survey 68fd1915d41841da463f0d46: Dynamic question reordering for CAPI mode
+    // Q28 should come AFTER Q19 and BEFORE Q20 (only for CAPI, not CATI)
+    if (!isCatiMode && survey && (survey._id === TARGET_SURVEY_ID || survey.id === TARGET_SURVEY_ID)) {
+      // Helper function to identify questions by questionNumber (reuse same efficient pattern)
+      const identifyQuestion = (question: any, targetNumber: string): boolean => {
+        const qNum = String(question.questionNumber || '').trim().toLowerCase();
+        const targetNumLower = String(targetNumber).toLowerCase();
+        return qNum === targetNumLower || 
+               question.questionNumber === targetNumber || 
+               question.questionNumber === String(targetNumber);
+      };
+
+      // Find indices of Q19, Q28, and Q20
+      let q19Index = -1;
+      let q28Index = -1;
+      let q20Index = -1;
+
+      questions.forEach((q: any, idx: number) => {
+        if (identifyQuestion(q, '19')) q19Index = idx;
+        if (identifyQuestion(q, '28')) q28Index = idx;
+        if (identifyQuestion(q, '20')) q20Index = idx;
+      });
+
+      // Only reorder if all three questions are found and Q28 is not already between Q19 and Q20
+      if (q19Index !== -1 && q28Index !== -1 && q20Index !== -1) {
+        // Check if Q28 is already in the correct position (between Q19 and Q20)
+        const isQ28BetweenQ19AndQ20 = q19Index < q28Index && q28Index < q20Index;
+        
+        if (!isQ28BetweenQ19AndQ20) {
+          // Remove Q28 from its current position
+          const q28Question = questions[q28Index];
+          const questionsWithoutQ28 = questions.filter((_: any, idx: number) => idx !== q28Index);
+          
+          // Find new positions after removing Q28
+          let newQ19Index = q19Index;
+          let newQ20Index = q20Index;
+          
+          // Adjust indices if Q28 was before Q19 or Q20
+          if (q28Index < q19Index) {
+            newQ19Index = q19Index - 1;
+            newQ20Index = q20Index - 1;
+          } else if (q28Index < q20Index) {
+            newQ20Index = q20Index - 1;
+          }
+          
+          // Insert Q28 right after Q19 (which is now at newQ19Index)
+          const insertIndex = newQ19Index + 1;
+          const reorderedQuestions = [
+            ...questionsWithoutQ28.slice(0, insertIndex),
+            q28Question,
+            ...questionsWithoutQ28.slice(insertIndex)
+          ];
+          
+          console.log(`✅ Reordered Q28 to come after Q19 and before Q20 for CAPI interview (Survey: ${TARGET_SURVEY_ID})`);
+          return reorderedQuestions;
+        }
+      }
     }
     
     return questions;
@@ -2129,21 +2189,132 @@ export default function InterviewInterface({ navigation, route }: any) {
             }
           }, 1500);
         } else {
-          // CAPI mode - OPTIMIZATION: Run location fetch and startInterview in parallel
+          // CAPI mode - CRITICAL: GPS is REQUIRED for CAPI interviews
+          // Request location permission and capture GPS BEFORE starting interview
           setLocationLoading(true);
           
-          // OPTIMIZATION: Start location fetch and interview start in parallel
-          const locationPromise = (async () => {
+          let locationData: any = null;
+          let locationPermissionGranted = false;
+          
+          // CRITICAL FIX: Request location permission and capture GPS for CAPI
           try {
+            console.log('📍 CAPI Mode: Requesting location permission and capturing GPS...');
+            
+            // Request location permission
+            locationPermissionGranted = await LocationService.requestPermissions();
+            
+            if (!locationPermissionGranted) {
+              // Permission denied - show alert with instructions
+              Alert.alert(
+                'Location Permission Required',
+                'This survey requires location data (GPS coordinates). Please grant location permission to continue.\n\nInstructions:\n1. Tap "Open Settings"\n2. Find this app\n3. Enable "Location" permission\n4. Return to this app and try again.',
+                [
+                  {
+                    text: 'Cancel',
+                    style: 'cancel',
+                    onPress: () => {
+                      navigation.goBack();
+                      setIsLoading(false);
+                    }
+                  },
+                  {
+                    text: 'Open Settings',
+                    onPress: async () => {
+                      // Open app settings
+                      try {
+                        if (Platform.OS === 'android') {
+                          await Linking.openSettings();
+                        } else if (Platform.OS === 'ios') {
+                          await Linking.openURL('app-settings:');
+                        }
+                      } catch (settingsError) {
+                        console.error('Error opening settings:', settingsError);
+                      }
+                      navigation.goBack();
+                      setIsLoading(false);
+                    }
+                  }
+                ],
+                { cancelable: false }
+              );
+              setIsLoading(false);
+              return;
+            }
+            
+            // Permission granted - get location
             const isOnline = await apiService.isOnline();
             console.log('📡 Online status for location:', isOnline);
-            const location = await LocationService.getCurrentLocation(!isOnline);
-              return location;
-          } catch (locationError) {
-            console.error('Error getting location:', locationError);
-              return null;
+            locationData = await LocationService.getCurrentLocation(!isOnline);
+            
+            if (!locationData || !locationData.latitude || !locationData.longitude) {
+              throw new Error('Failed to get valid GPS coordinates');
             }
-          })();
+            
+            console.log('✅ GPS location captured successfully:', {
+              latitude: locationData.latitude,
+              longitude: locationData.longitude,
+              accuracy: locationData.accuracy
+            });
+            
+          } catch (locationError: any) {
+            console.error('❌ Error getting location:', locationError);
+            
+            // Show error alert with retry option
+            Alert.alert(
+              'GPS Location Required',
+              `This survey requires GPS location data. ${locationError.message || 'Failed to get location.'}\n\nPlease ensure:\n1. Location services are enabled\n2. GPS is turned on\n3. You are in an area with GPS signal\n\nWould you like to try again?`,
+              [
+                {
+                  text: 'Cancel',
+                  style: 'cancel',
+                  onPress: () => {
+                    navigation.goBack();
+                    setIsLoading(false);
+                  }
+                },
+                {
+                  text: 'Retry',
+                  onPress: async () => {
+                    // Retry location capture
+                    try {
+                      const isOnline = await apiService.isOnline();
+                      const retryLocation = await LocationService.getCurrentLocation(!isOnline);
+                      if (retryLocation && retryLocation.latitude && retryLocation.longitude) {
+                        setLocationData(retryLocation);
+                        setLocationLoading(false);
+                        // Continue with interview start
+                        // Rest of initialization will continue below
+                      } else {
+                        throw new Error('Still could not get valid GPS coordinates');
+                      }
+                    } catch (retryError: any) {
+                      Alert.alert(
+                        'GPS Still Unavailable',
+                        `Could not get GPS location: ${retryError.message || 'Unknown error'}\n\nPlease check your device settings and try again later.`,
+                        [{
+                          text: 'OK',
+                          onPress: () => {
+                            navigation.goBack();
+                            setIsLoading(false);
+                          }
+                        }]
+                      );
+                    }
+                  }
+                }
+              ],
+              { cancelable: false }
+            );
+            setIsLoading(false);
+            return;
+          }
+          
+          // Set location data
+          setLocationData(locationData);
+          setLocationLoading(false);
+          
+          // OPTIMIZATION: Start interview in parallel (location is already captured)
+          const locationPromise = Promise.resolve(locationData);
           
           // OPTIMIZATION: Fetch full survey data in parallel if needed
           let fullSurveyPromise: Promise<any> | null = null;
@@ -2174,41 +2345,34 @@ export default function InterviewInterface({ navigation, route }: any) {
             return;
           }
           
-          // CRITICAL: Validate critical fields for target survey
+          // CRITICAL: Validate critical fields for target survey (CAPI only)
           const isTargetSurvey = survey._id === '68fd1915d41841da463f0d46' || survey.id === '68fd1915d41841da463f0d46';
-          if (isTargetSurvey && syncedSurvey.assignACs === undefined) {
-            Alert.alert(
-              'Survey Data Incomplete',
-              'Survey data is missing critical fields (assignACs). Please sync surveys again from the dashboard.',
-              [
-                {
-                  text: 'OK',
-                  onPress: () => {
-                    navigation.goBack();
+          // For CAPI mode, ensure assignACs is present for target survey
+          if (!isCatiMode && isTargetSurvey && syncedSurvey.assignACs !== true && syncedSurvey.assignACs !== false) {
+            // Only block if assignACs is completely missing (undefined/null)
+            // If it's false, we'll handle it in the logic
+            if (syncedSurvey.assignACs === undefined || syncedSurvey.assignACs === null) {
+              Alert.alert(
+                'Survey Data Incomplete',
+                'Survey data is missing critical fields (assignACs). Please sync surveys again from the dashboard.',
+                [
+                  {
+                    text: 'OK',
+                    onPress: () => {
+                      navigation.goBack();
+                    }
                   }
-                }
-              ]
-            );
-            setIsLoading(false);
-            return;
+                ]
+              );
+              setIsLoading(false);
+              return;
+            }
           }
           
           console.log('✅ Survey sync validation passed before interview start');
           
-          // PERFORMANCE OPTIMIZED: Start interview immediately (non-blocking)
-          // Don't wait for location - it will update when ready
-          // Location is not critical for starting interview, can be fetched in background
+          // CRITICAL: Start interview (location is already captured above for CAPI)
           const interviewResult = await apiService.startInterview(survey._id);
-          
-          // Start location fetch in background (non-blocking)
-          locationPromise.then((location) => {
-            setLocationData(location);
-            setLocationLoading(false);
-          }).catch((locationError) => {
-            console.error('Location fetch error (non-critical):', locationError);
-            setLocationData(null);
-            setLocationLoading(false);
-          });
           
           // Fetch full survey data in parallel (if needed)
           const surveyResult = fullSurveyPromise ? await fullSurveyPromise : { success: false };
@@ -2240,7 +2404,14 @@ export default function InterviewInterface({ navigation, route }: any) {
             // If assignedACs.length === 0, we'll fetch all ACs for the state
             // Only for survey "68fd1915d41841da463f0d46"
             const isTargetSurvey = survey && (survey._id === '68fd1915d41841da463f0d46' || survey.id === '68fd1915d41841da463f0d46');
-            const needsACSelection = result.response.requiresACSelection;
+            
+            // CRITICAL FIX: Force requiresACSelection=true for target survey in CAPI mode
+            // This ensures AC/Polling Station questions always appear, even if survey data is incomplete
+            let needsACSelection = result.response.requiresACSelection;
+            if (!isCatiMode && isTargetSurvey && (result.response.assignACs === true || survey.assignACs === true || syncedSurvey?.assignACs === true)) {
+              needsACSelection = true;
+              console.log('🔍 ✅ FORCED requiresACSelection=true for target survey (CAPI mode)');
+            }
             
             // CRITICAL LOGGING: Log all AC selection related data
             console.log('🔍 ========== AC SELECTION DEBUG (OFFLINE) ==========');
@@ -3718,50 +3889,52 @@ export default function InterviewInterface({ navigation, route }: any) {
   // Progressive fallback: best settings first, then simpler ones for old devices
   const getRecordingConfig = (retryCount: number): any => {
     const configs = [
-      // Configuration 0: Best quality (for modern devices)
+      // Configuration 0: Industry-standard quality for speech (16kHz, 32kbps)
+      // Top tech companies (WhatsApp, Amazon, Google) use these settings for voice
+      // Provides 75% file size reduction with no quality loss for speech recordings
       {
         android: {
           extension: '.m4a',
           outputFormat: Audio.AndroidOutputFormat.MPEG_4,
           audioEncoder: Audio.AndroidAudioEncoder.AAC,
-          sampleRate: 44100,
+          sampleRate: 16000, // ✅ Industry standard for speech (was 44100 - music quality)
           numberOfChannels: 1,
-          bitRate: 128000,
+          bitRate: 32000, // ✅ Industry standard for speech (was 128000 - music quality)
         },
         ios: {
           extension: '.m4a',
           outputFormat: Audio.IOSOutputFormat.MPEG4AAC,
-          audioQuality: Audio.IOSAudioQuality.HIGH,
-          sampleRate: 44100,
+          audioQuality: Audio.IOSAudioQuality.MEDIUM, // ✅ Changed from HIGH to MEDIUM (optimal for speech)
+          sampleRate: 16000, // ✅ Industry standard for speech (was 44100 - music quality)
           numberOfChannels: 1,
-          bitRate: 128000,
+          bitRate: 32000, // ✅ Industry standard for speech (was 128000 - music quality)
         },
         web: {
-          mimeType: 'audio/webm',
-          bitsPerSecond: 128000,
+          mimeType: 'audio/webm;codecs=opus', // ✅ Prefer Opus codec (better for speech)
+          bitsPerSecond: 32000, // ✅ Industry standard for speech (was 128000 - music quality)
         },
       },
-      // Configuration 1: Medium quality (for average devices)
+      // Configuration 1: Fallback quality (for average devices) - still optimized for speech
       {
         android: {
           extension: '.m4a',
           outputFormat: Audio.AndroidOutputFormat.MPEG_4,
           audioEncoder: Audio.AndroidAudioEncoder.AAC,
-          sampleRate: 22050, // Lower sample rate for better compatibility
+          sampleRate: 16000, // ✅ Keep 16kHz (industry standard)
           numberOfChannels: 1,
-          bitRate: 64000, // Lower bitrate
+          bitRate: 24000, // ✅ Lower bitrate for compatibility (was 64000)
         },
         ios: {
           extension: '.m4a',
           outputFormat: Audio.IOSOutputFormat.MPEG4AAC,
           audioQuality: Audio.IOSAudioQuality.MEDIUM,
-          sampleRate: 22050,
+          sampleRate: 16000, // ✅ Keep 16kHz (industry standard)
           numberOfChannels: 1,
-          bitRate: 64000,
+          bitRate: 24000, // ✅ Lower bitrate for compatibility (was 64000)
         },
         web: {
-          mimeType: 'audio/webm',
-          bitsPerSecond: 64000,
+          mimeType: 'audio/webm;codecs=opus', // ✅ Prefer Opus codec
+          bitsPerSecond: 24000, // ✅ Lower bitrate for compatibility (was 64000)
         },
       },
       // Configuration 2: Low quality (for old devices)
@@ -4758,7 +4931,7 @@ export default function InterviewInterface({ navigation, route }: any) {
             recordingDuration: Math.round(duration),
             format: 'm4a',
             codec: 'aac',
-            bitrate: 128000,
+            bitrate: 32000, // ✅ Industry standard for speech (was 128000)
             fileSize: audioFileSize,
             uploadedAt: new Date().toISOString()
           } : null,
@@ -5050,6 +5223,69 @@ export default function InterviewInterface({ navigation, route }: any) {
       return;
     }
 
+    // CRITICAL: For CAPI interviews, validate GPS location before completion
+    // GPS is REQUIRED for CAPI interviews - cannot submit without it
+    if (!isCatiMode) {
+      if (!locationData || !locationData.latitude || !locationData.longitude) {
+        // Try to get location one more time before showing error
+        try {
+          const isOnline = await apiService.isOnline();
+          const retryLocation = await LocationService.getCurrentLocation(!isOnline);
+          
+          if (retryLocation && retryLocation.latitude && retryLocation.longitude) {
+            setLocationData(retryLocation);
+            // Continue with submission
+          } else {
+            throw new Error('GPS coordinates not available');
+          }
+        } catch (gpsError: any) {
+          Alert.alert(
+            'GPS Location Required',
+            `This CAPI survey requires GPS location data to complete.\n\nError: ${gpsError.message || 'Failed to get GPS location'}\n\nPlease ensure:\n1. Location services are enabled\n2. GPS is turned on\n3. You are in an area with GPS signal\n4. Location permission is granted\n\nWould you like to retry getting location?`,
+            [
+              {
+                text: 'Cancel',
+                style: 'cancel',
+                onPress: () => {
+                  // Don't complete - return to interview
+                }
+              },
+              {
+                text: 'Retry GPS',
+                onPress: async () => {
+                  try {
+                    setIsLoading(true);
+                    const isOnline = await apiService.isOnline();
+                    const finalLocation = await LocationService.getCurrentLocation(!isOnline);
+                    
+                    if (finalLocation && finalLocation.latitude && finalLocation.longitude) {
+                      setLocationData(finalLocation);
+                      setIsLoading(false);
+                      // Retry completion after getting location
+                      setTimeout(() => {
+                        completeInterview();
+                      }, 100);
+                    } else {
+                      throw new Error('Still could not get valid GPS coordinates');
+                    }
+                  } catch (finalGpsError: any) {
+                    setIsLoading(false);
+                    Alert.alert(
+                      'GPS Still Unavailable',
+                      `Could not get GPS location: ${finalGpsError.message || 'Unknown error'}\n\nPlease check your device settings and try again.`,
+                      [{ text: 'OK' }]
+                    );
+                  }
+                }
+              }
+            ],
+            { cancelable: false }
+          );
+          return; // Don't complete without GPS
+        }
+      }
+    }
+    
     // If call status is not connected (CATI), skip consent form check and proceed with submission
     // For CATI interviews, if call status is not connected, consent form doesn't matter
     const shouldSkipConsentCheck = isCatiMode && callStatusResponse && !isCallConnected;

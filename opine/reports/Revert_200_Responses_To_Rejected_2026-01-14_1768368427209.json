@@ -1,0 +1,723 @@
+{
+  "metadata": {
+    "operation": "Revert 200 Responses Back to Rejected Status",
+    "criteria": {
+      "sourceReports": [
+        "Status_Change_Report_2026-01-09_1767988107042.json",
+        "Status_Change_VERIFICATION_Report_2026-01-09.json"
+      ],
+      "originalOperation": "Change Auto-Rejected to Pending_Approval",
+      "originalChangeDate": "2026-01-09"
+    },
+    "executedAt": "2026-01-14T05:27:05.945Z",
+    "executedBy": "Script: revert200ResponsesToRejected.js"
+  },
+  "summary": {
+    "totalResponseIds": 100,
+    "successfullyChanged": 97,
+    "failed": 0,
+    "notFound": 0,
+    "skipped": 3
+  },
+  "changes": [
+    {
+      "responseId": "3e6ea5a1-58b1-4ef9-9b8d-d1b105320c97",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "questionsAnswered": 32,
+      "changedAt": "2026-01-14T05:27:06.012Z"
+    },
+    {
+      "responseId": "ac7d102b-e057-4cab-a7c6-ef7e18766657",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "questionsAnswered": 32,
+      "changedAt": "2026-01-14T05:27:06.031Z"
+    },
+    {
+      "responseId": "0af1acce-7d7f-4362-a5d3-4ac8be54efac",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "questionsAnswered": 32,
+      "changedAt": "2026-01-14T05:27:06.048Z"
+    },
+    {
+      "responseId": "6958d4db-8648-45fc-a3ae-1e39586e09f2",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "questionsAnswered": 32,
+      "changedAt": "2026-01-14T05:27:06.068Z"
+    },
+    {
+      "responseId": "73f142a3-8ad6-4dba-9269-d3238d5d6345",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "questionsAnswered": 32,
+      "changedAt": "2026-01-14T05:27:06.089Z"
+    },
+    {
+      "responseId": "b1dbccd8-2f14-481c-b1f9-b10b0fe15623",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "questionsAnswered": 32,
+      "changedAt": "2026-01-14T05:27:06.105Z"
+    },
+    {
+      "responseId": "688d2e3f-4235-421f-85f7-5952ac0247cb",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "questionsAnswered": 32,
+      "changedAt": "2026-01-14T05:27:06.121Z"
+    },
+    {
+      "responseId": "b50b4e10-427b-4a49-9cf4-fccb8f25bca7",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "questionsAnswered": 32,
+      "changedAt": "2026-01-14T05:27:06.138Z"
+    },
+    {
+      "responseId": "6e72408e-5435-49eb-87a9-afb81995cf81",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "questionsAnswered": 32,
+      "changedAt": "2026-01-14T05:27:06.153Z"
+    },
+    {
+      "responseId": "816da24a-791f-45e9-9ea0-d21f14b0b292",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "questionsAnswered": 32,
+      "changedAt": "2026-01-14T05:27:06.168Z"
+    },
+    {
+      "responseId": "840b13c3-ecd0-4e71-885a-f0fe0ed31ffc",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "questionsAnswered": 32,
+      "changedAt": "2026-01-14T05:27:06.183Z"
+    },
+    {
+      "responseId": "eb947f11-019b-4267-afc2-7582180e5a5a",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "questionsAnswered": 32,
+      "changedAt": "2026-01-14T05:27:06.197Z"
+    },
+    {
+      "responseId": "ae31b435-3ca3-4590-aa39-c00ff3649d7b",
+      "previousStatus": "Pending_Approval",
+      "newStatus": "Rejected",
+      "questionsAnswered": 27,
+      "changedAt": "2026-01-14T05:27:06.239Z"
+    },
+    {
+      "responseId": "96eb7254-d354-4fd7-9cf8-338ca8433b84",
+      "previousStatus": "Pending_Approval",
+      "newStatus": "Rejected",
+      "questionsAnswered": 27,
+      "changedAt": "2026-01-14T05:27:06.255Z"
+    },
+    {
+      "responseId": "55d64476-a946-4b1b-98d4-6869c1a7c858",
+      "previousStatus": "Pending_Approval",
+      "newStatus": "Rejected",
+      "questionsAnswered": 32,
+      "changedAt": "2026-01-14T05:27:06.269Z"
+    },
+    {
+      "responseId": "6eda258d-7423-4ebc-8d2c-7f37827d1988",
+      "previousStatus": "Pending_Approval",
+      "newStatus": "Rejected",
+      "questionsAnswered": 32,
+      "changedAt": "2026-01-14T05:27:06.284Z"
+    },
+    {
+      "responseId": "6c8390cd-d6e0-4346-b0d3-017b7007f304",
+      "previousStatus": "Pending_Approval",
+      "newStatus": "Rejected",
+      "questionsAnswered": 26,
+      "changedAt": "2026-01-14T05:27:06.295Z"
+    },
+    {
+      "responseId": "5c15f6a7-06bc-400a-b4c4-167e12bc91eb",
+      "previousStatus": "Pending_Approval",
+      "newStatus": "Rejected",
+      "questionsAnswered": 27,
+      "changedAt": "2026-01-14T05:27:06.310Z"
+    },
+    {
+      "responseId": "d7e08592-3067-4e23-827f-9679c7b3e930",
+      "previousStatus": "Pending_Approval",
+      "newStatus": "Rejected",
+      "questionsAnswered": 27,
+      "changedAt": "2026-01-14T05:27:06.322Z"
+    },
+    {
+      "responseId": "0d0a5b01-9b1f-4036-a414-cad156705d7c",
+      "previousStatus": "Pending_Approval",
+      "newStatus": "Rejected",
+      "questionsAnswered": 27,
+      "changedAt": "2026-01-14T05:27:06.334Z"
+    },
+    {
+      "responseId": "28fb0299-f959-4150-b9eb-70e1680193dc",
+      "previousStatus": "Pending_Approval",
+      "newStatus": "Rejected",
+      "questionsAnswered": 32,
+      "changedAt": "2026-01-14T05:27:06.346Z"
+    },
+    {
+      "responseId": "458e8299-3213-4e9f-80bf-b8ebe2a09892",
+      "previousStatus": "Pending_Approval",
+      "newStatus": "Rejected",
+      "questionsAnswered": 27,
+      "changedAt": "2026-01-14T05:27:06.359Z"
+    },
+    {
+      "responseId": "70360b59-ba3b-4774-a149-d4a6c772d10a",
+      "previousStatus": "Pending_Approval",
+      "newStatus": "Rejected",
+      "questionsAnswered": 32,
+      "changedAt": "2026-01-14T05:27:06.372Z"
+    },
+    {
+      "responseId": "4b3bc354-cdd3-42ef-a83a-b9a6c93b6535",
+      "previousStatus": "Pending_Approval",
+      "newStatus": "Rejected",
+      "questionsAnswered": 27,
+      "changedAt": "2026-01-14T05:27:06.383Z"
+    },
+    {
+      "responseId": "86ee960f-571c-4328-8a0a-4587f1c3464a",
+      "previousStatus": "Pending_Approval",
+      "newStatus": "Rejected",
+      "questionsAnswered": 25,
+      "changedAt": "2026-01-14T05:27:06.393Z"
+    },
+    {
+      "responseId": "33993b3e-2118-40ac-8fd4-fdc3f1bcd6b4",
+      "previousStatus": "Pending_Approval",
+      "newStatus": "Rejected",
+      "questionsAnswered": 32,
+      "changedAt": "2026-01-14T05:27:06.405Z"
+    },
+    {
+      "responseId": "9a1cb9eb-bb03-4eeb-a7a9-aab3e46ca5d7",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "questionsAnswered": 27,
+      "changedAt": "2026-01-14T05:27:06.423Z"
+    },
+    {
+      "responseId": "fe646e94-fe66-4b28-8a49-12062255b02a",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "questionsAnswered": 32,
+      "changedAt": "2026-01-14T05:27:06.435Z"
+    },
+    {
+      "responseId": "b6bd0c98-ac79-4f8d-86fa-db063cd2a25e",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "questionsAnswered": 27,
+      "changedAt": "2026-01-14T05:27:06.445Z"
+    },
+    {
+      "responseId": "76db19d5-0275-4e95-9a68-d11ffe059eae",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "questionsAnswered": 32,
+      "changedAt": "2026-01-14T05:27:06.456Z"
+    },
+    {
+      "responseId": "f91fddfe-3b4e-499e-8cbc-f09bd63a9b9c",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "questionsAnswered": 26,
+      "changedAt": "2026-01-14T05:27:06.468Z"
+    },
+    {
+      "responseId": "f3dea935-d9dd-4d50-8b35-dc36b8e09fd3",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "questionsAnswered": 25,
+      "changedAt": "2026-01-14T05:27:06.479Z"
+    },
+    {
+      "responseId": "666cfd20-6b41-445e-b2be-9984424c8803",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "questionsAnswered": 25,
+      "changedAt": "2026-01-14T05:27:06.489Z"
+    },
+    {
+      "responseId": "0a97bbe6-ef29-406c-b7f0-82daf011ca0f",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "questionsAnswered": 25,
+      "changedAt": "2026-01-14T05:27:06.499Z"
+    },
+    {
+      "responseId": "f91f190f-4783-4b62-84d7-ecb4e3b5dd42",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "questionsAnswered": 25,
+      "changedAt": "2026-01-14T05:27:06.508Z"
+    },
+    {
+      "responseId": "64a326b7-9a53-41ee-b529-7ad2c4dc75b4",
+      "previousStatus": "Pending_Approval",
+      "newStatus": "Rejected",
+      "questionsAnswered": 32,
+      "changedAt": "2026-01-14T05:27:06.526Z"
+    },
+    {
+      "responseId": "1829a68b-f0a3-4d10-9d98-72c956079f72",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "questionsAnswered": 32,
+      "changedAt": "2026-01-14T05:27:06.538Z"
+    },
+    {
+      "responseId": "60027f02-e967-45c3-8e93-905129864a23",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "questionsAnswered": 26,
+      "changedAt": "2026-01-14T05:27:06.549Z"
+    },
+    {
+      "responseId": "5d6a65a9-9e1b-42da-86e5-49674b8dc8a5",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "questionsAnswered": 26,
+      "changedAt": "2026-01-14T05:27:06.559Z"
+    },
+    {
+      "responseId": "7ff1bbd7-a525-404f-8437-6a1bcd0dd171",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "questionsAnswered": 27,
+      "changedAt": "2026-01-14T05:27:06.569Z"
+    },
+    {
+      "responseId": "d53256bf-35cc-43c2-98dc-d46114a513d2",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "questionsAnswered": 32,
+      "changedAt": "2026-01-14T05:27:06.581Z"
+    },
+    {
+      "responseId": "09cd3e80-02a5-4017-b294-edf902c9226b",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "questionsAnswered": 27,
+      "changedAt": "2026-01-14T05:27:06.591Z"
+    },
+    {
+      "responseId": "92faa03f-5b02-4d50-ae29-9b603d709811",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "questionsAnswered": 27,
+      "changedAt": "2026-01-14T05:27:06.601Z"
+    },
+    {
+      "responseId": "647669a3-7fed-4abf-89cc-7521832eed06",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "questionsAnswered": 32,
+      "changedAt": "2026-01-14T05:27:06.613Z"
+    },
+    {
+      "responseId": "a816ac53-3132-4619-a4d5-105f45b72819",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "questionsAnswered": 27,
+      "changedAt": "2026-01-14T05:27:06.628Z"
+    },
+    {
+      "responseId": "9bffbdb0-399d-47af-a392-bec046589bc5",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "questionsAnswered": 27,
+      "changedAt": "2026-01-14T05:27:06.639Z"
+    },
+    {
+      "responseId": "301cca11-9b96-48f5-a0c3-e342ffee20aa",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "questionsAnswered": 27,
+      "changedAt": "2026-01-14T05:27:06.649Z"
+    },
+    {
+      "responseId": "7052f607-63b6-4eae-a5da-ef91f31f7742",
+      "previousStatus": "Pending_Approval",
+      "newStatus": "Rejected",
+      "questionsAnswered": 27,
+      "changedAt": "2026-01-14T05:27:06.659Z"
+    },
+    {
+      "responseId": "7ba95dc3-da5a-4f23-aaa4-9f1ad782f050",
+      "previousStatus": "Pending_Approval",
+      "newStatus": "Rejected",
+      "questionsAnswered": 27,
+      "changedAt": "2026-01-14T05:27:06.669Z"
+    },
+    {
+      "responseId": "28578a67-cc81-47de-a1e1-ca3600ef2d4a",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "questionsAnswered": 27,
+      "changedAt": "2026-01-14T05:27:06.681Z"
+    },
+    {
+      "responseId": "c7adebb0-d520-4648-b1e0-85b22cec7a73",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "questionsAnswered": 27,
+      "changedAt": "2026-01-14T05:27:06.690Z"
+    },
+    {
+      "responseId": "92f687d3-84f5-44cf-aae9-48c33dc489a3",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "questionsAnswered": 27,
+      "changedAt": "2026-01-14T05:27:06.700Z"
+    },
+    {
+      "responseId": "18396f57-c49c-490d-92b3-10eb12324342",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "questionsAnswered": 27,
+      "changedAt": "2026-01-14T05:27:06.709Z"
+    },
+    {
+      "responseId": "2f0781be-57e5-4ebd-963c-b3d911dbbd73",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "questionsAnswered": 27,
+      "changedAt": "2026-01-14T05:27:06.720Z"
+    },
+    {
+      "responseId": "9ade6df4-c73e-4d02-b5a4-8f0e76149073",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "questionsAnswered": 27,
+      "changedAt": "2026-01-14T05:27:06.730Z"
+    },
+    {
+      "responseId": "c73e971c-8836-4678-a460-115bdbe47184",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "questionsAnswered": 27,
+      "changedAt": "2026-01-14T05:27:06.740Z"
+    },
+    {
+      "responseId": "13a35f58-23a3-4838-a394-abd542cf6cdc",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "questionsAnswered": 27,
+      "changedAt": "2026-01-14T05:27:06.751Z"
+    },
+    {
+      "responseId": "deb32596-3e84-4ae8-a827-ec1ef96e9248",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "questionsAnswered": 26,
+      "changedAt": "2026-01-14T05:27:06.760Z"
+    },
+    {
+      "responseId": "cb2f1569-7235-4dfc-b4e1-39a6b50582a6",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "questionsAnswered": 27,
+      "changedAt": "2026-01-14T05:27:06.772Z"
+    },
+    {
+      "responseId": "33a8084b-75d1-47ff-bdba-36c5f2caacf1",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "questionsAnswered": 27,
+      "changedAt": "2026-01-14T05:27:06.783Z"
+    },
+    {
+      "responseId": "47f9d64f-7ceb-49ca-9eea-f9138d68facb",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "questionsAnswered": 27,
+      "changedAt": "2026-01-14T05:27:06.794Z"
+    },
+    {
+      "responseId": "bb0faea3-de76-4c72-be20-ff36cf1af72c",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "questionsAnswered": 27,
+      "changedAt": "2026-01-14T05:27:06.804Z"
+    },
+    {
+      "responseId": "bb9eac53-1b0b-45a4-942b-4f3d550ad5f1",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "questionsAnswered": 27,
+      "changedAt": "2026-01-14T05:27:06.816Z"
+    },
+    {
+      "responseId": "a8a60c75-951f-4948-8367-aa7c4ce700a1",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "questionsAnswered": 27,
+      "changedAt": "2026-01-14T05:27:06.825Z"
+    },
+    {
+      "responseId": "fb5ae706-e018-44fb-be42-cff0502676f1",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "questionsAnswered": 27,
+      "changedAt": "2026-01-14T05:27:06.837Z"
+    },
+    {
+      "responseId": "ec9b19cb-aede-41ba-8398-1e8771a5f537",
+      "previousStatus": "Pending_Approval",
+      "newStatus": "Rejected",
+      "questionsAnswered": 27,
+      "changedAt": "2026-01-14T05:27:06.851Z"
+    },
+    {
+      "responseId": "a8937a39-7932-4e3b-ae6d-dc072183017e",
+      "previousStatus": "Pending_Approval",
+      "newStatus": "Rejected",
+      "questionsAnswered": 25,
+      "changedAt": "2026-01-14T05:27:06.861Z"
+    },
+    {
+      "responseId": "ae33140a-4366-4a9d-b6f4-5636679c1317",
+      "previousStatus": "Pending_Approval",
+      "newStatus": "Rejected",
+      "questionsAnswered": 25,
+      "changedAt": "2026-01-14T05:27:06.874Z"
+    },
+    {
+      "responseId": "b1bae9a4-ad76-445e-9942-7d27819f17c0",
+      "previousStatus": "Pending_Approval",
+      "newStatus": "Rejected",
+      "questionsAnswered": 27,
+      "changedAt": "2026-01-14T05:27:06.884Z"
+    },
+    {
+      "responseId": "3880e203-2382-49ca-902f-40d84694bee6",
+      "previousStatus": "Pending_Approval",
+      "newStatus": "Rejected",
+      "questionsAnswered": 27,
+      "changedAt": "2026-01-14T05:27:06.893Z"
+    },
+    {
+      "responseId": "1b44d62c-3d3f-4f7e-8963-4046e158775f",
+      "previousStatus": "Pending_Approval",
+      "newStatus": "Rejected",
+      "questionsAnswered": 27,
+      "changedAt": "2026-01-14T05:27:06.906Z"
+    },
+    {
+      "responseId": "8c080a83-d0dc-4c2e-a8c2-4fec9a18bf4f",
+      "previousStatus": "Pending_Approval",
+      "newStatus": "Rejected",
+      "questionsAnswered": 27,
+      "changedAt": "2026-01-14T05:27:06.916Z"
+    },
+    {
+      "responseId": "8738206e-63ad-45ba-a098-1c2ecd434ab8",
+      "previousStatus": "Pending_Approval",
+      "newStatus": "Rejected",
+      "questionsAnswered": 27,
+      "changedAt": "2026-01-14T05:27:06.930Z"
+    },
+    {
+      "responseId": "e5af68c2-6ab4-40b7-96c7-9d6e82ad822a",
+      "previousStatus": "Pending_Approval",
+      "newStatus": "Rejected",
+      "questionsAnswered": 27,
+      "changedAt": "2026-01-14T05:27:06.944Z"
+    },
+    {
+      "responseId": "588060cc-cef3-4870-81af-3c9c504c89e1",
+      "previousStatus": "Pending_Approval",
+      "newStatus": "Rejected",
+      "questionsAnswered": 27,
+      "changedAt": "2026-01-14T05:27:06.954Z"
+    },
+    {
+      "responseId": "defc543b-b1c7-417e-9b6d-03325cceb070",
+      "previousStatus": "Pending_Approval",
+      "newStatus": "Rejected",
+      "questionsAnswered": 27,
+      "changedAt": "2026-01-14T05:27:06.967Z"
+    },
+    {
+      "responseId": "6e4aafaa-8f7e-43ca-b722-d1f1075dade9",
+      "previousStatus": "Pending_Approval",
+      "newStatus": "Rejected",
+      "questionsAnswered": 27,
+      "changedAt": "2026-01-14T05:27:06.978Z"
+    },
+    {
+      "responseId": "5cdb8c78-5b0a-45ed-8e54-e0a259b53408",
+      "previousStatus": "Pending_Approval",
+      "newStatus": "Rejected",
+      "questionsAnswered": 27,
+      "changedAt": "2026-01-14T05:27:06.991Z"
+    },
+    {
+      "responseId": "6ac85c38-8173-4ddd-8783-cd89708a423e",
+      "previousStatus": "Pending_Approval",
+      "newStatus": "Rejected",
+      "questionsAnswered": 27,
+      "changedAt": "2026-01-14T05:27:07.004Z"
+    },
+    {
+      "responseId": "e82ef00b-cc7f-4d3a-9fe0-610eb521bcae",
+      "previousStatus": "Pending_Approval",
+      "newStatus": "Rejected",
+      "questionsAnswered": 27,
+      "changedAt": "2026-01-14T05:27:07.015Z"
+    },
+    {
+      "responseId": "c4b95067-20b8-4283-970f-d43229fda245",
+      "previousStatus": "Pending_Approval",
+      "newStatus": "Rejected",
+      "questionsAnswered": 27,
+      "changedAt": "2026-01-14T05:27:07.026Z"
+    },
+    {
+      "responseId": "990c8ccd-bb9d-4051-9cbb-b1869b2de284",
+      "previousStatus": "Pending_Approval",
+      "newStatus": "Rejected",
+      "questionsAnswered": 27,
+      "changedAt": "2026-01-14T05:27:07.040Z"
+    },
+    {
+      "responseId": "bfe4715b-bc9e-483b-9f60-ca35b165eaad",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "questionsAnswered": 27,
+      "changedAt": "2026-01-14T05:27:07.052Z"
+    },
+    {
+      "responseId": "43982f8b-1be1-4cec-8e19-98817c7c7d40",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "questionsAnswered": 27,
+      "changedAt": "2026-01-14T05:27:07.065Z"
+    },
+    {
+      "responseId": "783632e0-2dd3-4c81-b26a-70f18720950e",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "questionsAnswered": 27,
+      "changedAt": "2026-01-14T05:27:07.078Z"
+    },
+    {
+      "responseId": "f24d8e06-7612-4ea2-9ba1-54ccc0ae3242",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "questionsAnswered": 27,
+      "changedAt": "2026-01-14T05:27:07.091Z"
+    },
+    {
+      "responseId": "6dc851d7-c272-4f19-b1c3-4854c55d977f",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "questionsAnswered": 27,
+      "changedAt": "2026-01-14T05:27:07.100Z"
+    },
+    {
+      "responseId": "61df3fe3-3b80-492c-8d03-8cb473abea75",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "questionsAnswered": 27,
+      "changedAt": "2026-01-14T05:27:07.109Z"
+    },
+    {
+      "responseId": "f9d24f8a-7fd0-424d-bb87-74924e9b4db1",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "questionsAnswered": 27,
+      "changedAt": "2026-01-14T05:27:07.122Z"
+    },
+    {
+      "responseId": "b925e0a1-637c-43a6-bb5d-924ef5388491",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "questionsAnswered": 27,
+      "changedAt": "2026-01-14T05:27:07.132Z"
+    },
+    {
+      "responseId": "67dfb3b7-9e81-44eb-b8ad-d194a0a545b3",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "questionsAnswered": 27,
+      "changedAt": "2026-01-14T05:27:07.144Z"
+    },
+    {
+      "responseId": "336962cf-8ec2-4de9-9baf-1c162a1af712",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "questionsAnswered": 27,
+      "changedAt": "2026-01-14T05:27:07.153Z"
+    },
+    {
+      "responseId": "b54c28d3-0d5d-4eda-9f11-aa82b690f99a",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "questionsAnswered": 27,
+      "changedAt": "2026-01-14T05:27:07.162Z"
+    },
+    {
+      "responseId": "8dcf8676-de7f-41a4-bacc-3563d53044bc",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "questionsAnswered": 27,
+      "changedAt": "2026-01-14T05:27:07.172Z"
+    },
+    {
+      "responseId": "bcab20b8-109c-49d2-a853-f01ec3fd05e1",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "questionsAnswered": 27,
+      "changedAt": "2026-01-14T05:27:07.186Z"
+    },
+    {
+      "responseId": "c8f977bc-55f9-4440-97d2-67c3d4bba374",
+      "previousStatus": "Pending_Approval",
+      "newStatus": "Rejected",
+      "questionsAnswered": 27,
+      "changedAt": "2026-01-14T05:27:07.199Z"
+    },
+    {
+      "responseId": "3268a0fd-94ff-4cb4-803d-e5cb305055ab",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "questionsAnswered": 27,
+      "changedAt": "2026-01-14T05:27:07.209Z"
+    }
+  ],
+  "errors": [
+    {
+      "responseId": "7823d08a-25e0-43a9-8ffb-cd40358f0bfe",
+      "previousStatus": "Rejected",
+      "error": "Already in Rejected status",
+      "timestamp": "2026-01-14T05:27:06.206Z"
+    },
+    {
+      "responseId": "cab54192-6bde-4f9b-8c5f-6598a9d419e0",
+      "previousStatus": "Rejected",
+      "error": "Already in Rejected status",
+      "timestamp": "2026-01-14T05:27:06.215Z"
+    },
+    {
+      "responseId": "cbb2c676-9c10-4a37-8d01-7b67e58de98c",
+      "previousStatus": "Rejected",
+      "error": "Already in Rejected status",
+      "timestamp": "2026-01-14T05:27:06.513Z"
+    }
+  ]
+}

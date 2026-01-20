@@ -1,0 +1,397 @@
+{
+  "timestamp": "2026-01-13T09:36:20.495Z",
+  "totalResponses": 39,
+  "action": "Reverted auto-rejected but approved responses back to Rejected status",
+  "responses": [
+    {
+      "responseId": "1e247953-f08f-4a0b-b44e-d635d1180927",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "rejectionReason": "Duplicate Phone Number",
+      "autoRejectionReasons": [
+        "duplicate_phone"
+      ],
+      "feedback": "Duplicate Phone Number"
+    },
+    {
+      "responseId": "cd61c74d-4fe8-47e9-9b01-58686f974290",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "rejectionReason": "Duplicate Phone Number",
+      "autoRejectionReasons": [
+        "duplicate_phone"
+      ],
+      "feedback": "Duplicate Phone Number"
+    },
+    {
+      "responseId": "16ad4dce-94c0-473f-adeb-eded38277fad",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "rejectionReason": "Duplicate Phone Number",
+      "autoRejectionReasons": [
+        "duplicate_phone"
+      ],
+      "feedback": "Duplicate Phone Number"
+    },
+    {
+      "responseId": "228bcc94-5105-40aa-bb3a-3e8500b5c23d",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "rejectionReason": "Duplicate Phone Number",
+      "autoRejectionReasons": [
+        "duplicate_phone"
+      ],
+      "feedback": "Duplicate Phone Number"
+    },
+    {
+      "responseId": "c6483966-a1f4-4a63-a735-2c5f0fc235da",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "rejectionReason": "Duplicate Phone Number",
+      "autoRejectionReasons": [
+        "duplicate_phone"
+      ],
+      "feedback": "Duplicate Phone Number"
+    },
+    {
+      "responseId": "67f15aae-8234-433b-b79c-65baddc1be8e",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "rejectionReason": "Duplicate Phone Number",
+      "autoRejectionReasons": [
+        "duplicate_phone"
+      ],
+      "feedback": "Duplicate Phone Number"
+    },
+    {
+      "responseId": "2940747b-82d4-4c4f-813b-c269ee232014",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "rejectionReason": "Duplicate Phone Number",
+      "autoRejectionReasons": [
+        "duplicate_phone"
+      ],
+      "feedback": "Duplicate Phone Number"
+    },
+    {
+      "responseId": "6c3e4ccb-26e7-4cc9-aafe-df6741dd6016",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "rejectionReason": "Duplicate Phone Number",
+      "autoRejectionReasons": [
+        "duplicate_phone"
+      ],
+      "feedback": "Duplicate Phone Number"
+    },
+    {
+      "responseId": "0a51809d-cd91-4808-bc80-e639957a6907",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "rejectionReason": "Duplicate Phone Number",
+      "autoRejectionReasons": [
+        "duplicate_phone"
+      ],
+      "feedback": "Duplicate Phone Number"
+    },
+    {
+      "responseId": "18b19ecc-d51a-451f-9e37-e4fe11aed94b",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "rejectionReason": "Duplicate Phone Number",
+      "autoRejectionReasons": [
+        "duplicate_phone"
+      ],
+      "feedback": "Duplicate Phone Number"
+    },
+    {
+      "responseId": "2f5d0bb0-964a-439d-9cd6-106cdc02e1b3",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "rejectionReason": "Duplicate Phone Number",
+      "autoRejectionReasons": [
+        "duplicate_phone"
+      ],
+      "feedback": "Duplicate Phone Number"
+    },
+    {
+      "responseId": "044cc0aa-9ae1-4f62-94c4-1153517936fb",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "rejectionReason": "Duplicate Phone Number",
+      "autoRejectionReasons": [
+        "duplicate_phone"
+      ],
+      "feedback": "Duplicate Phone Number"
+    },
+    {
+      "responseId": "3f88ef1e-40c9-4c43-8765-1fa1e76d3ff0",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "rejectionReason": "Duplicate Phone Number",
+      "autoRejectionReasons": [
+        "duplicate_phone"
+      ],
+      "feedback": "Duplicate Phone Number"
+    },
+    {
+      "responseId": "818562e7-1705-4f58-99a9-17eab1e05b82",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "rejectionReason": "Duplicate Phone Number",
+      "autoRejectionReasons": [
+        "duplicate_phone"
+      ],
+      "feedback": "Duplicate Phone Number"
+    },
+    {
+      "responseId": "7ff7d272-d16d-4180-99a3-f0129cd450d9",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "rejectionReason": "Duplicate Phone Number",
+      "autoRejectionReasons": [
+        "duplicate_phone"
+      ],
+      "feedback": "Duplicate Phone Number"
+    },
+    {
+      "responseId": "f08c018c-4c16-40bd-8fd8-8600deb59f4c",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "rejectionReason": "Duplicate Phone Number",
+      "autoRejectionReasons": [
+        "duplicate_phone"
+      ],
+      "feedback": "Duplicate Phone Number"
+    },
+    {
+      "responseId": "af58576d-af3c-4382-9d25-17f752859a6a",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "rejectionReason": "Duplicate Phone Number",
+      "autoRejectionReasons": [
+        "duplicate_phone"
+      ],
+      "feedback": "Duplicate Phone Number"
+    },
+    {
+      "responseId": "9a865fa5-3582-4443-b236-95cbf2b3ef4a",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "rejectionReason": "Duplicate Phone Number",
+      "autoRejectionReasons": [
+        "duplicate_phone"
+      ],
+      "feedback": "Duplicate Phone Number"
+    },
+    {
+      "responseId": "1bd6fc27-30f6-4743-ba13-ea849c43647e",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "rejectionReason": "Duplicate Phone Number",
+      "autoRejectionReasons": [
+        "duplicate_phone"
+      ],
+      "feedback": "Duplicate Phone Number"
+    },
+    {
+      "responseId": "c05d5e40-63c5-4229-a1c2-a31323996064",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "rejectionReason": "Duplicate Phone Number",
+      "autoRejectionReasons": [
+        "duplicate_phone"
+      ],
+      "feedback": "Duplicate Phone Number"
+    },
+    {
+      "responseId": "c57f87a3-559c-4b76-bb78-a1525d7f0bdb",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "rejectionReason": "Duplicate Phone Number",
+      "autoRejectionReasons": [
+        "duplicate_phone"
+      ],
+      "feedback": "Duplicate Phone Number"
+    },
+    {
+      "responseId": "fe2d2153-9a44-4856-9e75-6808d4f674c4",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "rejectionReason": "Duplicate Phone Number",
+      "autoRejectionReasons": [
+        "duplicate_phone"
+      ],
+      "feedback": "Duplicate Phone Number"
+    },
+    {
+      "responseId": "ec0c1bb4-cce9-4fe7-b2e4-5a66771ecc06",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "rejectionReason": "Duplicate Phone Number",
+      "autoRejectionReasons": [
+        "duplicate_phone"
+      ],
+      "feedback": "Duplicate Phone Number"
+    },
+    {
+      "responseId": "87bdaf4b-fc5f-41a7-a218-66bc71ac7b1b",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "rejectionReason": "Duplicate Phone Number",
+      "autoRejectionReasons": [
+        "duplicate_phone"
+      ],
+      "feedback": "Duplicate Phone Number"
+    },
+    {
+      "responseId": "2e970168-4969-4a4d-a676-b2f8bf2228bb",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "rejectionReason": "Duplicate Phone Number",
+      "autoRejectionReasons": [
+        "duplicate_phone"
+      ],
+      "feedback": "Duplicate Phone Number"
+    },
+    {
+      "responseId": "1c544f89-ba5a-43da-af97-1fd7ced7268a",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "rejectionReason": "Duplicate Phone Number",
+      "autoRejectionReasons": [
+        "duplicate_phone"
+      ],
+      "feedback": "Duplicate Phone Number"
+    },
+    {
+      "responseId": "5b9e4b6a-ed41-48b1-947e-fb5170fd1260",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "rejectionReason": "Duplicate Phone Number",
+      "autoRejectionReasons": [
+        "duplicate_phone"
+      ],
+      "feedback": "Duplicate Phone Number"
+    },
+    {
+      "responseId": "9e9ad895-4408-4ee1-a5eb-ce89473db853",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "rejectionReason": "Duplicate Phone Number",
+      "autoRejectionReasons": [
+        "duplicate_phone"
+      ],
+      "feedback": "Duplicate Phone Number"
+    },
+    {
+      "responseId": "ea32020b-2b8e-4df8-a4de-b7b24689b106",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "rejectionReason": "Duplicate Phone Number",
+      "autoRejectionReasons": [
+        "duplicate_phone"
+      ],
+      "feedback": "Duplicate Phone Number"
+    },
+    {
+      "responseId": "78de1c06-7758-4890-8862-ccc00df76dbe",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "rejectionReason": "Duplicate Phone Number",
+      "autoRejectionReasons": [
+        "duplicate_phone"
+      ],
+      "feedback": "Duplicate Phone Number"
+    },
+    {
+      "responseId": "dbc7e0d6-58fa-4bc3-a6f3-df11f7ab86ef",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "rejectionReason": "Duplicate Phone Number",
+      "autoRejectionReasons": [
+        "duplicate_phone"
+      ],
+      "feedback": "Duplicate Phone Number"
+    },
+    {
+      "responseId": "0688a9b2-3902-4d67-97a9-da2edadd87ec",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "rejectionReason": "Duplicate Phone Number",
+      "autoRejectionReasons": [
+        "duplicate_phone"
+      ],
+      "feedback": "Duplicate Phone Number"
+    },
+    {
+      "responseId": "b7418c1c-497c-4c65-8c81-a803921f7c28",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "rejectionReason": "Duplicate Phone Number",
+      "autoRejectionReasons": [
+        "duplicate_phone"
+      ],
+      "feedback": "Duplicate Phone Number"
+    },
+    {
+      "responseId": "ccfd683a-3c2b-4fc0-b676-38fb713d1e77",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "rejectionReason": "Duplicate Phone Number",
+      "autoRejectionReasons": [
+        "duplicate_phone"
+      ],
+      "feedback": "Duplicate Phone Number"
+    },
+    {
+      "responseId": "56775cf4-fc22-42dd-bfde-47a4f8694a65",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "rejectionReason": "Duplicate Phone Number",
+      "autoRejectionReasons": [
+        "duplicate_phone"
+      ],
+      "feedback": "Duplicate Phone Number"
+    },
+    {
+      "responseId": "15aa7ac2-ac90-4bd2-b69b-8d643e07f1f2",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "rejectionReason": "Duplicate Phone Number",
+      "autoRejectionReasons": [
+        "duplicate_phone"
+      ],
+      "feedback": "Duplicate Phone Number"
+    },
+    {
+      "responseId": "b5fd5d7b-0d39-4008-8d18-6808ecf86bf0",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "rejectionReason": "Duplicate Phone Number",
+      "autoRejectionReasons": [
+        "duplicate_phone"
+      ],
+      "feedback": "Duplicate Phone Number"
+    },
+    {
+      "responseId": "41e0eea2-3be8-45b4-ae2e-6385c14b70c4",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "rejectionReason": "Duplicate Phone Number",
+      "autoRejectionReasons": [
+        "duplicate_phone"
+      ],
+      "feedback": "Duplicate Phone Number"
+    },
+    {
+      "responseId": "6626bf47-fdb7-459b-98bd-45565e11065d",
+      "previousStatus": "Approved",
+      "newStatus": "Rejected",
+      "rejectionReason": "Duplicate Phone Number",
+      "autoRejectionReasons": [
+        "duplicate_phone"
+      ],
+      "feedback": "Duplicate Phone Number"
+    }
+  ]
+}

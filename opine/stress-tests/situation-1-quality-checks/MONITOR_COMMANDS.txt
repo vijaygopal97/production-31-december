@@ -1,0 +1,30 @@
+═══════════════════════════════════════════════════════════════
+📊 STRESS TEST MONITORING COMMANDS
+═══════════════════════════════════════════════════════════════
+
+✅ Test is running! Use these commands to monitor progress:
+
+1. REAL-TIME PROGRESS MONITOR (Recommended):
+   cd /var/www/opine/stress-tests/situation-1-quality-checks
+   ./monitor-test.sh
+
+2. WATCH SUCCESS RATES LIVE:
+   cd /var/www/opine/stress-tests/situation-1-quality-checks
+   tail -f logs/comprehensive-5min-*.log | grep -E 'Progress Update|Quality Agents:|CATI Interviewers:|CAPI Interviewers:|Project Managers:|Company Admins:|Company Admins \(QC\):'
+
+3. CHECK LATEST STATUS:
+   cd /var/www/opine/stress-tests/situation-1-quality-checks
+   tail -50 logs/comprehensive-5min-*.log | grep -E 'Progress Update|\[.*s/300s\]|requests.*Success'
+
+4. VIEW FINAL STATISTICS (after test completes):
+   cd /var/www/opine/stress-tests/situation-1-quality-checks
+   tail -100 logs/comprehensive-5min-*.log | grep -A 10 "Final Statistics"
+
+5. CHECK TEST PROCESS:
+   ps aux | grep comprehensive-5min-stress-test-updated | grep -v grep
+
+6. VIEW REPORTS (after test completes):
+   cd /var/www/opine/stress-tests/situation-1-quality-checks/reports
+   ls -lht *.json | head -5
+
+═══════════════════════════════════════════════════════════════

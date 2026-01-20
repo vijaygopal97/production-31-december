@@ -44,6 +44,10 @@ const ViewResponsesV2Page = () => {
   // Check if user is company admin (for CSV download)
   const isCompanyAdmin = user?.userType === 'company_admin';
   
+  // Get qualityAgentId from URL params (for filtering by quality agent)
+  const searchParams = new URLSearchParams(location.search);
+  const qualityAgentIdFromUrl = searchParams.get('qualityAgentId');
+  
   const [survey, setSurvey] = useState(null);
   const [showDownloadModal, setShowDownloadModal] = useState(false);
   const [showPreGeneratedDownloadModal, setShowPreGeneratedDownloadModal] = useState(false);
@@ -70,10 +74,11 @@ const ViewResponsesV2Page = () => {
   // Filter states
   // OPTIMIZED: Default to 'today' instead of 'all' to prevent memory leaks and improve performance
   // Top tech companies (Meta, Twitter, Google) show recent/relevant data first, not all-time
+  // EXCEPTION: When filtering by quality agent, default to 'all' to show all their reviews
   const [filters, setFilters] = useState({
     search: '',
-    status: 'approved_rejected_pending',
-    dateRange: 'today', // Changed from 'all' to 'today' - shows today's data by default
+    status: qualityAgentIdFromUrl ? 'approved_rejected' : 'approved_rejected_pending', // Default to approved_rejected when filtering by QA
+    dateRange: qualityAgentIdFromUrl ? 'all' : 'today', // Show 'all' when filtering by QA, 'today' otherwise
     startDate: '',
     endDate: '',
     gender: '',
@@ -85,7 +90,8 @@ const ViewResponsesV2Page = () => {
     lokSabha: '',
     interviewMode: '',
     interviewerIds: [],
-    interviewerMode: 'include'
+    interviewerMode: 'include',
+    qualityAgentId: qualityAgentIdFromUrl || '' // Filter by quality agent who reviewed
   });
   
   const [showFilters, setShowFilters] = useState(true);
@@ -192,6 +198,7 @@ const ViewResponsesV2Page = () => {
         interviewerIds: interviewerIdsParam,
         interviewerMode: filters.interviewerMode || 'include',
         search: filters.search || '',
+        qualityAgentId: filters.qualityAgentId || '', // Filter by quality agent who reviewed
         includeFilterOptions: skipFilterOptions ? 'false' : 'true' // Make filterOptions optional
       };
 

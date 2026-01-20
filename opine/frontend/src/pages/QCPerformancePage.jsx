@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useRef, useCallback } from 'react';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -17,7 +17,8 @@ import {
   CheckCircle,
   XCircle,
   BarChart3,
-  Users
+  Users,
+  Eye
 } from 'lucide-react';
 import { performanceAPI, surveyAPI } from '../services/api';
 import { useToast } from '../contexts/ToastContext';
@@ -61,9 +62,10 @@ const QCPerformancePage = () => {
   const { showError } = useToast();
 
   // Filter states
+  // OPTIMIZED: Default to 'today' instead of 'all' to prevent memory leaks (like responses-v2)
   const [filters, setFilters] = useState({
     search: '',
-    dateRange: 'all', // 'all', 'today', 'yesterday', 'week', 'month', 'custom'
+    dateRange: 'today', // Changed from 'all' to 'today' - shows today's data by default
     startDate: '',
     endDate: '',
     sortBy: 'totalReviews', // totalReviews, approvedResponses, rejectedResponses
@@ -75,6 +77,19 @@ const QCPerformancePage = () => {
   const [pageSize, setPageSize] = useState(10);
 
   const [showFilters, setShowFilters] = useState(true);
+
+  // TOP-TIER TECH COMPANY SOLUTION: Memory leak prevention (Meta, Google, Amazon pattern)
+  // AbortController for request cancellation (CRITICAL: Prevents memory leaks)
+  const abortControllerRef = useRef(null);
+  
+  // Debounce timer for search
+  const debounceTimerRef = useRef(null);
+  
+  // Track if component is mounted (prevent state updates after unmount)
+  const isMountedRef = useRef(true);
+  
+  // Initial load ref to prevent debounce on first load
+  const initialLoadRef = useRef(false);
 
   // Add CSS to ensure full width and responsive layout
   // Add CSS to ensure full width and break out of DashboardLayout padding
@@ -155,21 +170,36 @@ const QCPerformancePage = () => {
   }, [filters.dateRange, filters.startDate, filters.endDate]);
 
   // Fetch survey and QC performance data
-  const fetchData = async () => {
+  // OPTIMIZED: Uses AbortController to cancel previous requests, prevents memory leaks
+  const fetchData = useCallback(async () => {
+    if (!surveyId || !isMountedRef.current) return;
+    
+    // CRITICAL: Cancel previous request to prevent memory leaks and duplicate updates
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+    }
+    
+    // Create new AbortController for this request
+    abortControllerRef.current = new AbortController();
+    const signal = abortControllerRef.current.signal;
+    
     try {
+      if (isMountedRef.current) {
       setLoading(true);
+      }
       
       // Fetch survey details
       const surveyResponse = await surveyAPI.getSurvey(surveyId);
-      if (surveyResponse.success) {
+      if (surveyResponse.success && isMountedRef.current) {
         setSurvey(surveyResponse.data.survey || surveyResponse.data);
       }
       
       // Fetch QC performance data
+      // OPTIMIZED: Search is now server-side (passed as param)
       const params = {
         ...(getDateRange.startDate && { startDate: getDateRange.startDate }),
         ...(getDateRange.endDate && { endDate: getDateRange.endDate }),
-        ...(filters.search && { search: filters.search })
+        ...(filters.search && filters.search.trim() && { search: filters.search.trim() })
       };
       
       // Fetch both QC performance and trends data in parallel
@@ -181,41 +211,128 @@ const QCPerformancePage = () => {
         })
       ]);
       
-      if (qcResponse.success) {
+      // CRITICAL: Check if request was aborted or component unmounted
+      if (signal.aborted || !isMountedRef.current) {
+        return;
+      }
+      
+      if (qcResponse.success && isMountedRef.current) {
         setQualityAgents(qcResponse.data.qualityAgents || []);
       }
       
-      if (trendsResponse.success) {
+      if (trendsResponse.success && isMountedRef.current) {
         setTrendsData(trendsResponse.data);
       }
     } catch (error) {
+      // Ignore aborted requests (not an error)
+      if (error.name === 'AbortError' || error.code === 'ERR_CANCELED') {
+        return;
+      }
+      
+      // Only show error if component is still mounted
+      if (isMountedRef.current) {
       console.error('Error fetching QC performance:', error);
       showError('Failed to load QC performance data', error.message);
+      }
     } finally {
+      // Only update state if component is still mounted
+      if (isMountedRef.current) {
       setLoading(false);
     }
-  };
+    }
+  }, [surveyId, getDateRange.startDate, getDateRange.endDate, filters.search, showError]);
 
+  // Initial load - fetch immediately without debounce
   useEffect(() => {
-    if (surveyId) {
+    if (surveyId && !initialLoadRef.current) {
+      initialLoadRef.current = true;
       fetchData();
     }
-  }, [surveyId, filters.dateRange, filters.startDate, filters.endDate, filters.search]);
+    
+    // Cleanup: Cancel any pending requests when surveyId changes
+    return () => {
+      if (abortControllerRef.current) {
+        abortControllerRef.current.abort();
+        abortControllerRef.current = null;
+      }
+    };
+  }, [surveyId, fetchData]);
 
-  // Apply search and sorting
+  // Reset initial load ref when surveyId changes
+  useEffect(() => {
+    initialLoadRef.current = false;
+  }, [surveyId]);
+
+  // CRITICAL: Cleanup on component unmount (prevents memory leaks)
+  useEffect(() => {
+    isMountedRef.current = true;
+    
+    return () => {
+      isMountedRef.current = false;
+      
+      // Cancel any pending requests
+      if (abortControllerRef.current) {
+        abortControllerRef.current.abort();
+        abortControllerRef.current = null;
+      }
+      
+      // Clear all timers
+      if (debounceTimerRef.current) {
+        clearTimeout(debounceTimerRef.current);
+        debounceTimerRef.current = null;
+      }
+    };
+  }, []);
+
+  // Debounced fetch when filters change (skip initial load)
+  // OPTIMIZED: Proper cleanup prevents memory leaks
+  useEffect(() => {
+    if (!surveyId || !initialLoadRef.current || !isMountedRef.current) return; // Don't run until initial load is done
+    
+    // CRITICAL: Clear previous debounce timer
+    if (debounceTimerRef.current) {
+      clearTimeout(debounceTimerRef.current);
+      debounceTimerRef.current = null;
+    }
+    
+    // CRITICAL: Cancel any pending requests before starting new one
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+    }
+    
+    // Debounce search: 500ms delay (like responses-v2)
+    // For date filters, fetch immediately (no debounce needed)
+    const isSearchChange = filters.search !== undefined;
+    const delay = isSearchChange ? 500 : 0;
+    
+    debounceTimerRef.current = setTimeout(() => {
+      // Double-check component is still mounted before fetching
+      if (isMountedRef.current && surveyId) {
+      fetchData();
+    }
+      debounceTimerRef.current = null;
+    }, delay);
+
+    // CRITICAL: Cleanup function - clear timer and cancel requests
+    return () => {
+      if (debounceTimerRef.current) {
+        clearTimeout(debounceTimerRef.current);
+        debounceTimerRef.current = null;
+      }
+      
+      // Cancel pending request if filters change again
+      if (abortControllerRef.current) {
+        abortControllerRef.current.abort();
+      }
+    };
+  }, [filters.dateRange, filters.startDate, filters.endDate, filters.search, surveyId, fetchData]);
+
+  // Apply sorting only (search is now server-side)
   const filteredAndSortedData = useMemo(() => {
     let data = [...qualityAgents];
 
-    // Apply search filter (name, email, or memberId)
-    if (filters.search && filters.search.trim()) {
-      const searchLower = filters.search.toLowerCase().trim();
-      data = data.filter(qa => {
-        const nameMatch = qa.name?.toLowerCase().includes(searchLower) || false;
-        const emailMatch = qa.email?.toLowerCase().includes(searchLower) || false;
-        const memberIdMatch = qa.memberId?.toString().includes(searchLower) || false;
-        return nameMatch || emailMatch || memberIdMatch;
-      });
-    }
+    // OPTIMIZED: Search filtering is now done server-side
+    // No client-side filtering needed - improves performance and prevents memory leaks
 
     // Apply sorting
     data.sort((a, b) => {
@@ -251,7 +368,7 @@ const QCPerformancePage = () => {
     });
 
     return data;
-  }, [qualityAgents, filters.search, filters.sortBy, filters.sortOrder]);
+  }, [qualityAgents, filters.sortBy, filters.sortOrder]);
 
   // Paginated data
   const paginatedData = useMemo(() => {
@@ -271,10 +388,10 @@ const QCPerformancePage = () => {
   const hasNext = currentPage < totalPages;
   const hasPrev = currentPage > 1;
 
-  // Reset to first page when search changes
+  // Reset to first page when filters change
   useEffect(() => {
     setCurrentPage(1);
-  }, [filters.search]);
+  }, [filters.search, filters.dateRange, filters.startDate, filters.endDate]);
 
   // Handle filter changes
   const handleFilterChange = (key, value) => {
@@ -284,11 +401,34 @@ const QCPerformancePage = () => {
     }));
   };
 
+  // Handle search input with Enter key support
+  const handleSearchChange = (value) => {
+    handleFilterChange('search', value);
+  };
+
+  // Handle search on Enter key or blur
+  const handleSearchKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      // Clear debounce timer and fetch immediately
+      if (debounceTimerRef.current) {
+        clearTimeout(debounceTimerRef.current);
+        debounceTimerRef.current = null;
+      }
+      // Cancel previous request
+      if (abortControllerRef.current) {
+        abortControllerRef.current.abort();
+      }
+      // Fetch immediately
+      fetchData();
+    }
+  };
+
   // Clear all filters
   const clearFilters = () => {
     setFilters({
       search: '',
-      dateRange: 'all',
+      dateRange: 'today', // Reset to 'today' instead of 'all' for consistency
       startDate: '',
       endDate: '',
       sortBy: 'totalReviews',
@@ -518,8 +658,22 @@ const QCPerformancePage = () => {
                   <input
                     type="text"
                     value={filters.search}
-                    onChange={(e) => handleFilterChange('search', e.target.value)}
-                    placeholder="Search by name, email, or Member ID..."
+                    onChange={(e) => handleSearchChange(e.target.value)}
+                    onKeyDown={handleSearchKeyDown}
+                    onBlur={() => {
+                      // Fetch on blur if value changed
+                      if (filters.search && filters.search.trim()) {
+                        if (debounceTimerRef.current) {
+                          clearTimeout(debounceTimerRef.current);
+                          debounceTimerRef.current = null;
+                        }
+                        if (abortControllerRef.current) {
+                          abortControllerRef.current.abort();
+                        }
+                        fetchData();
+                      }
+                    }}
+                    placeholder="Search by name, email, or Member ID... (Press Enter to search)"
                     className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                   />
                 </div>
@@ -845,6 +999,20 @@ const QCPerformancePage = () => {
                             </div>
                           </div>
                         )}
+                        {/* View Responses Button */}
+                        <div className="text-center">
+                          <button
+                            onClick={() => {
+                              const basePath = isProjectManagerRoute ? '/project-manager' : '/company';
+                              navigate(`${basePath}/surveys/${surveyId}/responses-v2?qualityAgentId=${qa._id}&status=approved_rejected`);
+                            }}
+                            className="flex items-center space-x-1 px-3 py-1.5 text-xs font-medium text-white bg-[#373177] rounded-lg hover:bg-[#001D48] transition-colors"
+                            title="View responses reviewed by this quality agent"
+                          >
+                            <Eye className="w-3 h-3" />
+                            <span>View Responses</span>
+                          </button>
+                        </div>
                       </div>
                     </div>
                   </div>

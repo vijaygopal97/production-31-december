@@ -453,6 +453,75 @@ class SyncService {
       }
     };
 
+    // CRITICAL FIX: Check if interview needs audio retry (response exists but audio upload failed)
+    // This handles rollback scenario where interview was created but audio upload failed
+    if (interview.metadata?.needsAudioRetry && interview.metadata?.responseId) {
+      const existingResponseId = interview.metadata.responseId;
+      const audioPath = interview.audioOfflinePath || interview.audioUri;
+      const hasAudioFile = audioPath && audioPath.trim().length > 0;
+      
+      if (hasAudioFile) {
+        console.log(`🔄 RETRY: Interview ${interview.id} needs audio retry (responseId: ${existingResponseId})`);
+        console.log(`🔄 Retrying audio upload for existing response...`);
+        
+        // Retry audio upload for existing response
+        try {
+          const { apiService } = await import('./api');
+          const uploadResult = await this.uploadAudioWithRetry(
+            audioPath,
+            interview.sessionId || 'retry',
+            interview.surveyId,
+            interview.id,
+            5, // max retries
+            existingResponseId // Pass responseId to link audio to existing response
+          );
+          
+          if (uploadResult.success && uploadResult.audioUrl) {
+            console.log(`✅ Audio retry successful: ${uploadResult.audioUrl}`);
+            
+            // Verify audio is on server
+            const verifyResult = await apiService.getSurveyResponseById(existingResponseId);
+            if (verifyResult.success && verifyResult.response) {
+              const serverAudioUrl = verifyResult.response?.audioRecording?.audioUrl || 
+                                    verifyResult.response?.audioUrl ||
+                                    null;
+              
+              if (serverAudioUrl && serverAudioUrl.trim() !== '') {
+                console.log(`✅ Audio retry verified on server: ${serverAudioUrl}`);
+                // Clear retry flag and mark as uploaded
+                interview.audioUploadStatus = 'uploaded';
+                interview.metadata = {
+                  ...interview.metadata,
+                  audioUrl: uploadResult.audioUrl,
+                  needsAudioRetry: false, // Clear retry flag
+                };
+                await offlineStorage.saveOfflineInterview(interview);
+                // Continue to normal sync flow to mark as synced
+              } else {
+                throw new Error('Audio retry verification failed - audio not found on server');
+              }
+            } else {
+              throw new Error('Failed to verify audio retry on server');
+            }
+          } else {
+            throw new Error(uploadResult.error || 'Audio retry failed');
+          }
+        } catch (retryError: any) {
+          console.error(`❌ Audio retry failed: ${retryError.message}`);
+          // Keep needsAudioRetry flag - will retry on next sync
+          throw new Error(`Audio retry failed: ${retryError.message}`);
+        }
+      } else {
+        console.log(`⚠️ Interview ${interview.id} needs audio retry but audio file not found - clearing retry flag`);
+        // Clear retry flag if audio file no longer exists
+        interview.metadata = {
+          ...interview.metadata,
+          needsAudioRetry: false,
+        };
+        await offlineStorage.saveOfflineInterview(interview);
+      }
+    }
+    
     // Fix 2 & 3: Check if interview was already successfully submitted (IDEMPOTENCY)
     // If metadata contains a responseId, it means it was already submitted
     // CRITICAL: This prevents duplicate submissions and ensures retries don't change status
@@ -1172,7 +1241,25 @@ class SyncService {
           interview.audioUploadStatus = 'failed';
           interview.audioUploadError = audioError.message;
           await offlineStorage.saveOfflineInterview(interview);
+          
+          // CRITICAL ROLLBACK: If interview was already created but audio upload failed,
+          // we need to mark the response as "partial" so it can be retried
+          // This prevents data loss - response exists but audio is missing
+          if (responseId) {
+            console.error(`❌ ROLLBACK: Interview ${interview.id} was created (responseId: ${responseId}) but audio upload failed`);
+            console.error(`❌ Marking response as needing audio retry - will retry on next sync`);
+            // Store responseId so we can retry audio upload later
+            interview.metadata = {
+              ...interview.metadata,
+              responseId: responseId,
+              serverResponseId: responseId,
+              needsAudioRetry: true, // Flag to indicate audio needs to be retried
+            };
+            await offlineStorage.saveOfflineInterview(interview);
+          }
+          
           // CRITICAL: Audio exists but upload failed - fail sync
+          // This ensures sync is not marked as complete until audio is uploaded
           throw new Error(`Audio file exists but upload failed: ${audioError.message || 'Audio upload failed'}`);
         }
       }
@@ -1189,11 +1276,74 @@ class SyncService {
     await offlineStorage.updateInterviewSyncProgress(interview.id, 95, 'verifying');
     console.log(`📊 [${interview.id}] Progress: 95% - Verifying sync...`);
     
-    // Log audio status - audioUrl is guaranteed to be present at this point
-    if (audioUrl) {
-      console.log('✅ Interview synced WITH audio:', audioUrl);
+    // CRITICAL FIX: Final verification - ensure audio is actually on server before marking sync complete
+    // This prevents data loss where sync is marked complete but audio is missing
+    // Top tech companies (Meta, WhatsApp, Amazon) always verify data exists on server before marking complete
+    // Reuse audioPath and hasAudioFile variables already declared earlier in function (line 1070)
+    if (hasAudioFile) {
+      // Audio file exists - MUST verify it's on server before proceeding
+      console.log(`🔍 CRITICAL VERIFICATION: Audio file exists locally - verifying it's on server...`);
+      console.log(`🔍 ResponseId for verification: ${responseId}`);
+      console.log(`🔍 Audio URL from upload: ${audioUrl || 'NOT SET'}`);
+      
+      if (!audioUrl || audioUrl.trim() === '') {
+        // CRITICAL: Audio file exists but upload failed - fail sync
+        console.error(`❌ CRITICAL DATA LOSS PREVENTION: Audio file exists but audioUrl is empty!`);
+        console.error(`❌ Interview ${interview.id} has audio file but upload failed`);
+        console.error(`❌ Failing sync to prevent data loss - interview will retry on next sync`);
+        throw new Error('Audio file exists but upload failed - audioUrl is empty. Sync cannot complete.');
+      }
+      
+      // Final verification: Fetch response from server to confirm audio is linked
+      // Use lean query to avoid memory overhead (only fetch what we need)
+      try {
+        const { apiService } = await import('./api');
+        
+        // Try UUID first (preferred), then MongoDB _id
+        let verifyResult;
+        if (uuidResponseId) {
+          verifyResult = await apiService.getSurveyResponseById(uuidResponseId);
+          if (!verifyResult.success && mongoId) {
+            verifyResult = await apiService.getSurveyResponseById(mongoId);
+          }
+        } else {
+          verifyResult = await apiService.getSurveyResponseById(responseId);
+        }
+        
+        if (!verifyResult.success || !verifyResult.response) {
+          const errorMsg = verifyResult.error || 'Unknown error';
+          console.error(`❌ CRITICAL: Failed to fetch response for final verification`);
+          console.error(`❌ Error: ${errorMsg}`);
+          throw new Error(`Final verification failed: ${errorMsg}`);
+        }
+        
+        const serverResponse = verifyResult.response;
+        const serverAudioUrl = serverResponse?.audioRecording?.audioUrl || 
+                              serverResponse?.audioUrl ||
+                              null;
+        
+        if (!serverAudioUrl || serverAudioUrl.trim() === '') {
+          // CRITICAL: Audio file exists locally but not on server - fail sync
+          console.error(`❌ CRITICAL DATA LOSS PREVENTION: Audio file exists locally but NOT on server!`);
+          console.error(`❌ ResponseId: ${responseId}`);
+          console.error(`❌ Local audio path: ${audioPath}`);
+          console.error(`❌ Server audioUrl: ${serverAudioUrl || 'MISSING'}`);
+          console.error(`❌ Failing sync to prevent data loss - interview will retry on next sync`);
+          throw new Error('Audio file exists locally but not found on server - data loss prevented. Sync will retry.');
+        }
+        
+        console.log(`✅ FINAL VERIFICATION PASSED: Audio confirmed on server: ${serverAudioUrl}`);
+        console.log(`✅ Interview synced WITH audio: ${audioUrl}`);
+      } catch (verifyError: any) {
+        // Verification failed - fail sync to prevent data loss
+        console.error(`❌ CRITICAL: Final audio verification failed: ${verifyError.message}`);
+        console.error(`❌ Failing sync to prevent data loss - interview will retry on next sync`);
+        throw new Error(`Final audio verification failed: ${verifyError.message}. Sync cannot complete.`);
+      }
     } else {
-      console.log('⚠️ Interview synced WITHOUT audio (audio upload may have failed)');
+      // No audio file - this is OK (early abandoned or CATI interview)
+      console.log('ℹ️ No audio file found - this is OK (early abandoned interview or CATI)');
+      console.log('ℹ️ Interview will sync without audio');
     }
 
     // Fix 3: Atomic metadata and status update - store responseId and sessionId together
@@ -1221,6 +1371,7 @@ class SyncService {
     console.log(`✅ syncCapiInterview completed successfully for interview: ${interview.id}`);
     console.log(`✅ All API calls verified - ready for cleanup in caller`);
     console.log(`✅ Response ID stored: ${responseId}`);
+    console.log(`✅ Audio verification passed: ${hasAudioFile ? 'YES' : 'N/A (no audio)'}`);
     
     // Return success indicator - this function should only return if sync was successful
     // Any errors should throw, which will be caught by the caller's try-catch
