@@ -2025,11 +2025,36 @@ export default function ResponseDetailsModal({
       });
     };
 
-    // Find name from Q28 - "Would You like to share your name with us?"
+    // Helper: detect if a value looks like a gender response (matches web logic)
+    const isGenderResponseValue = (value: any) => {
+      if (value === null || value === undefined) return false;
+      const valueStr = String(value).toLowerCase().trim();
+      if (!valueStr) return false;
+      // Exact values
+      if (valueStr === 'male' || valueStr === 'female' || valueStr === 'non_binary' || valueStr === 'other') return true;
+      // Option codes commonly used for gender
+      if (valueStr === '1' || valueStr === '2' || valueStr === '3') return true;
+      // Translation format (e.g. "Male_{পুরুষ}")
+      if (valueStr.includes('_{')) return true;
+      // Starts with gender keyword
+      if (valueStr.startsWith('male') || valueStr.startsWith('female')) return true;
+      return false;
+    };
+
+    // Find name from dedicated name question for this survey, then fall back
+    // to older strategies (Q28, text search) only if needed.
     let nameResponse = null;
     if (surveyId === '68fd1915d41841da463f0d46') {
+      // Strategy 0: Directly by fixed questionId (most reliable)
+      nameResponse =
+        responses.find(
+          (r: any) => r.questionId === '68fd1915d41841da463f0d46_fixed_respondent_name'
+        ) || null;
+
       // Strategy 1: Find by questionNumber (Q28 or 28)
-      nameResponse = findResponseByQuestionNumber('Q28') || findResponseByQuestionNumber('28');
+      if (!nameResponse) {
+        nameResponse = findResponseByQuestionNumber('Q28') || findResponseByQuestionNumber('28');
+      }
       
       // Strategy 2: Find by question text keywords
       if (!nameResponse) {
@@ -2088,8 +2113,7 @@ export default function ResponseDetailsModal({
       nameResponse = findResponseByQuestionText([
         'what is your full name',
         'full name',
-        'name',
-        'respondent'
+        'name'
       ]);
     }
 
@@ -2109,9 +2133,30 @@ export default function ResponseDetailsModal({
     // Format gender response using formatResponseDisplay (removes translation part)
     let genderDisplay = 'Not Available';
     if (genderResponse?.response) {
-      const genderValue = extractValue(genderResponse.response);
+      const genderValue = extractValue(genderResponse);
       if (genderValue) {
         genderDisplay = formatResponseDisplay(genderValue, genderQuestion);
+      }
+    }
+
+    // CRITICAL FIX: Ensure nameResponse is never the gender response
+    // (This prevents Q6 "Name of the respondent matching?" showing gender)
+    if (nameResponse) {
+      // If it's literally the same response object as genderResponse, discard
+      if (genderResponse && (nameResponse === genderResponse || (nameResponse._id && genderResponse._id && String(nameResponse._id) === String(genderResponse._id)))) {
+        nameResponse = null;
+      } else if (nameResponse.questionText) {
+        const qText = getMainText(nameResponse.questionText).toLowerCase();
+        if (qText.includes('gender') || qText.includes("respondent's gender")) {
+          nameResponse = null;
+        }
+      }
+      // If the value itself looks like gender (male/female/1/2/3/translated), discard
+      if (nameResponse?.response) {
+        const candidateValue = extractValue(nameResponse);
+        if (isGenderResponseValue(candidateValue)) {
+          nameResponse = null;
+        }
       }
     }
 
@@ -2123,11 +2168,10 @@ export default function ResponseDetailsModal({
     // Get name and capitalize it
     let name = 'Not Available';
     if (nameResponse?.response) {
-      const nameValue = extractValue(nameResponse.response);
+      const nameValue = extractValue(nameResponse);
       if (nameValue && nameValue !== 'N/A' && String(nameValue).trim() !== '') {
         // Make sure it's not a gender value
-        const nameStr = String(nameValue).toLowerCase().trim();
-        if (nameStr !== 'male' && nameStr !== 'female' && !nameStr.includes('_{')) {
+        if (!isGenderResponseValue(nameValue)) {
           // Capitalize the name
           name = String(nameValue)
             .split(' ')

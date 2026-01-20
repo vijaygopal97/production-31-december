@@ -81,9 +81,24 @@ const InterviewDetails: React.FC<InterviewDetailsProps> = ({ route, navigation }
       const result = await apiService.getInterviewDetails(interview._id);
       if (result.success) {
         setDetailedInterview(result.interview);
+      } else if (result.isGone) {
+        // PHASE 2: Handle 410 (Gone) status - interview no longer available
+        Alert.alert(
+          'Interview Not Available',
+          'This interview is no longer available or has been removed.',
+          [
+            {
+              text: 'Go Back',
+              onPress: () => navigation?.goBack(),
+            },
+          ]
+        );
+      } else {
+        Alert.alert('Error', result.message || 'Failed to load interview details');
       }
     } catch (error) {
       console.error('Error loading interview details:', error);
+      Alert.alert('Error', 'Failed to load interview details. Please try again.');
     } finally {
       setIsLoading(false);
     }

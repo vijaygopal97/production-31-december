@@ -2272,10 +2272,23 @@ const getMyInterviews = async (req, res) => {
     // Build query
     let query = { interviewer: interviewerId };
 
-    // Add status filter if provided
+    // PHASE 1: Always exclude abandoned responses to prevent excessive retries
+    // Abandoned responses should not appear in "My Interviews" list
     if (status) {
+      if (status === 'abandoned') {
+        // Don't allow filtering for abandoned - return empty
+        return res.status(200).json({
+          success: true,
+          interviews: [],
+          total: 0
+        });
+      }
+      // If status filter provided, use it (status already excludes abandoned via filter below)
       query.status = status;
     }
+    
+    // Always exclude abandoned responses (even if status filter is provided)
+    // Filter in JavaScript after query to ensure abandoned is never returned
 
     // Build sort object
     const sort = {};
@@ -2288,6 +2301,9 @@ const getMyInterviews = async (req, res) => {
       .populate('survey', 'surveyName description category') // REMOVED 'sections' - huge memory leak!
       .sort(sort)
       .lean();
+
+    // PHASE 1: Filter out abandoned responses (safety check even if query excludes them)
+    interviews = interviews.filter(interview => interview.status !== 'abandoned');
 
     console.log('getMyInterviews - Found interviews:', interviews.length);
 
@@ -3464,8 +3480,16 @@ const getNextReviewAssignment = async (req, res) => {
         });
         
         // Use interviewer directly from populate (same as getPendingApprovals)
+        // CRITICAL FIX: Ensure survey is always an object with _id (RN depends on interview.survey._id)
+        // This prevents RN falling back to generic name detection and misreading gender as name.
+        const normalizedSurvey =
+          activeAssignment.survey && typeof activeAssignment.survey === 'object'
+            ? { _id: activeAssignment.survey._id || activeAssignment.survey.id || activeAssignment.survey }
+            : { _id: activeAssignment.survey };
+        
         const transformedResponse = {
           ...activeAssignment,
+          survey: normalizedSurvey,
           audioRecording, // Include audio recording with signed URL
           totalQuestions: effectiveQuestions,
           answeredQuestions,
@@ -3937,9 +3961,21 @@ const getNextReviewAssignment = async (req, res) => {
         }
         
         // Build response object with manually fetched data (like Google/Facebook pattern)
+        // CRITICAL FIX: Ensure survey is always an object with _id (RN depends on interview.survey._id)
+        // Keep this lightweight: no sections (avoids memory leaks).
+        const normalizedSurvey = surveyData
+          ? {
+              _id: surveyData._id,
+              surveyName: surveyData.surveyName,
+              description: surveyData.description,
+              category: surveyData.category,
+              company: surveyData.company
+            }
+          : { _id: assignedResponse.survey };
+        
         const transformedResponse = {
           ...assignedResponse,
-          survey: surveyData || { _id: assignedResponse.survey },
+          survey: normalizedSurvey,
           interviewer: interviewerData || { _id: assignedResponse.interviewer }
         };
         
@@ -4259,8 +4295,15 @@ const getNextReviewAssignment = async (req, res) => {
     }
 
     // Use interviewer directly from populate (same as getPendingApprovals)
+    // CRITICAL FIX: Ensure survey is always an object with _id (RN depends on interview.survey._id)
+    const normalizedSurvey =
+      updatedResponse.survey && typeof updatedResponse.survey === 'object'
+        ? { _id: updatedResponse.survey._id || updatedResponse.survey.id || updatedResponse.survey }
+        : { _id: updatedResponse.survey };
+    
     const transformedResponse = {
       ...updatedResponse,
+      survey: normalizedSurvey,
       audioRecording, // Include audio recording with signed URL
       totalQuestions: effectiveQuestions,
       answeredQuestions,
@@ -4952,6 +4995,26 @@ const getSurveyResponseById = async (req, res) => {
     const userId = req.user.id;
     const userRole = req.user.userType;
 
+    // Ultra-lightweight Redis-based protection for hot / abusive responseIds
+    // If a responseId is known to be "blocked" (e.g. abandoned + repeatedly requested),
+    // short‑circuit BEFORE any Mongo queries to protect the backend.
+    let blockKey = null;
+    try {
+      const redisOps = require('../utils/redisClient');
+      blockKey = `sr:view-blocked:${responseId}`;
+      const isBlocked = await redisOps.get(blockKey);
+      if (isBlocked) {
+        // Fast exit: minimal payload, no DB / populate work
+        return res.status(410).json({
+          success: false,
+          message: 'Interview not available'
+        });
+      }
+    } catch (redisError) {
+      // If Redis is unavailable, continue normally – do NOT break core flow
+      console.log('getSurveyResponseById - Redis block check error:', redisError.message);
+    }
+
     // Find the survey response - handle both ObjectId and UUID responseId
     let surveyResponse;
     if (mongoose.Types.ObjectId.isValid(responseId) && responseId.length === 24) {
@@ -4989,9 +5052,39 @@ const getSurveyResponseById = async (req, res) => {
     }
 
     if (!surveyResponse) {
+      // If we ever get hammered for a completely invalid responseId, we can also
+      // cache this as "not available" to avoid repeated DB hits.
+      if (blockKey) {
+        try {
+          const redisOps = require('../utils/redisClient');
+          // Short TTL for unknown IDs – prevents hot 404s from hitting Mongo repeatedly.
+          await redisOps.set(blockKey, { reason: 'not_found' }, 600); // 10 minutes
+        } catch (cacheErr) {
+          console.log('getSurveyResponseById - Redis set not_found error:', cacheErr.message);
+        }
+      }
       return res.status(404).json({
         success: false,
         message: 'Survey response not found'
+      });
+    }
+
+    // If this response is abandoned, and the caller is an interviewer, block it aggressively.
+    // These are the ones that tend to get retried in a loop from devices and can overwhelm the server.
+    if ((surveyResponse.status === 'abandoned' || surveyResponse.status === 'Abandoned') &&
+        userRole === 'interviewer') {
+      if (blockKey) {
+        try {
+          const redisOps = require('../utils/redisClient');
+          // Cache the "blocked" state for a longer period – abandoned is a final status.
+          await redisOps.set(blockKey, { reason: 'abandoned' }, 4 * 60 * 60); // 4 hours
+        } catch (cacheErr) {
+          console.log('getSurveyResponseById - Redis set abandoned error:', cacheErr.message);
+        }
+      }
+      return res.status(410).json({
+        success: false,
+        message: 'Interview not available'
       });
     }
 
@@ -7201,6 +7294,18 @@ const getSurveyResponsesV2 = async (req, res) => {
     const pageNum = parseInt(page, 10) || 1;
     const limitNum = parseInt(limit, 10) || 20;
     const skip = limitNum !== -1 ? (pageNum - 1) * limitNum : 0;
+    
+    // CRITICAL FIX: Apply AC filter at database level (like interviewer filter)
+    // This ensures accurate counts and efficient queries (uses indexes)
+    // AC filter should work the same way as interviewer filter - at MongoDB level, not JavaScript
+    // NOTE: We use the indexed selectedAC field here for performance. For this survey,
+    // all Darjeeling responses already have selectedAC set (0 rely only on selectedPollingStation.acName).
+    if (ac && ac.trim()) {
+      const acPattern = ac.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      // Use the indexed selectedAC field so MongoDB can use survey+status+selectedAC+startTime index
+      matchFilter.selectedAC = { $regex: acPattern, $options: 'i' };
+      console.log('✅ AC filter applied at database level using selectedAC index:', acPattern);
+    }
     
     // CRITICAL OPTIMIZATION: If searching for responseId, add it to matchFilter EARLY
     // This allows MongoDB to use indexes for efficient responseId search

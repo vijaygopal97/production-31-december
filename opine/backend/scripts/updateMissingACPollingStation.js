@@ -63,8 +63,15 @@ async function updateResponses() {
     await mongoose.connect(mongoUri);
     console.log('✅ Connected to MongoDB');
 
-    // Load the report
-    const reportPath = path.join(__dirname, '../reports/missing-ac-polling-station-report-2026-01-16.json');
+    // Load the report - use today's date
+    const today = new Date();
+    const dateStr = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
+    const reportPath = path.join(__dirname, `../reports/missing-ac-polling-station-report-${dateStr}.json`);
+    
+    if (!fs.existsSync(reportPath)) {
+      throw new Error(`Report file not found: ${reportPath}. Please run generateMissingACPollingStationReport.js first.`);
+    }
+    
     const report = JSON.parse(fs.readFileSync(reportPath, 'utf8'));
     
     console.log(`📊 Processing ${report.responses.length} responses...`);

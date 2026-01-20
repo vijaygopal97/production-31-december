@@ -20,10 +20,51 @@ class ApiService {
   private requestInterceptorId: number | null = null;
   private responseInterceptorId: number | null = null;
   private interceptorsSetup: boolean = false;
+  
+  // PHASE 2: Request deduplication - prevent duplicate concurrent requests
+  private pendingRequests: Map<string, Promise<any>> = new Map();
+  
+  // PHASE 2: Local cache for responses (with 410 invalidation)
+  private responseCache: Map<string, { data: any; timestamp: number; isGone: boolean }> = new Map();
+  private readonly CACHE_TTL = 5 * 60 * 1000; // 5 minutes cache TTL
+  private readonly GONE_CACHE_TTL = 24 * 60 * 60 * 1000; // 24 hours for 410 (Gone) responses
+
+  // PERFORMANCE: Pre-load performanceCache module to avoid blocking dynamic imports
+  private performanceCacheInstance: any = null;
+  private performanceCacheLoadPromise: Promise<any> | null = null;
 
   constructor() {
     this.baseURL = API_BASE_URL;
     // Don't setup interceptors in constructor - wait until network condition is set
+    // PERFORMANCE: Pre-load performanceCache module in background (non-blocking)
+    this.preloadPerformanceCache();
+  }
+
+  // PERFORMANCE: Pre-load performanceCache module to avoid blocking on first use
+  private async preloadPerformanceCache(): Promise<any> {
+    if (this.performanceCacheLoadPromise) {
+      return this.performanceCacheLoadPromise;
+    }
+    this.performanceCacheLoadPromise = import('./performanceCache')
+      .then((module) => {
+        this.performanceCacheInstance = module.performanceCache; // Named export
+        return module.performanceCache;
+      })
+      .catch((error) => {
+        console.warn('⚠️ Failed to pre-load performanceCache:', error);
+        return null;
+      });
+    return this.performanceCacheLoadPromise;
+  }
+
+  // PERFORMANCE: Get performanceCache instance (uses pre-loaded instance if available)
+  private async getPerformanceCache(): Promise<any> {
+    if (this.performanceCacheInstance) {
+      return this.performanceCacheInstance;
+    }
+    // Fallback to dynamic import if pre-load didn't complete yet
+    const module = await this.preloadPerformanceCache();
+    return module;
   }
 
   // Toggle offline mode for testing
@@ -484,18 +525,21 @@ class ApiService {
   ): Promise<{ foundAssignment: boolean; requiresACSelection: boolean; assignedACs: string[] }> {
     const isTargetSurvey = survey && (survey._id === '68fd1915d41841da463f0d46' || survey.id === '68fd1915d41841da463f0d46');
     
-    // PERFORMANCE: Check cache first (O(1) lookup)
+    // PERFORMANCE: Check cache first (O(1) lookup - instant)
     if (currentUserId) {
       try {
-        const { performanceCache } = await import('./performanceCache');
-        const cachedAssignment = performanceCache.getAssignment(survey._id || survey.id, currentUserId);
-        if (cachedAssignment) {
-          console.log('⚡ Assignment loaded from memory cache (instant)');
-          return {
-            foundAssignment: cachedAssignment.foundAssignment,
-            requiresACSelection: cachedAssignment.requiresACSelection,
-            assignedACs: cachedAssignment.assignedACs,
-          };
+        // PERFORMANCE: Use pre-loaded cache instance for faster access
+        const performanceCache = await this.getPerformanceCache();
+        if (performanceCache) {
+          const cachedAssignment = performanceCache.getAssignment(survey._id || survey.id, currentUserId);
+          if (cachedAssignment) {
+            console.log('⚡ Assignment loaded from memory cache (instant)');
+            return {
+              foundAssignment: cachedAssignment.foundAssignment,
+              requiresACSelection: cachedAssignment.requiresACSelection,
+              assignedACs: cachedAssignment.assignedACs,
+            };
+          }
         }
       } catch (cacheError) {
         // Cache not available, continue with normal check
@@ -617,14 +661,16 @@ class ApiService {
     // Cache the result for next time
     if (currentUserId && survey._id) {
       try {
-        const { performanceCache } = await import('./performanceCache');
-        performanceCache.setAssignment(survey._id || survey.id, currentUserId, {
-          foundAssignment,
-          requiresACSelection,
-          assignedACs,
-          surveyId: survey._id || survey.id,
-          userId: currentUserId,
-        });
+        const performanceCache = await this.getPerformanceCache();
+        if (performanceCache) {
+          performanceCache.setAssignment(survey._id || survey.id, currentUserId, {
+            foundAssignment,
+            requiresACSelection,
+            assignedACs,
+            surveyId: survey._id || survey.id,
+            userId: currentUserId,
+          });
+        }
       } catch (cacheError) {
         // Ignore cache errors
       }
@@ -644,12 +690,20 @@ class ApiService {
       // STEP 1: Get survey from offline storage and check assignment FIRST (offline-first)
       console.log('📴 CAPI: Checking assignment from synced survey data FIRST (offline-first approach)');
       
-      // PERFORMANCE: Check cache first, then fallback to storage
-      const { performanceCache } = await import('./performanceCache');
-      let survey = performanceCache.getSurvey(surveyId);
+      // PERFORMANCE: Check cache first (synchronous - instant if cached)
+      // Use pre-loaded cache instance for faster access
+      let survey: any = null;
+      try {
+        const performanceCache = await this.getPerformanceCache();
+        if (performanceCache) {
+          survey = performanceCache.getSurvey(surveyId);
+        }
+      } catch (cacheError) {
+        // Cache module not available, continue with storage
+      }
       
       if (!survey) {
-        // Cache miss - load from storage
+        // Cache miss - load from storage (fast - usually <100ms)
         const surveys = await offlineStorage.getSurveys();
         survey = surveys.find((s: any) => s._id === surveyId || s.id === surveyId);
       }
@@ -664,10 +718,11 @@ class ApiService {
           };
         }
         const headers = await this.getHeaders();
+        // PERFORMANCE: Reduced timeout from 10s to 5s for faster failure detection
         const response = await axios.post(
           `${this.baseURL}/api/survey-responses/start/${surveyId}`,
           {},
-          { headers, timeout: 10000 }
+          { headers, timeout: 5000 }
         );
         return { success: true, response: response.data.data };
       }
@@ -703,7 +758,8 @@ class ApiService {
             const fullSurveyResult = await this.getSurveyFull(surveyId);
             if (fullSurveyResult.success && fullSurveyResult.survey) {
               // Update survey in offline storage
-              const updatedSurveys = surveys.map((s: any) => 
+              const allSurveys = await offlineStorage.getSurveys();
+              const updatedSurveys = allSurveys.map((s: any) => 
                 (s._id === surveyId || s.id === surveyId) ? fullSurveyResult.survey : s
               );
               await offlineStorage.saveSurveys(updatedSurveys, false);
@@ -733,113 +789,109 @@ class ApiService {
       // STEP 2: Check assignment from synced survey data (offline-first)
       console.log('✅ Survey found in offline storage - checking assignment locally');
       
-      // PERFORMANCE: Get user ID from cache first
+      // PERFORMANCE: Get user ID from cache first (synchronous - instant)
       let currentUserId: string | null = null;
       try {
-        const cachedUserData = performanceCache.getUserData();
-        if (cachedUserData) {
-          currentUserId = cachedUserData._id || cachedUserData.id || cachedUserData.memberId || null;
-          console.log('⚡ User ID loaded from memory cache (instant)');
+        const performanceCache = await this.getPerformanceCache();
+        if (performanceCache) {
+          const cachedUserData = performanceCache.getUserData();
+          if (cachedUserData) {
+            currentUserId = cachedUserData._id || cachedUserData.id || cachedUserData.memberId || null;
+            console.log('⚡ User ID loaded from memory cache (instant)');
+          } else {
+            // PERFORMANCE: Read from AsyncStorage (fast - usually <50ms)
+            const userDataStr = await AsyncStorage.getItem('userData');
+            if (userDataStr) {
+              const userData = JSON.parse(userDataStr);
+              currentUserId = userData._id || userData.id || userData.memberId || null;
+              
+              // Cache for next time
+              performanceCache.setUserData(userData);
+            }
+          }
         } else {
-          // Cache miss - read from AsyncStorage
+          // Performance cache not available - read directly from AsyncStorage
           const userDataStr = await AsyncStorage.getItem('userData');
           if (userDataStr) {
             const userData = JSON.parse(userDataStr);
             currentUserId = userData._id || userData.id || userData.memberId || null;
-            
-            // Cache for next time
-            performanceCache.setUserData(userData);
           }
         }
       } catch (error) {
         console.error('❌ Error getting current user ID:', error);
       }
       
-      // PERFORMANCE OPTIMIZED: Use optimized assignment checking (O(1) Map lookup instead of O(n) array.find)
+      // PERFORMANCE OPTIMIZED: Use optimized assignment checking (O(1) Map lookup - instant)
+      // This is fast because it uses in-memory cache and Map lookups
       const { foundAssignment, requiresACSelection, assignedACs } = await this.checkAssignmentOptimized(survey, currentUserId);
       
       // STEP 3: If assignment found, create local session (offline-first)
       if (foundAssignment) {
         console.log('✅ Assignment found in synced survey data - creating local session');
         
-        // PERFORMANCE: Check online status (uses cache for faster response)
-        const isOnline = await this.isOnline();
+        // PERFORMANCE: CAPI OFFLINE-FIRST - Start interview immediately, check online status in background
+        // For CAPI, we already have assignment verified locally, so we can start immediately
+        // This prevents blocking on slow network checks or API calls
+        console.log('🌐 CAPI offline-first: starting interview immediately, checking online status in background');
         
-        if (!isOnline) {
-          // Offline - create local session immediately
-          console.log('📴 Offline mode - creating local interview session (assignment verified from synced data)');
-          const localSessionId = `offline_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
-          const localSessionData = {
-            sessionId: localSessionId,
-            survey: surveyId,
-            interviewMode: 'capi',
-            startTime: new Date().toISOString(),
-            requiresACSelection: requiresACSelection,
-            assignedACs: assignedACs,
-            acAssignmentState: survey?.acAssignmentState || 'West Bengal',
-            status: 'active',
-            isOffline: true,
-          };
-          
-          return { 
-            success: true, 
-            response: localSessionData 
-          };
-        } else {
-          // Online - try API call for sync
-          // CRITICAL: If this is called during sync, we MUST get a server session, not offline
-          // Check if this is a sync context by checking if we're being called from sync service
-          // For now, we'll always try API call and only fallback if it's NOT a critical sync operation
-          console.log('🌐 Online mode - attempting API call to create server session');
-          try {
-            const headers = await this.getHeaders();
-            const response = await axios.post(
-              `${this.baseURL}/api/survey-responses/start/${surveyId}`,
-              {},
-              { headers, timeout: 10000 }
-            );
-            return { success: true, response: response.data.data };
-          } catch (apiError: any) {
-            // API call failed - check if it's a 403 (assignment issue) or network error
-            const is403Error = apiError.response?.status === 403;
-            const isNetworkError = apiError.message?.includes('Network') || 
-                                  apiError.message?.includes('timeout') ||
-                                  apiError.code === 'NETWORK_ERROR';
-            
-            // CRITICAL: If it's a 403 error, don't fallback to offline - throw the error
-            // This ensures sync operations fail properly if assignment is wrong
-            if (is403Error) {
-              console.error('❌ API call failed with 403 - assignment verification failed on server');
-              console.error('❌ This means the backend rejected the request - do not fallback to offline');
-              throw new Error(apiError.response?.data?.message || 'You are not assigned to this survey on the server');
+        // Create offline session immediately (non-blocking - interview starts instantly)
+        const localSessionId = `offline_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+        const localSessionData = {
+          sessionId: localSessionId,
+          survey: surveyId,
+          interviewMode: 'capi',
+          startTime: new Date().toISOString(),
+          requiresACSelection: requiresACSelection,
+          assignedACs: assignedACs,
+          acAssignmentState: survey?.acAssignmentState || 'West Bengal',
+          status: 'active',
+          isOffline: true, // Will be updated when server sync completes
+        };
+        
+        // PERFORMANCE: Check online status and sync to server in background (non-blocking)
+        // Don't await - interview starts immediately
+        this.isOnline()
+          .then((isOnline) => {
+            if (isOnline) {
+              // Start API call in background - don't await it
+              return this.getHeaders()
+                .then((headers) => {
+                  return axios.post(
+                    `${this.baseURL}/api/survey-responses/start/${surveyId}`,
+                    {},
+                    { headers, timeout: 5000 }
+                  );
+                })
+                .then((response) => {
+                  if (response.data && response.data.data) {
+                    console.log('✅ [BACKGROUND] Server session created - will be used for sync');
+                    // Server session created successfully - it will be used during sync
+                    // The local session is fine for now, server session will be linked during sync
+                  }
+                })
+                .catch((apiError: any) => {
+                  // Silently handle errors - interview is already started offline
+                  const is403Error = apiError.response?.status === 403;
+                  if (is403Error) {
+                    console.warn('⚠️ [BACKGROUND] Server rejected assignment (403) - interview continues offline');
+                  } else {
+                    console.log('⚠️ [BACKGROUND] Server sync failed (non-critical) - interview continues offline:', apiError.message);
+                  }
+                });
+            } else {
+              console.log('📴 [BACKGROUND] Device is offline - interview continues in offline mode');
             }
-            
-            // Only fallback to offline for network errors (not assignment errors)
-            if (isNetworkError) {
-              console.log('⚠️ Network error during API call, falling back to offline mode (assignment verified from synced data):', apiError.message);
-              const localSessionId = `offline_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
-              const localSessionData = {
-                sessionId: localSessionId,
-                survey: surveyId,
-                interviewMode: 'capi',
-                startTime: new Date().toISOString(),
-                requiresACSelection: requiresACSelection,
-                assignedACs: assignedACs,
-                acAssignmentState: survey?.acAssignmentState || 'West Bengal',
-                status: 'active',
-                isOffline: true,
-              };
-              
-              return { 
-                success: true, 
-                response: localSessionData 
-              };
-            }
-            
-            // For other errors, throw them (don't fallback)
-            throw apiError;
-          }
-        }
+          })
+          .catch(() => {
+            // Ignore isOnline errors - interview continues offline
+            console.log('⚠️ [BACKGROUND] Online check failed - interview continues in offline mode');
+          });
+        
+        // Return offline session immediately (interview starts instantly - no blocking!)
+        return { 
+          success: true, 
+          response: localSessionData 
+        };
       } else {
         // No assignment found in synced data - this shouldn't happen if surveys are synced correctly
         console.log('⚠️ No assignment found in synced survey data - will try API call (edge case)');
@@ -855,10 +907,11 @@ class ApiService {
         
         // Try API call as fallback
         const headers = await this.getHeaders();
+        // PERFORMANCE: Reduced timeout from 10s to 5s for faster failure detection
         const response = await axios.post(
           `${this.baseURL}/api/survey-responses/start/${surveyId}`,
           {},
-          { headers, timeout: 10000 }
+          { headers, timeout: 5000 }
         );
         return { success: true, response: response.data.data };
       }
@@ -894,15 +947,25 @@ class ApiService {
         // Get current user ID from cache
         let currentUserId: string | null = null;
         try {
-          const cachedUserData = performanceCache.getUserData();
-          if (cachedUserData) {
-            currentUserId = cachedUserData._id || cachedUserData.id || cachedUserData.memberId || null;
+          const performanceCache = await this.getPerformanceCache();
+          if (performanceCache) {
+            const cachedUserData = performanceCache.getUserData();
+            if (cachedUserData) {
+              currentUserId = cachedUserData._id || cachedUserData.id || cachedUserData.memberId || null;
+            } else {
+              const userDataStr = await AsyncStorage.getItem('userData');
+              if (userDataStr) {
+                const userData = JSON.parse(userDataStr);
+                currentUserId = userData._id || userData.id || userData.memberId || null;
+                performanceCache.setUserData(userData);
+              }
+            }
           } else {
+            // Performance cache not available - read directly from AsyncStorage
             const userDataStr = await AsyncStorage.getItem('userData');
             if (userDataStr) {
               const userData = JSON.parse(userDataStr);
               currentUserId = userData._id || userData.id || userData.memberId || null;
-              performanceCache.setUserData(userData);
             }
           }
         } catch (error) {
@@ -948,37 +1011,134 @@ class ApiService {
    * 
    * @param identifier - Can be UUID responseId or MongoDB _id
    */
-  async getSurveyResponseById(identifier: string): Promise<{ success: boolean; response?: any; error?: string }> {
+  /**
+   * Verify interview sync (two-phase commit verification)
+   * This endpoint verifies that an interview was successfully synced to the server
+   * Works even for abandoned responses (unlike getSurveyResponseById which blocks them)
+   * 
+   * @param responseId - UUID responseId (preferred)
+   * @param mongoId - MongoDB _id (fallback)
+   */
+  async verifyInterviewSync(responseId?: string, mongoId?: string): Promise<{ 
+    success: boolean; 
+    verified?: boolean; 
+    audioVerified?: boolean; 
+    responseId?: string; 
+    mongoId?: string; 
+    status?: string; 
+    hasResponses?: boolean; 
+    hasAudio?: boolean; 
+    error?: string 
+  }> {
     try {
       const headers = await this.getHeaders();
       
-      // Try by UUID responseId first, then by MongoDB _id if that fails
-      let response;
-      try {
-        // First try: search by responseId (UUID)
-        response = await axios.get(
-          `${this.baseURL}/api/survey-responses/${identifier}`,
-          { headers }
-        );
-      } catch (error: any) {
-        // If that fails, the endpoint might not support UUID lookup directly
-        // The backend endpoint accepts either UUID or MongoDB _id
-        console.log(`⚠️ Direct lookup failed, trying alternative method...`);
-        throw error; // Let it fall through to error handling
+      if (!responseId && !mongoId) {
+        return {
+          success: false,
+          error: 'responseId or mongoId is required'
+        };
       }
       
-      if (response.data && response.data.success && response.data.interview) {
+      const response = await axios.post(
+        `${this.baseURL}/api/survey-responses/verify-sync`,
+        { responseId, mongoId },
+        { headers }
+      );
+      
+      if (response.data && response.data.success) {
         return {
           success: true,
-          response: response.data.interview
+          verified: response.data.verified,
+          audioVerified: response.data.audioVerified,
+          responseId: response.data.responseId,
+          mongoId: response.data.mongoId,
+          status: response.data.status,
+          hasResponses: response.data.hasResponses,
+          hasAudio: response.data.hasAudio
         };
       } else {
         return {
           success: false,
-          error: 'Response not found or invalid format'
+          error: response.data?.message || 'Verification failed'
         };
       }
     } catch (error: any) {
+      console.error('Error verifying interview sync:', error);
+      
+      if (error.response?.status === 404) {
+        return {
+          success: false,
+          error: 'Interview not found on server',
+          verified: false
+        };
+      }
+      
+      return {
+        success: false,
+        error: error.response?.data?.message || error.message || 'Failed to verify interview sync'
+      };
+    }
+  }
+
+  async getSurveyResponseById(identifier: string): Promise<{ success: boolean; response?: any; error?: string; isGone?: boolean }> {
+    const cacheKey = `survey_response_${identifier}`;
+    
+    try {
+      // PHASE 2: Use retry logic with deduplication and caching
+      const result = await this.makeRequestWithRetry(
+        cacheKey,
+        async () => {
+          const headers = await this.getHeaders();
+          
+          // Try by UUID responseId first, then by MongoDB _id if that fails
+          let response;
+          try {
+            // First try: search by responseId (UUID)
+            response = await axios.get(
+              `${this.baseURL}/api/survey-responses/${identifier}`,
+              { headers }
+            );
+          } catch (error: any) {
+            // PHASE 2: Stop retrying on 410 (Gone) - permanent failure
+            if (error.response?.status === 410) {
+              console.log(`[ApiService] Response ${identifier} returned 410 (Gone) - no retries`);
+              throw error; // Will be caught and cached as "gone"
+            }
+            
+            // If that fails, the endpoint might not support UUID lookup directly
+            // The backend endpoint accepts either UUID or MongoDB _id
+            console.log(`⚠️ Direct lookup failed, trying alternative method...`);
+            throw error; // Let it fall through to error handling
+          }
+          
+          if (response.data && response.data.success && response.data.interview) {
+            return {
+              success: true,
+              response: response.data.interview
+            };
+          } else {
+            return {
+              success: false,
+              error: 'Response not found or invalid format'
+            };
+          }
+        },
+        2 // max 2 retries (less than getInterviewDetails since this is for verification)
+      );
+
+      return result;
+    } catch (error: any) {
+      // PHASE 2: Handle 410 (Gone) status specifically - stop all retries
+      if (error.response?.status === 410) {
+        console.log(`[ApiService] getSurveyResponseById - Response ${identifier} is gone (410), returning error immediately`);
+        return {
+          success: false,
+          error: 'Interview not available or has been removed.',
+          isGone: true // Flag to indicate permanent failure
+        };
+      }
+      
       console.error('Error fetching survey response:', error);
       
       // If 404, try to provide helpful error message
@@ -1463,13 +1623,160 @@ class ApiService {
     }
   }
 
+  // PHASE 2: Helper method for exponential backoff with jitter
+  private async sleep(ms: number): Promise<void> {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
+  private getRetryDelay(attempt: number, baseDelay: number = 1000, maxDelay: number = 30000): number {
+    // Exponential backoff: baseDelay * 2^attempt
+    const exponentialDelay = baseDelay * Math.pow(2, attempt);
+    // Add jitter (random 0-30% of delay)
+    const jitter = Math.random() * 0.3 * exponentialDelay;
+    const delay = exponentialDelay + jitter;
+    // Cap at maxDelay
+    return Math.min(delay, maxDelay);
+  }
+
+  // PHASE 2: Check if response is cached and still valid
+  private getCachedResponse(cacheKey: string): any | null {
+    const cached = this.responseCache.get(cacheKey);
+    if (!cached) return null;
+
+    const now = Date.now();
+    const ttl = cached.isGone ? this.GONE_CACHE_TTL : this.CACHE_TTL;
+    
+    if (now - cached.timestamp > ttl) {
+      // Cache expired
+      this.responseCache.delete(cacheKey);
+      return null;
+    }
+
+    // If it's marked as "gone" (410), return error immediately
+    if (cached.isGone) {
+      return { isGone: true, cached: true };
+    }
+
+    return cached.data;
+  }
+
+  // PHASE 2: Cache response
+  private setCachedResponse(cacheKey: string, data: any, isGone: boolean = false): void {
+    this.responseCache.set(cacheKey, {
+      data,
+      timestamp: Date.now(),
+      isGone
+    });
+  }
+
+  // PHASE 2: Make request with retry logic, deduplication, and caching
+  private async makeRequestWithRetry<T>(
+    cacheKey: string,
+    requestFn: () => Promise<T>,
+    maxRetries: number = 3
+  ): Promise<T> {
+    // Check cache first
+    const cached = this.getCachedResponse(cacheKey);
+    if (cached) {
+      if (cached.isGone) {
+        // Return 410 error immediately for cached "gone" responses
+        throw { response: { status: 410, data: { message: 'Interview not available or has been removed.' } } };
+      }
+      return cached;
+    }
+
+    // Check if request is already pending (deduplication)
+    const pendingRequest = this.pendingRequests.get(cacheKey);
+    if (pendingRequest) {
+      return pendingRequest;
+    }
+
+    // Create new request
+    const requestPromise = this.executeRequestWithRetry(requestFn, maxRetries, cacheKey);
+    this.pendingRequests.set(cacheKey, requestPromise);
+
+    try {
+      const result = await requestPromise;
+      return result;
+    } finally {
+      // Remove from pending requests
+      this.pendingRequests.delete(cacheKey);
+    }
+  }
+
+  // PHASE 2: Execute request with exponential backoff retry
+  private async executeRequestWithRetry<T>(
+    requestFn: () => Promise<T>,
+    maxRetries: number,
+    cacheKey: string
+  ): Promise<T> {
+    let lastError: any;
+
+    for (let attempt = 0; attempt <= maxRetries; attempt++) {
+      try {
+        const result = await requestFn();
+        
+        // Cache successful response
+        this.setCachedResponse(cacheKey, result, false);
+        return result;
+      } catch (error: any) {
+        lastError = error;
+
+        // PHASE 2: Stop retrying on 410 (Gone) - permanent failure
+        if (error.response?.status === 410) {
+          console.log(`[ApiService] Response ${cacheKey} returned 410 (Gone) - marking as gone, no retries`);
+          // Cache as "gone" for 24 hours
+          this.setCachedResponse(cacheKey, null, true);
+          throw error;
+        }
+
+        // PHASE 2: Stop retrying on 4xx errors (except network errors) - client errors
+        if (error.response?.status >= 400 && error.response?.status < 500 && error.response?.status !== 408) {
+          console.log(`[ApiService] Response ${cacheKey} returned ${error.response.status} - no retries`);
+          throw error;
+        }
+
+        // PHASE 2: Only retry on 5xx errors, network errors, or timeout (408)
+        if (attempt < maxRetries) {
+          const delay = this.getRetryDelay(attempt);
+          console.log(`[ApiService] Request failed (attempt ${attempt + 1}/${maxRetries + 1}), retrying in ${Math.round(delay)}ms...`);
+          await this.sleep(delay);
+        }
+      }
+    }
+
+    // All retries exhausted
+    throw lastError;
+  }
+
   async getInterviewDetails(responseId: string) {
     try {
-      const headers = await this.getHeaders();
-      const response = await axios.get(`${this.baseURL}/api/survey-responses/${responseId}`, { headers });
-      return { success: true, interview: response.data.interview };
+      const cacheKey = `interview_details_${responseId}`;
+      
+      // PHASE 2: Use retry logic with deduplication and caching
+      const result = await this.makeRequestWithRetry(
+        cacheKey,
+        async () => {
+          const headers = await this.getHeaders();
+          const response = await axios.get(`${this.baseURL}/api/survey-responses/${responseId}`, { headers });
+          return { success: true, interview: response.data.interview };
+        },
+        3 // max 3 retries
+      );
+
+      return result;
     } catch (error: any) {
       console.error('Get interview details error:', error);
+      
+      // PHASE 2: Handle 410 (Gone) status specifically
+      if (error.response?.status === 410) {
+        return {
+          success: false,
+          message: 'Interview not available or has been removed.',
+          isGone: true // Flag to indicate permanent failure
+        };
+      }
+
       return {
         success: false,
         message: error.response?.data?.message || 'Failed to fetch interview details',
@@ -2261,30 +2568,90 @@ class ApiService {
   // @param forceRefresh - If true, always fetch from server when online, bypassing cache
   async getCurrentUser(forceRefresh: boolean = false) {
     try {
-      // Check if online first
-      const isOnline = await this.isOnline();
+      // PERFORMANCE: Check cached online status first (non-blocking)
+      // This prevents blocking on network checks during interview start
+      let isOnline = false;
+      try {
+        const { performanceCache } = await import('./performanceCache');
+        const cachedStatus = performanceCache.getOnlineStatus();
+        if (cachedStatus !== null) {
+          isOnline = cachedStatus;
+        } else {
+          // Cache miss - check online status (non-blocking, uses cache internally)
+          isOnline = await this.isOnline();
+        }
+      } catch (cacheError) {
+        // Fallback to normal check if cache not available
+        isOnline = await this.isOnline();
+      }
       
-      // If online and forceRefresh is true, always fetch from server (for locationControlBooster updates)
-      if (isOnline && forceRefresh) {
-        console.log('🔄 Force refreshing user data from server...');
-        const headers = await this.getHeaders();
-        const response = await axios.get(`${this.baseURL}/api/auth/me`, { headers });
-        
-        // Cache the fresh data
-        const cacheForSave = await this.getOfflineCache();
-        if (cacheForSave && (response.data.data || response.data.user)) {
+      // PERFORMANCE: If forceRefresh is true, return cached data immediately and refresh in background
+      // This prevents blocking interview start on slow API calls
+      if (forceRefresh) {
+        // Get cached data from offline cache (fast - module is cached after first load)
+        const cacheForRead = await this.getOfflineCache();
+        let cachedData = null;
+        if (cacheForRead) {
           try {
-            await cacheForSave.saveUserData(response.data.data || response.data.user);
-            console.log('✅ Cached fresh user data');
+            cachedData = await cacheForRead.getUserData();
           } catch (cacheError) {
-            console.error('Error caching user data:', cacheError);
+            // Cache read failed, continue
           }
         }
         
-        return { success: true, user: response.data.data || response.data.user };
+        // Return cached data immediately if available (non-blocking return)
+        if (cachedData) {
+          console.log('⚡ Returning cached user data immediately (forceRefresh in background)');
+          
+          // Refresh from server in background (non-blocking - don't await)
+          if (isOnline) {
+            // Start refresh in background immediately (don't await)
+            this.getHeaders()
+              .then((headers) => {
+                return axios.get(`${this.baseURL}/api/auth/me`, { headers, timeout: 5000 });
+              })
+              .then((response) => {
+                // Cache the fresh data
+                return this.getOfflineCache().then((cacheForSave) => {
+                  if (cacheForSave && (response.data.data || response.data.user)) {
+                    return cacheForSave.saveUserData(response.data.data || response.data.user);
+                  }
+                });
+              })
+              .then(() => {
+                console.log('✅ [BACKGROUND] Cached fresh user data');
+              })
+              .catch((error) => {
+                console.warn('⚠️ [BACKGROUND] Failed to refresh user data (non-critical):', error.message);
+              });
+          }
+          
+          // Return immediately with cached data (interview starts instantly)
+          return { success: true, user: cachedData };
+        }
+        
+        // No cached data - must fetch (but this should be rare)
+        if (isOnline) {
+          console.log('🔄 Force refreshing user data from server (no cache available)...');
+          const headers = await this.getHeaders();
+          const response = await axios.get(`${this.baseURL}/api/auth/me`, { headers, timeout: 5000 });
+          
+          // Cache the fresh data
+          const cacheForSave = await this.getOfflineCache();
+          if (cacheForSave && (response.data.data || response.data.user)) {
+            try {
+              await cacheForSave.saveUserData(response.data.data || response.data.user);
+              console.log('✅ Cached fresh user data');
+            } catch (cacheError) {
+              console.error('Error caching user data:', cacheError);
+            }
+          }
+          
+          return { success: true, user: response.data.data || response.data.user };
+        }
       }
       
-      // Check offline cache (only if not forcing refresh)
+      // Check offline cache (fast - module is cached after first load)
       const cacheForRead = await this.getOfflineCache();
       let cachedData = null;
       if (cacheForRead) {
@@ -2299,7 +2666,7 @@ class ApiService {
       if (isOnline) {
         console.log('🌐 Online - fetching fresh user data from server...');
         const headers = await this.getHeaders();
-        const response = await axios.get(`${this.baseURL}/api/auth/me`, { headers });
+        const response = await axios.get(`${this.baseURL}/api/auth/me`, { headers, timeout: 5000 });
         
         // Cache the fresh data
         const cacheForSave = await this.getOfflineCache();

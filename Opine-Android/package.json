@@ -1,6 +1,6 @@
 {
   "name": "convergent-android",
-  "version": "19",
+  "version": "20",
   "main": "index.ts",
   "scripts": {
     "start": "TMPDIR=$PWD/node_modules/.cache expo start",

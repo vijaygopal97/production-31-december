@@ -41,16 +41,27 @@ class ProviderFactory {
       const fallbackProvider = config.fallbackProvider || 'deepcall';
       const percentages = config.percentages || { deepcall: 100, cloudtelephony: 0 };
 
+      // Debug logging to help diagnose provider selection issues
+      console.log(`📞 [ProviderFactory] Company ${companyId} config:`, {
+        enabledProviders,
+        selectionMethod,
+        activeProvider,
+        fallbackProvider,
+        percentages
+      });
+
       // Select provider based on method
       let selectedProviderName;
       
       if (selectionMethod === 'switch') {
         // Simple switch: use activeProvider
         selectedProviderName = activeProvider;
+        console.log(`📞 [ProviderFactory] Switch mode: using activeProvider=${activeProvider}`);
       } else if (selectionMethod === 'random') {
         // Random selection from enabled providers
         const available = enabledProviders.filter(p => ['deepcall', 'cloudtelephony'].includes(p));
         selectedProviderName = available[Math.floor(Math.random() * available.length)] || fallbackProvider;
+        console.log(`📞 [ProviderFactory] Random mode: selected=${selectedProviderName} from available=${available.join(',')}`);
       } else if (selectionMethod === 'percentage') {
         // Percentage-based selection
         const rand = Math.random() * 100;
@@ -72,16 +83,20 @@ class ProviderFactory {
         if (!selectedProviderName) {
           selectedProviderName = enabledProviders[0] || fallbackProvider;
         }
+        console.log(`📞 [ProviderFactory] Percentage mode: rand=${rand.toFixed(2)}, selected=${selectedProviderName}`);
       } else {
         // Default: use activeProvider
         selectedProviderName = activeProvider;
+        console.log(`📞 [ProviderFactory] Default mode: using activeProvider=${activeProvider}`);
       }
 
       // Ensure selected provider is enabled
       if (!enabledProviders.includes(selectedProviderName)) {
-        console.warn(`⚠️  Selected provider ${selectedProviderName} not enabled, using fallback: ${fallbackProvider}`);
+        console.warn(`⚠️  [ProviderFactory] Selected provider ${selectedProviderName} not enabled, using fallback: ${fallbackProvider}`);
         selectedProviderName = fallbackProvider;
       }
+      
+      console.log(`✅ [ProviderFactory] Final provider selection: ${selectedProviderName} for company ${companyId}`);
 
       // Get or create provider instance
       const cacheKey = `${companyId}_${selectedProviderName}`;

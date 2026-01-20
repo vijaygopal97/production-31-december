@@ -108,6 +108,7 @@ let isPreInitializing = false;
 
 /**
  * Proactively cache polling groups and stations for ACs
+ * PERFORMANCE OPTIMIZED: Uses request batching and yields to event loop to prevent blocking
  * This ensures data is available even if internet is lost during interview
  * Accepts both string array (AC names) and object array (AC objects with acName/acCode)
  */
@@ -117,7 +118,7 @@ async function cachePollingDataForACs(acs: any[], state: string): Promise<void> 
     return;
   }
   
-  console.log(`📥 Starting proactive cache for ${acs.length} AC(s) in state: ${state}`);
+  console.log(`📥 [BACKGROUND] Starting proactive cache for ${acs.length} AC(s) in state: ${state}`);
   const startTime = Date.now();
   let groupsCached = 0;
   let stationsCached = 0;
@@ -131,7 +132,10 @@ async function cachePollingDataForACs(acs: any[], state: string): Promise<void> 
       return;
     }
     
-    // Cache polling groups and stations for each AC
+    // PERFORMANCE: Process ACs in batches with yields to prevent blocking UI
+    const BATCH_SIZE = 1; // Process one AC at a time to keep UI responsive
+    const YIELD_INTERVAL = 2; // Yield every 2 ACs to allow UI updates
+    
     for (let i = 0; i < acs.length; i++) {
       const acItem = acs[i];
       if (!acItem) continue;
@@ -155,17 +159,18 @@ async function cachePollingDataForACs(acs: any[], state: string): Promise<void> 
       
       try {
         // Fetch and cache polling groups for this AC
-        console.log(`📥 [${i + 1}/${acs.length}] Caching groups for AC: ${acIdentifier}`);
         const groupsResult = await apiService.getGroupsByAC(state, acIdentifier);
         
         if (groupsResult.success && groupsResult.data) {
           groupsCached++;
           const groups = groupsResult.data.groups || [];
-          console.log(`✅ Cached groups for ${acIdentifier}: ${groups.length} group(s)`);
           
-          // Cache polling stations for each group
-          for (let j = 0; j < groups.length; j++) {
-            const groupItem = groups[j];
+          // Cache polling stations for each group (limit to prevent blocking)
+          const MAX_GROUPS_TO_CACHE = 10; // Limit groups per AC to prevent excessive API calls
+          const groupsToCache = groups.slice(0, MAX_GROUPS_TO_CACHE);
+          
+          for (let j = 0; j < groupsToCache.length; j++) {
+            const groupItem = groupsToCache[j];
             let groupName: string | null = null;
             
             // Handle both string and object formats
@@ -184,42 +189,38 @@ async function cachePollingDataForACs(acs: any[], state: string): Promise<void> 
               const stationsResult = await apiService.getPollingStationsByGroup(state, acIdentifier, groupName);
               if (stationsResult.success && stationsResult.data) {
                 stationsCached++;
-                const stationCount = stationsResult.data.stations?.length || 0;
-                console.log(`✅ Cached stations for ${acIdentifier} - ${groupName}: ${stationCount} station(s)`);
               }
             } catch (stationError) {
-              console.warn(`⚠️ Failed to cache stations for ${acIdentifier} - ${groupName}:`, stationError);
-              // Continue with next group
+              // Silently continue - don't log every error
+            }
+            
+            // PERFORMANCE: Yield to event loop every few groups to keep UI responsive
+            if (j > 0 && j % 3 === 0) {
+              await new Promise(resolve => setTimeout(resolve, 0)); // Yield to event loop
             }
           }
         } else {
           // If AC not found (404), skip it - don't retry
           if (groupsResult.message && groupsResult.message.includes('not found')) {
-            console.log(`⏭️ Skipping AC ${acIdentifier} (not found in polling station data)`);
             errorsSkipped++;
-          } else {
-            console.warn(`⚠️ Failed to cache groups for ${acIdentifier}:`, groupsResult.message);
           }
         }
       } catch (error: any) {
         // Skip 404 errors (AC not found) - don't log as error
         if (error.response?.status === 404 || (error.message && error.message.includes('not found'))) {
-          console.log(`⏭️ Skipping AC ${acIdentifier} (not found)`);
           errorsSkipped++;
-        } else {
-          console.error(`❌ Error caching data for AC ${acIdentifier}:`, error.message || error);
         }
         // Continue with next AC
       }
       
-      // Add small delay to prevent overwhelming the API
-      if (i < acs.length - 1 && (i + 1) % 10 === 0) {
-        await new Promise(resolve => setTimeout(resolve, 100)); // 100ms delay every 10 ACs
+      // PERFORMANCE: Yield to event loop every few ACs to keep UI responsive
+      if (i > 0 && i % YIELD_INTERVAL === 0) {
+        await new Promise(resolve => setTimeout(resolve, 0)); // Yield to event loop
       }
     }
     
     const duration = Date.now() - startTime;
-    console.log(`✅ Proactive cache complete: ${groupsCached} AC groups, ${stationsCached} group stations cached, ${errorsSkipped} skipped in ${duration}ms`);
+    console.log(`✅ [BACKGROUND] Proactive cache complete: ${groupsCached} AC groups, ${stationsCached} group stations cached, ${errorsSkipped} skipped in ${duration}ms`);
   } catch (error) {
     console.error('❌ Error in proactive cache:', error);
     // Don't throw - this is a background operation
@@ -231,6 +232,12 @@ export default function InterviewInterface({ navigation, route }: any) {
   
   // OPTIMIZATION: Use state for survey so we can update it with full data when fetched
   const [survey, setSurvey] = useState<any>(routeSurvey);
+  
+  // CRITICAL: Prevent multiple initialization calls (race condition protection)
+  const isInitializingRef = useRef(false);
+  
+  // CRITICAL: Prevent multiple audio recording starts (React-friendly ref-based lock)
+  const isStartingRecordingRef = useRef(false);
   
   // Get safe area insets for bottom navigation bar
   const insets = useSafeAreaInsets();
@@ -1976,7 +1983,15 @@ export default function InterviewInterface({ navigation, route }: any) {
 
   // Initialize interview
   useEffect(() => {
+    // CRITICAL: Prevent multiple initialization calls (race condition protection)
+    if (isInitializingRef.current) {
+      console.log('⚠️ Interview initialization already in progress - skipping duplicate call');
+      return;
+    }
+    
     const initializeInterview = async () => {
+      // Set initialization lock
+      isInitializingRef.current = true;
       setIsLoading(true);
       try {
         // Start timing
@@ -2189,14 +2204,65 @@ export default function InterviewInterface({ navigation, route }: any) {
             }
           }, 1500);
         } else {
-          // CAPI mode - CRITICAL: GPS is REQUIRED for CAPI interviews
-          // Request location permission and capture GPS BEFORE starting interview
+          // CAPI mode - CRITICAL: GPS and Audio are REQUIRED for CAPI interviews (data loss prevention)
+          // PERFORMANCE OPTIMIZATION: Run GPS capture, survey validation, and audio pre-initialization in parallel
           setLocationLoading(true);
           
           let locationData: any = null;
           let locationPermissionGranted = false;
           
-          // CRITICAL FIX: Request location permission and capture GPS for CAPI
+          // PERFORMANCE: Pre-initialize audio recording while GPS is being captured (non-blocking)
+          // This reduces audio startup time later
+          const audioPreInitPromise = (async () => {
+            try {
+              const shouldRecordAudio = (survey.mode === 'capi') || 
+                                       (survey.mode === 'multi_mode' && survey.assignedMode === 'capi');
+              if (shouldRecordAudio && !preInitializedRecording && !isPreInitializing) {
+                console.log('🎙️ Pre-initializing audio recording (non-blocking)...');
+                isPreInitializing = true;
+                try {
+                  // Pre-initialize audio module (doesn't start recording yet)
+                  await Audio.setAudioModeAsync({
+                    allowsRecordingIOS: true,
+                    playsInSilentModeIOS: true,
+                  });
+                  console.log('✅ Audio module pre-initialized');
+                } catch (audioError) {
+                  console.warn('⚠️ Audio pre-initialization failed (non-critical):', audioError);
+                } finally {
+                  isPreInitializing = false;
+                }
+              }
+            } catch (error) {
+              // Ignore - this is just pre-initialization
+            }
+          })();
+          
+          // PERFORMANCE: Validate survey sync in parallel with GPS capture (uses cache)
+          const surveyValidationPromise = (async () => {
+            try {
+              // OPTIMIZATION: Use getSurveyById instead of loading all surveys
+              const syncedSurvey = await offlineStorage.getSurveyById(survey._id || survey.id);
+              
+              if (!syncedSurvey) {
+                return { success: false, error: 'Survey not synced' };
+              }
+              
+              // CRITICAL: Validate critical fields for target survey (CAPI only)
+              const isTargetSurvey = survey._id === '68fd1915d41841da463f0d46' || survey.id === '68fd1915d41841da463f0d46';
+              if (!isCatiMode && isTargetSurvey && syncedSurvey.assignACs !== true && syncedSurvey.assignACs !== false) {
+                if (syncedSurvey.assignACs === undefined || syncedSurvey.assignACs === null) {
+                  return { success: false, error: 'Survey data incomplete (assignACs missing)' };
+                }
+              }
+              
+              return { success: true, syncedSurvey };
+            } catch (error) {
+              return { success: false, error: error.message || 'Survey validation failed' };
+            }
+          })();
+          
+          // CRITICAL FIX: Request location permission and capture GPS for CAPI (BLOCKING - data loss prevention)
           try {
             console.log('📍 CAPI Mode: Requesting location permission and capturing GPS...');
             
@@ -2241,7 +2307,7 @@ export default function InterviewInterface({ navigation, route }: any) {
               return;
             }
             
-            // Permission granted - get location
+            // Permission granted - get location (BLOCKING - required for data integrity)
             const isOnline = await apiService.isOnline();
             console.log('📡 Online status for location:', isOnline);
             locationData = await LocationService.getCurrentLocation(!isOnline);
@@ -2313,25 +2379,14 @@ export default function InterviewInterface({ navigation, route }: any) {
           setLocationData(locationData);
           setLocationLoading(false);
           
-          // OPTIMIZATION: Start interview in parallel (location is already captured)
-          const locationPromise = Promise.resolve(locationData);
-          
-          // OPTIMIZATION: Fetch full survey data in parallel if needed
-          let fullSurveyPromise: Promise<any> | null = null;
-          if (!hasFullSurveyData) {
-            console.log('📥 Survey missing full data, fetching in parallel...');
-            fullSurveyPromise = apiService.getSurveyFull(survey._id);
-          }
-          
-          // CRITICAL: Validate survey sync is complete BEFORE starting interview (like META/Google)
-          // This ensures AC/Polling Station questions are never missed
-          const surveys = await offlineStorage.getSurveys();
-          const syncedSurvey = surveys.find((s: any) => s._id === survey._id || s.id === survey._id);
-          
-          if (!syncedSurvey) {
+          // PERFORMANCE: Wait for survey validation (should be fast - uses cache)
+          const validationResult = await surveyValidationPromise;
+          if (!validationResult.success) {
             Alert.alert(
-              'Survey Not Synced',
-              'This survey is not synced to your device. Please sync surveys from the dashboard first.',
+              validationResult.error === 'Survey not synced' ? 'Survey Not Synced' : 'Survey Data Incomplete',
+              validationResult.error === 'Survey not synced' 
+                ? 'This survey is not synced to your device. Please sync surveys from the dashboard first.'
+                : 'Survey data is missing critical fields (assignACs). Please sync surveys again from the dashboard.',
               [
                 {
                   text: 'OK',
@@ -2345,52 +2400,40 @@ export default function InterviewInterface({ navigation, route }: any) {
             return;
           }
           
-          // CRITICAL: Validate critical fields for target survey (CAPI only)
-          const isTargetSurvey = survey._id === '68fd1915d41841da463f0d46' || survey.id === '68fd1915d41841da463f0d46';
-          // For CAPI mode, ensure assignACs is present for target survey
-          if (!isCatiMode && isTargetSurvey && syncedSurvey.assignACs !== true && syncedSurvey.assignACs !== false) {
-            // Only block if assignACs is completely missing (undefined/null)
-            // If it's false, we'll handle it in the logic
-            if (syncedSurvey.assignACs === undefined || syncedSurvey.assignACs === null) {
-              Alert.alert(
-                'Survey Data Incomplete',
-                'Survey data is missing critical fields (assignACs). Please sync surveys again from the dashboard.',
-                [
-                  {
-                    text: 'OK',
-                    onPress: () => {
-                      navigation.goBack();
-                    }
-                  }
-                ]
-              );
-              setIsLoading(false);
-              return;
-            }
-          }
-          
+          const syncedSurvey = validationResult.syncedSurvey;
           console.log('✅ Survey sync validation passed before interview start');
           
-          // CRITICAL: Start interview (location is already captured above for CAPI)
-          const interviewResult = await apiService.startInterview(survey._id);
+          // PERFORMANCE: Don't wait for audio pre-initialization - it's already done in parallel
+          // Just ensure it completes (non-blocking check)
+          audioPreInitPromise.catch(() => {}); // Ignore errors, it's just pre-initialization
           
-          // Fetch full survey data in parallel (if needed)
-          const surveyResult = fullSurveyPromise ? await fullSurveyPromise : { success: false };
-          
-          // Update survey with full data if fetched
-          // CRITICAL: Preserve targetAudience when merging full survey data (needed for age/gender validation)
-          if (surveyResult && surveyResult.success && surveyResult.survey) {
-            fullSurveyData = surveyResult.survey;
-            // Update survey state with full data, preserving existing fields like targetAudience
-            setSurvey((prevSurvey: any) => ({
-              ...prevSurvey,
-              sections: fullSurveyData.sections,
-              questions: fullSurveyData.questions,
-              // Preserve targetAudience from either fullSurveyData or prevSurvey (for validation)
-              targetAudience: fullSurveyData.targetAudience || prevSurvey.targetAudience
-            }));
-            console.log('✅ Fetched full survey data in parallel');
+          // PERFORMANCE: Fetch full survey data in background (non-blocking)
+          // Don't await it - let it complete in background and update survey when ready
+          if (!hasFullSurveyData) {
+            console.log('📥 Survey missing full data, fetching in background (non-blocking)...');
+            apiService.getSurveyFull(survey._id)
+              .then((surveyResult) => {
+                if (surveyResult && surveyResult.success && surveyResult.survey) {
+                  console.log('✅ [BACKGROUND] Fetched full survey data - updating survey state');
+                  // Update survey state with full data, preserving existing fields like targetAudience
+                  setSurvey((prevSurvey: any) => ({
+                    ...prevSurvey,
+                    sections: surveyResult.survey.sections,
+                    questions: surveyResult.survey.questions,
+                    // Preserve targetAudience from either fetched data or prevSurvey (for validation)
+                    targetAudience: surveyResult.survey.targetAudience || prevSurvey.targetAudience
+                  }));
+                }
+              })
+              .catch((err) => {
+                console.warn('⚠️ Background survey data fetch failed (non-critical):', err);
+                // Don't block - survey will work with existing data
+              });
           }
+          
+          // CRITICAL: Start interview (location is already captured above for CAPI)
+          // PERFORMANCE: This is the only blocking operation now (required for server session)
+          const interviewResult = await apiService.startInterview(survey._id);
 
           // Start interview session (works offline for CAPI)
           const result = interviewResult;
@@ -2442,18 +2485,6 @@ export default function InterviewInterface({ navigation, route }: any) {
               });
             } else {
               setAllACs([]);
-              
-              // CRITICAL: Proactively cache polling groups and stations for assigned ACs
-              // This ensures data is available even if internet is lost during interview
-              const assignedACsList = result.response.assignedACs || [];
-              if (assignedACsList.length > 0 && needsACSelection) {
-                const state = survey?.acAssignmentState || result.response.acAssignmentState || 'West Bengal';
-                console.log('📥 Proactively caching polling data for', assignedACsList.length, 'assigned AC(s)...');
-                cachePollingDataForACs(assignedACsList, state).catch((err) => {
-                  console.error('⚠️ Error proactively caching polling data:', err);
-                  // Don't block interview - continue even if caching fails
-                });
-              }
             }
             
             // Show message if offline
@@ -2491,6 +2522,22 @@ export default function InterviewInterface({ navigation, route }: any) {
               }
               
               console.log('✅ Audio recording confirmed - interview can now proceed');
+            }
+            
+            // PERFORMANCE: Defer polling data caching to AFTER interview starts (non-blocking)
+            // This ensures interview starts immediately without waiting for polling data cache
+            // Use setTimeout to defer it to next event loop cycle, ensuring UI is responsive
+            const assignedACsList = result.response.assignedACs || [];
+            if (assignedACsList.length > 0 && needsACSelection) {
+              const state = survey?.acAssignmentState || result.response.acAssignmentState || 'West Bengal';
+              // Defer to next event loop cycle - interview is already started, this is background work
+              setTimeout(() => {
+                console.log('📥 [DEFERRED] Proactively caching polling data for', assignedACsList.length, 'assigned AC(s)...');
+                cachePollingDataForACs(assignedACsList, state).catch((err) => {
+                  console.error('⚠️ Error proactively caching polling data:', err);
+                  // Don't block interview - continue even if caching fails
+                });
+              }, 100); // 100ms delay ensures interview UI is fully rendered first
             }
           } else {
             // Show detailed error message
@@ -2534,10 +2581,17 @@ export default function InterviewInterface({ navigation, route }: any) {
         );
       } finally {
         setIsLoading(false);
+        // Release initialization lock
+        isInitializingRef.current = false;
       }
     };
 
     initializeInterview();
+    
+    // Cleanup: Release lock if component unmounts
+    return () => {
+      isInitializingRef.current = false;
+    };
   }, [survey._id, isCatiMode]); // Include isCatiMode in dependencies
 
   // Update duration
@@ -3073,16 +3127,23 @@ export default function InterviewInterface({ navigation, route }: any) {
   }, []);
 
   // Check locationControlBooster on mount and when survey changes
+  // PERFORMANCE: Make this non-blocking so it doesn't delay interview start
   // Always fetch fresh data from server when online to ensure locationControlBooster is up-to-date
   useEffect(() => {
-    refreshLocationControlBooster();
+    // Don't await - let it run in background (non-blocking)
+    refreshLocationControlBooster().catch((error) => {
+      console.warn('⚠️ Background locationControlBooster refresh failed (non-critical):', error);
+    });
   }, [survey?._id, survey?.id, refreshLocationControlBooster]); // Re-check when survey changes (e.g., when syncing survey details)
 
   // Refresh locationControlBooster when screen comes into focus (e.g., after syncing survey details)
+  // PERFORMANCE: Make this non-blocking so it doesn't delay interview start
   useFocusEffect(
     useCallback(() => {
-      // Refresh user data when screen comes into focus to get latest locationControlBooster
-      refreshLocationControlBooster();
+      // Refresh user data when screen comes into focus to get latest locationControlBooster (non-blocking)
+      refreshLocationControlBooster().catch((error) => {
+        console.warn('⚠️ Background locationControlBooster refresh failed (non-critical):', error);
+      });
     }, [refreshLocationControlBooster])
   );
   
@@ -4003,8 +4064,8 @@ export default function InterviewInterface({ navigation, route }: any) {
       }
       globalRecording = null;
       setRecording(null);
-      // Minimal wait for native module cleanup
-      await new Promise(resolve => setTimeout(resolve, 100));
+      // PERFORMANCE: Reduced wait since audio module is pre-initialized
+      await new Promise(resolve => setTimeout(resolve, 50));
     }
     
     // Step 2: Request permissions first
@@ -4017,6 +4078,7 @@ export default function InterviewInterface({ navigation, route }: any) {
     setAudioPermission(true);
     
     // Step 3: Set audio mode for recording
+    // PERFORMANCE: If audio module was pre-initialized, this should be faster
     console.log('Setting audio mode for recording...');
     await Audio.setAudioModeAsync({
       allowsRecordingIOS: true,
@@ -4025,8 +4087,8 @@ export default function InterviewInterface({ navigation, route }: any) {
       playThroughEarpieceAndroid: false,
     });
     
-    // Wait for audio mode (longer on first attempt, shorter on retries)
-    await new Promise(resolve => setTimeout(resolve, retryCount === 0 ? 150 : 50));
+    // PERFORMANCE: Reduced wait since audio module is pre-initialized (was 150ms, now 50ms)
+    await new Promise(resolve => setTimeout(resolve, 50));
     
     // Step 4: Get recording configuration based on retry count
     // Progressive fallback: try best settings first, then simpler ones for old devices
@@ -4056,8 +4118,9 @@ export default function InterviewInterface({ navigation, route }: any) {
     globalRecording = recording;
     setRecording(recording);
     
-    // Step 7: Wait before starting (shorter wait on retries)
-    await new Promise(resolve => setTimeout(resolve, retryCount === 0 ? 150 : 50));
+    // Step 7: Wait before starting
+    // PERFORMANCE: Reduced wait since audio module is pre-initialized (was 150ms, now 50ms)
+    await new Promise(resolve => setTimeout(resolve, 50));
     
     // Step 8: Start recording
     console.log('Starting recording...');
@@ -4104,7 +4167,8 @@ export default function InterviewInterface({ navigation, route }: any) {
     }
     
     // Step 10: Double verification - check again after brief moment (ensures it's stable)
-    await new Promise(resolve => setTimeout(resolve, 150));
+    // PERFORMANCE: Reduced wait since audio module is pre-initialized (was 150ms, now 100ms)
+    await new Promise(resolve => setTimeout(resolve, 100));
     const finalStatus = await recording.getStatusAsync();
     if (!finalStatus.isRecording) {
       try {
@@ -4124,14 +4188,33 @@ export default function InterviewInterface({ navigation, route }: any) {
     const MAX_RETRIES = 3;
     const TIMEOUT_MS = 10000; // 10 second timeout per attempt
     
-    // Synchronous check to prevent concurrent calls
-    if (isRecording || isStartingRecording) {
-      console.log('Already recording or starting, skipping...');
-      return isRecording && isRecordingReady;
+    // CRITICAL: Atomic check-and-set using ref (React-friendly, prevents race conditions)
+    // Check both module-level lock and ref-based lock
+    if (isStartingRecording || isStartingRecordingRef.current) {
+      console.log('⚠️ Audio recording already starting - waiting for current attempt...');
+      // Wait for current attempt to complete (max 15 seconds)
+      let waitCount = 0;
+      while ((isStartingRecording || isStartingRecordingRef.current) && waitCount < 30) {
+        await new Promise(resolve => setTimeout(resolve, 500));
+        waitCount++;
+      }
+      // If still starting after wait, return current state
+      if (isStartingRecording || isStartingRecordingRef.current) {
+        console.warn('⚠️ Audio recording start timed out - returning current state');
+        return isRecording && isRecordingReady;
+      }
     }
     
-    // Set lock immediately to prevent concurrent execution
+    if (isRecording && isRecordingReady) {
+      console.log('✅ Audio recording already active - skipping start');
+      return true;
+    }
+    
+    // CRITICAL: Set BOTH locks IMMEDIATELY (synchronously) before any async operations
+    // Module-level lock for compatibility, ref-based lock for React safety
     isStartingRecording = true;
+    isStartingRecordingRef.current = true;
+    
     setIsRecordingReady(false); // Reset ready state
     
     // Create timeout promise
@@ -4153,6 +4236,7 @@ export default function InterviewInterface({ navigation, route }: any) {
       setIsAudioPaused(false);
       setIsRecordingReady(true); // CRITICAL: Mark as ready - interview can now proceed
       isStartingRecording = false;
+      isStartingRecordingRef.current = false; // Release ref-based lock
       
       console.log('✅ Recording started and verified successfully');
       showSnackbar('Audio recording started');
@@ -4166,6 +4250,7 @@ export default function InterviewInterface({ navigation, route }: any) {
       if (retryCount < MAX_RETRIES) {
         console.log(`🔄 Retrying with fallback configuration (${retryCount + 1}/${MAX_RETRIES})...`);
         isStartingRecording = false; // Release lock for retry
+        isStartingRecordingRef.current = false; // Release ref-based lock
         
         // Wait a bit before retry (exponential backoff)
         await new Promise(resolve => setTimeout(resolve, 300 * (retryCount + 1)));
@@ -4182,6 +4267,7 @@ export default function InterviewInterface({ navigation, route }: any) {
       setIsAudioPaused(false);
       setRecording(null);
       isStartingRecording = false;
+      isStartingRecordingRef.current = false; // Release ref-based lock
       
       // Clean up on error
       if (globalRecording) {
@@ -4264,6 +4350,7 @@ export default function InterviewInterface({ navigation, route }: any) {
       setRecording(null);
       globalRecording = null;
       isStartingRecording = false; // Release lock when stopping
+      isStartingRecordingRef.current = false; // Release ref-based lock
       
       // Reset audio mode after stopping
       try {

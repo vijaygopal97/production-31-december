@@ -11,7 +11,8 @@ import LoginScreen from './src/screens/LoginScreen';
 import InterviewerDashboard from './src/screens/InterviewerDashboard';
 import QualityAgentDashboard from './src/screens/QualityAgentDashboard';
 import AvailableSurveys from './src/screens/AvailableSurveys';
-import MyInterviews from './src/screens/MyInterviews';
+// PHASE 1: Commented out to prevent excessive retries for abandoned responses
+// import MyInterviews from './src/screens/MyInterviews';
 import InterviewInterface from './src/screens/InterviewInterface';
 import InterviewDetails from './src/screens/InterviewDetails';
 
@@ -323,7 +324,8 @@ export default function App() {
                   },
                 }}
               />
-              <Stack.Screen 
+              {/* PHASE 1: Commented out MyInterviews route to prevent excessive retries for abandoned responses */}
+              {/* <Stack.Screen 
                 name="MyInterviews" 
                 component={MyInterviews}
                 options={{
@@ -337,7 +339,7 @@ export default function App() {
                     fontWeight: 'bold',
                   },
                 }}
-              />
+              /> */}
               <Stack.Screen 
                 name="InterviewInterface" 
                 component={InterviewInterface}

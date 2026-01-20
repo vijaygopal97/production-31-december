@@ -14,12 +14,11 @@ const axios = require('axios');
 const CatiCall = require('../models/CatiCall');
 const CatiRespondentQueue = require('../models/CatiRespondentQueue');
 const Survey = require('../models/Survey'); // CRITICAL: Import Survey model to prevent "Schema hasn't been registered" error
+const User = require('../models/User'); // Needed for company ID and agent registration
+const CatiAgent = require('../models/CatiAgent'); // Needed for CloudTelephony agent registration
+const ProviderFactory = require('../services/catiProviders/providerFactory'); // Use ProviderFactory instead of hardcoded DeepCall
 const redisOps = require('../utils/redisClient');
-
-// DeepCall API Configuration
-const DEEPCALL_API_BASE_URL = 'https://s-ct3.sarv.com/v2/clickToCall/para';
-const DEEPCALL_USER_ID = process.env.DEEPCALL_USER_ID || '89130240';
-const DEEPCALL_TOKEN = process.env.DEEPCALL_TOKEN || '6GQJuwW6lB8ZBHntzaRU';
+const WEBHOOK_BASE_URL = process.env.WEBHOOK_BASE_URL || 'https://opine.exypnossolutions.com';
 
 // MongoDB Connection
 const MONGODB_URI = process.env.MONGODB_URI;
@@ -75,93 +74,75 @@ const getRedisConnection = () => {
   return connection;
 };
 
-// Helper function to make call via DeepCall API (same as controller)
-const initiateDeepCall = async (fromNumber, toNumber, fromType = 'Number', toType = 'Number', fromRingTime = 30, toRingTime = 30) => {
+// Helper function to make call via ProviderFactory (supports both DeepCall and CloudTelephony)
+const initiateCall = async (companyId, interviewerId, fromNumber, toNumber, fromType = 'Number', toType = 'Number', fromRingTime = 30, toRingTime = 30) => {
   try {
     const cleanFrom = fromNumber.replace(/[^0-9]/g, '');
     const cleanTo = toNumber.replace(/[^0-9]/g, '');
 
-    const params = {
-      user_id: DEEPCALL_USER_ID,
-      token: DEEPCALL_TOKEN,
-      from: cleanFrom,
-      to: cleanTo,
-      fromType: fromType,
-      toType: toType,
-      fromRingTime: parseInt(fromRingTime),
-      toRingTime: parseInt(toRingTime)
-    };
-
-    const queryString = new URLSearchParams(params).toString();
-    const fullUrl = `${DEEPCALL_API_BASE_URL}?${queryString}`;
-
-    console.log(`📞 [Worker] Making CATI call: ${fromNumber} -> ${toNumber}`);
-
-    const response = await axios.get(fullUrl, {
-      timeout: 10000, // 10 seconds timeout (reduced from 30s)
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-      }
+    // Get provider based on company configuration
+    const { provider, providerName } = await ProviderFactory.getProvider(companyId, {
+      fromNumber: cleanFrom,
+      toNumber: cleanTo,
+      selectionKey: `${companyId}_${cleanFrom}_${cleanTo}`
     });
 
-    const apiResponse = response.data;
-    console.log('📞 [Worker] DeepCall API raw response:', apiResponse);
-    
-    // Normalize common fields
-    const status = typeof apiResponse?.status === 'string'
-      ? apiResponse.status.toLowerCase()
-      : apiResponse?.status;
-    const code = apiResponse?.code ?? apiResponse?.statusCode ?? apiResponse?.status_code;
+    console.log(`📞 [Worker] Making CATI call via provider=${providerName}: ${fromNumber} -> ${toNumber}`);
 
-    // Treat as error only when status explicitly indicates error or when we have a clear non‑success code
-    const isExplicitErrorStatus = status === 'error' || status === 'failed' || status === 'failure';
-    const isErrorCode = code !== undefined && !['0', 0, '200', 200].includes(code);
-
-    if (isExplicitErrorStatus || isErrorCode) {
-      const errorMessage =
-        apiResponse.message ||
-        (typeof apiResponse.error === 'string' ? apiResponse.error : apiResponse.error?.message) ||
-        `DeepCall API Error: ${code || 'Unknown error'}`;
-      return {
-        success: false,
-        message: errorMessage,
-        error: {
-          message: errorMessage,
-          code,
-          status: apiResponse.status,
-          details: apiResponse
-        },
-        statusCode: code
-      };
+    // Ensure agent is registered for providers that require it (CloudTelephony)
+    if (providerName === 'cloudtelephony') {
+      const agent = await CatiAgent.getOrCreate(interviewerId, cleanFrom);
+      if (!agent.isRegistered('cloudtelephony')) {
+        const interviewer = await User.findById(interviewerId).select('firstName lastName').lean();
+        const agentName = `${interviewer?.firstName || ''} ${interviewer?.lastName || ''}`.trim() || cleanFrom;
+        try {
+          const regResult = await provider.registerAgent(cleanFrom, agentName);
+          // Mark as registered even if provider says "already exists" (idempotent behavior)
+          agent.markRegistered('cloudtelephony', regResult?.response?.member_id || regResult?.response?.agentId || null);
+          await agent.save();
+          console.log(`✅ [Worker] Agent registered for CloudTelephony: ${cleanFrom}`);
+        } catch (regErr) {
+          // If registration fails, don't attempt call (provider requires it)
+          console.error(`❌ [Worker] Failed to register agent for CloudTelephony: ${regErr.message}`);
+          return {
+            success: false,
+            message: 'Failed to register agent for CloudTelephony',
+            error: {
+              message: regErr.message,
+              details: regErr.response?.data || regErr.message
+            }
+          };
+        }
+      }
     }
-    
-    const callId = apiResponse?.callId || apiResponse?.id || apiResponse?.call_id || apiResponse?.data?.callId;
 
-    if (!callId) {
-      return {
-        success: false,
-        message: 'API response does not contain call ID',
-        error: {
-          message: 'API response does not contain call ID',
-          details: apiResponse
-        },
-        apiResponse: apiResponse
-      };
-    }
+    // Make call using provider
+    const callResult = await provider.makeCall({
+      fromNumber: cleanFrom,
+      toNumber: cleanTo,
+      fromType,
+      toType,
+      fromRingTime,
+      toRingTime,
+      uid: `worker_${Date.now()}_${Math.random().toString(36).slice(2, 10)}`
+    });
+
+    console.log(`✅ [Worker] Call initiated via ${providerName}, callId: ${callResult.callId}`);
 
     return {
       success: true,
-      callId: callId,
+      callId: callResult.callId,
+      provider: providerName,
       data: {
-        callId: callId,
+        callId: callResult.callId,
         fromNumber: fromNumber,
         toNumber: toNumber,
-        apiResponse: apiResponse
+        apiResponse: callResult.apiResponse,
+        provider: providerName
       }
     };
   } catch (error) {
-    console.error('❌ [Worker] DeepCall API Error:', error.message);
+    console.error(`❌ [Worker] Call initiation failed: ${error.message}`);
     return {
       success: false,
       message: error.response?.data?.message || error.message || 'Failed to initiate call',
@@ -190,11 +171,27 @@ const createWorker = () => {
         try {
           const { queueId, fromNumber, toNumber, fromType, toType, interviewerId, surveyId } = job.data;
           
+          // Get queue entry to find company ID
+          const queueEntry = await CatiRespondentQueue.findById(queueId)
+            .populate('survey', 'company surveyName');
+          
+          if (!queueEntry) {
+            throw new Error(`Queue entry not found: ${queueId}`);
+          }
+
+          // Get company ID from survey
+          const companyId = queueEntry.survey?.company || queueEntry.survey?.company?._id;
+          if (!companyId) {
+            throw new Error(`Company ID not found for survey: ${surveyId}`);
+          }
+          
           // Update job progress
           await job.updateProgress({ stage: 'calling_api', progress: 25 });
           
-          // Make DeepCall API call
-          const callResult = await initiateDeepCall(
+          // Make call using ProviderFactory (supports both DeepCall and CloudTelephony)
+          const callResult = await initiateCall(
+            companyId,
+            interviewerId,
             fromNumber,
             toNumber,
             fromType || 'Number',
@@ -205,13 +202,7 @@ const createWorker = () => {
           
           await job.updateProgress({ stage: 'processing_response', progress: 50 });
           
-          // Get queue entry
-          const queueEntry = await CatiRespondentQueue.findById(queueId)
-            .populate('survey', 'surveyName');
-          
-          if (!queueEntry) {
-            throw new Error(`Queue entry not found: ${queueId}`);
-          }
+          // Queue entry already fetched above, no need to fetch again
           
           if (!callResult.success) {
             // Update queue entry on failure
@@ -250,22 +241,26 @@ const createWorker = () => {
           let tempCallRecord = null;
           if (callResult.success && callResult.callId) {
             try {
+              const providerName = callResult.provider || 'deepcall';
+
               tempCallRecord = new CatiCall({
                 callId: callResult.callId,
                 survey: surveyId || queueEntry.survey._id,
                 queueEntry: queueEntry._id,
-                company: null,
+                company: companyId,
                 createdBy: interviewerId,
                 fromNumber: fromNumber,
                 toNumber: toNumber,
                 fromType: fromType || 'Number',
                 toType: toType || 'Number',
                 callStatus: 'ringing',
-                webhookReceived: false
+                webhookReceived: false,
+                apiResponse: callResult.data?.apiResponse || {}
               });
               await tempCallRecord.save();
               
               queueEntry.callRecord = tempCallRecord._id;
+              console.log(`✅ [Worker] Call record created: ${tempCallRecord._id}, provider: ${providerName}`);
             } catch (error) {
               console.error('❌ [Worker] Error creating call record:', error.message);
               // Continue without call record - webhook will create it

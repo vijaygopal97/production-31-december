@@ -481,6 +481,13 @@ class SyncService {
             
             // Verify audio is on server
             const verifyResult = await apiService.getSurveyResponseById(existingResponseId);
+            
+            // PHASE 2: Stop if response is gone (410) - don't continue verification
+            if (verifyResult?.isGone) {
+              console.log(`[SyncService] Response ${existingResponseId} is gone (410) - skipping audio verification`);
+              return; // Exit early, don't continue
+            }
+            
             if (verifyResult.success && verifyResult.response) {
               const serverAudioUrl = verifyResult.response?.audioRecording?.audioUrl || 
                                     verifyResult.response?.audioUrl ||
@@ -524,34 +531,77 @@ class SyncService {
     
     // Fix 2 & 3: Check if interview was already successfully submitted (IDEMPOTENCY)
     // If metadata contains a responseId, it means it was already submitted
-    // CRITICAL: This prevents duplicate submissions and ensures retries don't change status
+    // CRITICAL: Verify it's actually complete on server before marking as synced
     if (interview.metadata?.responseId || interview.metadata?.serverResponseId || interview.serverResponseId) {
       const existingResponseId = interview.serverResponseId || 
                                  interview.metadata?.responseId || 
                                  interview.metadata?.serverResponseId;
       console.log(`ℹ️ Interview ${interview.id} was already submitted with responseId: ${existingResponseId}`);
-      console.log(`ℹ️ Skipping duplicate submission - interview is already on server (IDEMPOTENCY CHECK)`);
+      console.log(`ℹ️ Verifying interview is complete on server before marking as synced...`);
       
-      // Update progress to 100% since it's already synced
-      await offlineStorage.updateInterviewSyncProgress(interview.id, 100, 'synced');
-      console.log(`📊 [${interview.id}] Progress: 100% - Already synced (skipping duplicate)`);
-      
-      // Fix 3: Atomic metadata and status update - ensure responseId is stored and status is updated together
-      // CRITICAL: Only update if status is not already 'synced' - prevents unnecessary writes (IDEMPOTENCY)
-      if (interview.status !== 'synced') {
-        await offlineStorage.updateInterviewMetadataAndStatus(
-          interview.id,
-          {
-            responseId: existingResponseId,
-            serverResponseId: existingResponseId,
-          },
-          'synced' // Mark as synced since it's already on server
-        );
-        console.log(`✅ Interview already synced - marked as synced with atomic update`);
-      } else {
-        console.log(`✅ Interview already marked as synced - no update needed (IDEMPOTENCY)`);
+      try {
+        // CRITICAL: Verify interview is actually complete on server (including audio if it exists)
+        const { apiService } = await import('./api');
+        const verifyResult = await apiService.verifyInterviewSync(existingResponseId, undefined);
+        
+        if (verifyResult && verifyResult.success && verifyResult.verified) {
+          // Check if audio verification is required
+          const hasAudioFile = interview.audioOfflinePath || interview.audioUri;
+          const audioVerified = !hasAudioFile || verifyResult.audioVerified; // If no audio file, audio is "verified"
+          
+          if (audioVerified && verifyResult.hasResponses) {
+            // Interview is complete on server - safe to delete from local storage
+            console.log(`✅ Interview verified on server - complete and synced`);
+            console.log(`   - Verified: ${verifyResult.verified}`);
+            console.log(`   - Audio Verified: ${verifyResult.audioVerified || !hasAudioFile}`);
+            console.log(`   - Has Responses: ${verifyResult.hasResponses}`);
+            console.log(`   - Has Audio: ${verifyResult.hasAudio || !hasAudioFile}`);
+            console.log(`   - Status: ${verifyResult.status}`);
+            
+            // Update progress to 100%
+            await offlineStorage.updateInterviewSyncProgress(interview.id, 100, 'synced');
+            console.log(`📊 [${interview.id}] Progress: 100% - Verified and synced`);
+            
+            // CRITICAL: Delete from local storage since it's verified complete on server
+            console.log(`🗑️ Deleting verified interview from local storage: ${interview.id}`);
+            await offlineStorage.deleteSyncedInterview(interview.id);
+            
+            // Delete audio file if it exists and was verified uploaded
+            if (hasAudioFile && verifyResult.hasAudio) {
+              const audioPath = interview.audioOfflinePath || interview.audioUri;
+              if (audioPath) {
+                console.log(`🗑️ Deleting verified audio file: ${audioPath}`);
+                await offlineStorage.deleteAudioFileFromOfflineStorage(audioPath);
+              }
+            }
+            
+            console.log(`✅ Interview deleted from local storage - fully synced and verified`);
+            return; // Exit early - interview is verified and deleted
+          } else {
+            // Verification failed - audio or responses missing
+            console.warn(`⚠️ Interview has responseId but verification failed - will retry sync`);
+            console.warn(`   - Verified: ${verifyResult.verified}`);
+            console.warn(`   - Audio Verified: ${verifyResult.audioVerified}`);
+            console.warn(`   - Has Responses: ${verifyResult.hasResponses}`);
+            console.warn(`   - Has Audio: ${verifyResult.hasAudio}`);
+            // Don't return - continue with sync/audio processing below
+            responseId = existingResponseId; // Use existing responseId for audio upload
+          }
+        } else {
+          // Verification failed - response doesn't exist or incomplete
+          console.warn(`⚠️ Interview has responseId but verification failed - will retry sync`);
+          console.warn(`   - Verified: ${verifyResult?.verified || false}`);
+          console.warn(`   - Error: ${verifyResult?.error || 'Unknown error'}`);
+          // Don't return - continue with sync/audio processing below
+          responseId = existingResponseId; // Use existing responseId for audio upload
+        }
+      } catch (verifyError: any) {
+        // Verification check failed - continue with sync to ensure completeness
+        console.warn(`⚠️ Verification check failed - will continue with sync to ensure completeness`);
+        console.warn(`⚠️ Error: ${verifyError?.message || verifyError}`);
+        // Don't return - continue with sync/audio processing below
+        responseId = existingResponseId; // Use existing responseId for audio upload
       }
-      return; // Exit early - interview is already on server
     }
 
     // Fetch survey from cache if not stored in interview (to reduce storage size)
@@ -760,20 +810,72 @@ class SyncService {
     
     // CRITICAL: Check if interview was already successfully submitted
     // If metadata contains a responseId, it means it was already submitted
+    // CRITICAL: Verify it's actually complete on server before marking as synced
     if (interview.metadata?.responseId || interview.metadata?.serverResponseId) {
       const existingResponseId = interview.metadata.responseId || interview.metadata.serverResponseId;
       console.log(`ℹ️ Interview ${interview.id} was already submitted with responseId: ${existingResponseId}`);
-      console.log(`ℹ️ Skipping duplicate submission - interview is already on server`);
-      // Interview already exists on server - consider it synced
-      // Update metadata to reflect this
-      interview.metadata = {
-        ...interview.metadata,
-        responseId: existingResponseId,
-        serverResponseId: existingResponseId,
-      };
-      await offlineStorage.saveOfflineInterview(interview);
-      console.log(`✅ Interview already synced - will be marked as synced by caller`);
-      return; // Exit early - interview is already on server
+      console.log(`ℹ️ Verifying interview is complete on server before marking as synced...`);
+      
+      try {
+        // CRITICAL: Verify interview is actually complete on server (including audio if it exists)
+        const { apiService } = await import('./api');
+        const verifyResult = await apiService.verifyInterviewSync(existingResponseId, undefined);
+        
+        if (verifyResult && verifyResult.success && verifyResult.verified) {
+          // Check if audio verification is required
+          const hasAudioFile = interview.audioOfflinePath || interview.audioUri;
+          const audioVerified = !hasAudioFile || verifyResult.audioVerified; // If no audio file, audio is "verified"
+          
+          if (audioVerified && verifyResult.hasResponses) {
+            // Interview is complete on server - safe to delete from local storage
+            console.log(`✅ Interview verified on server - complete and synced`);
+            console.log(`   - Verified: ${verifyResult.verified}`);
+            console.log(`   - Audio Verified: ${verifyResult.audioVerified || !hasAudioFile}`);
+            console.log(`   - Has Responses: ${verifyResult.hasResponses}`);
+            console.log(`   - Has Audio: ${verifyResult.hasAudio || !hasAudioFile}`);
+            console.log(`   - Status: ${verifyResult.status}`);
+            
+            // Update progress to 100%
+            await offlineStorage.updateInterviewSyncProgress(interview.id, 100, 'synced');
+            console.log(`📊 [${interview.id}] Progress: 100% - Verified and synced`);
+            
+            // CRITICAL: Delete from local storage since it's verified complete on server
+            console.log(`🗑️ Deleting verified interview from local storage: ${interview.id}`);
+            await offlineStorage.deleteSyncedInterview(interview.id);
+            
+            // Delete audio file if it exists and was verified uploaded
+            if (hasAudioFile && verifyResult.hasAudio) {
+              const audioPath = interview.audioOfflinePath || interview.audioUri;
+              if (audioPath) {
+                console.log(`🗑️ Deleting verified audio file: ${audioPath}`);
+                await offlineStorage.deleteAudioFileFromOfflineStorage(audioPath);
+              }
+            }
+            
+            console.log(`✅ Interview deleted from local storage - fully synced and verified`);
+            return; // Exit early - interview is verified and deleted
+          } else {
+            // Verification failed - audio or responses missing
+            console.warn(`⚠️ Interview has responseId but verification failed - will retry sync`);
+            console.warn(`   - Verified: ${verifyResult.verified}`);
+            console.warn(`   - Audio Verified: ${verifyResult.audioVerified}`);
+            console.warn(`   - Has Responses: ${verifyResult.hasResponses}`);
+            console.warn(`   - Has Audio: ${verifyResult.hasAudio}`);
+            // Don't return - continue with sync/audio processing below
+          }
+        } else {
+          // Verification failed - response doesn't exist or incomplete
+          console.warn(`⚠️ Interview has responseId but verification failed - will retry sync`);
+          console.warn(`   - Verified: ${verifyResult?.verified || false}`);
+          console.warn(`   - Error: ${verifyResult?.error || 'Unknown error'}`);
+          // Don't return - continue with sync/audio processing below
+        }
+      } catch (verifyError: any) {
+        // Verification check failed - continue with sync to ensure completeness
+        console.warn(`⚠️ Verification check failed - will continue with sync to ensure completeness`);
+        console.warn(`⚠️ Error: ${verifyError?.message || verifyError}`);
+        // Don't return - continue with sync/audio processing below
+      }
     }
     
     // CRITICAL: Call completeInterview API and verify success BEFORE marking as synced
@@ -1122,81 +1224,71 @@ class SyncService {
                 console.log(`⏳ Waiting 3 seconds for backend to process audio link...`);
                 await new Promise(resolve => setTimeout(resolve, 3000));
                 
-                // CRITICAL: Actually fetch the response from server to verify audioUrl exists
+                // CRITICAL: Use verifyInterviewSync endpoint for proper verification
+                // This endpoint works even for abandoned responses and properly verifies data integrity
                 const { apiService } = await import('./api');
                 
                 // Try UUID first (preferred), then MongoDB _id if UUID not available
-                // Backend endpoint handles both
                 let verifyResult;
                 let verifyIdentifier = responseIdForVerification;
                 
                 if (uuidResponseId) {
                   // Try UUID first
                   console.log(`🔍 Trying verification with UUID: ${uuidResponseId}`);
-                  verifyResult = await apiService.getSurveyResponseById(uuidResponseId);
+                  verifyResult = await apiService.verifyInterviewSync(uuidResponseId, undefined);
                   
                   if (!verifyResult.success && mongoId) {
                     // If UUID lookup fails, try MongoDB _id
-                    console.log(`⚠️ UUID lookup failed, trying MongoDB _id: ${mongoId}`);
+                    console.log(`⚠️ UUID verification failed, trying MongoDB _id: ${mongoId}`);
                     verifyIdentifier = mongoId;
-                    verifyResult = await apiService.getSurveyResponseById(mongoId);
+                    verifyResult = await apiService.verifyInterviewSync(undefined, mongoId);
                   } else {
                     verifyIdentifier = uuidResponseId;
                   }
                 } else {
                   // Use MongoDB _id directly
                   console.log(`🔍 Using MongoDB _id for verification: ${mongoId}`);
-                  verifyResult = await apiService.getSurveyResponseById(responseIdForVerification);
+                  verifyResult = await apiService.verifyInterviewSync(undefined, mongoId || responseIdForVerification);
                 }
                 
-                if (!verifyResult.success || !verifyResult.response) {
-                  const errorMsg = verifyResult.error || 'Unknown error';
-                  console.error(`❌ Failed to fetch response for verification`);
-                  console.error(`❌ Error: ${errorMsg}`);
+                // CRITICAL: Only continue if verification succeeded
+                if (!verifyResult || !verifyResult.success || !verifyResult.verified) {
+                  const errorMsg = verifyResult?.error || 'Verification failed';
+                  console.error(`❌ Verification failed: ${errorMsg}`);
                   console.error(`❌ Identifier used: ${verifyIdentifier}`);
                   console.error(`❌ UUID responseId: ${uuidResponseId || 'N/A'}`);
                   console.error(`❌ MongoDB _id: ${mongoId || 'N/A'}`);
-                  throw new Error(`Failed to fetch response for verification: ${errorMsg}`);
+                  console.error(`❌ Verified: ${verifyResult?.verified || false}`);
+                  console.error(`❌ Has Responses: ${verifyResult?.hasResponses || false}`);
+                  throw new Error(`Verification failed: ${errorMsg}. Interview will remain in verifying state.`);
                 }
                 
-                const serverResponse = verifyResult.response;
-                const serverAudioUrl = serverResponse?.audioRecording?.audioUrl || 
-                                      serverResponse?.audioUrl ||
-                                      null;
+                // Verification succeeded - log details
+                console.log(`✅ Verification succeeded:`);
+                console.log(`   - Verified: ${verifyResult.verified}`);
+                console.log(`   - Audio Verified: ${verifyResult.audioVerified}`);
+                console.log(`   - Has Responses: ${verifyResult.hasResponses}`);
+                console.log(`   - Has Audio: ${verifyResult.hasAudio}`);
+                console.log(`   - Status: ${verifyResult.status}`);
+                console.log(`   - ResponseId: ${verifyResult.responseId || 'N/A'}`);
+                console.log(`   - MongoId: ${verifyResult.mongoId || 'N/A'}`);
                 
-                console.log(`🔍 Verification successful - fetched response from server`);
-                console.log(`🔍 Server response ID: ${serverResponse?.responseId || serverResponse?._id || 'N/A'}`);
-                console.log(`🔍 Server response audioRecording:`, JSON.stringify(serverResponse?.audioRecording, null, 2));
-                console.log(`🔍 Server audioUrl: ${serverAudioUrl || 'NOT FOUND'}`);
-                console.log(`🔍 Uploaded audioUrl: ${audioUrl}`);
-                
-                if (!serverAudioUrl || serverAudioUrl.trim() === '') {
-                  console.error(`❌ CRITICAL: Audio URL not found in server response!`);
+                // CRITICAL FIX: verifyInterviewSync doesn't return full response object
+                // It only returns verification status fields
+                // Since audioVerified and hasAudio are both true, audio is confirmed to be linked
+                if (!verifyResult.audioVerified || !verifyResult.hasAudio) {
+                  console.error(`❌ CRITICAL: Audio verification failed!`);
                   console.error(`❌ Verification identifier: ${verifyIdentifier}`);
                   console.error(`❌ UUID responseId: ${uuidResponseId || 'N/A'}`);
                   console.error(`❌ MongoDB _id: ${mongoId || 'N/A'}`);
-                  console.error(`❌ Server response _id: ${serverResponse?._id || 'N/A'}`);
-                  console.error(`❌ Server response responseId: ${serverResponse?.responseId || 'N/A'}`);
-                  console.error(`❌ Full server response:`, JSON.stringify(serverResponse, null, 2));
-                  throw new Error(`Audio URL not found in server response - audio was NOT linked to response. Verification identifier: ${verifyIdentifier}`);
+                  console.error(`❌ Audio Verified: ${verifyResult.audioVerified}`);
+                  console.error(`❌ Has Audio: ${verifyResult.hasAudio}`);
+                  throw new Error(`Audio verification failed - audio was NOT linked to response. Verification identifier: ${verifyIdentifier}`);
                 }
                 
-                // Verify the audioUrl matches what we uploaded
-                // Note: Server might return S3 key while we have full URL, so check for partial match
-                const audioUrlMatches = serverAudioUrl === audioUrl || 
-                                      serverAudioUrl.includes(audioUrl.split('/').pop() || '') ||
-                                      audioUrl.includes(serverAudioUrl.split('/').pop() || '');
-                
-                if (!audioUrlMatches) {
-                  console.warn(`⚠️ Audio URL format mismatch:`);
-                  console.warn(`⚠️ Uploaded: ${audioUrl}`);
-                  console.warn(`⚠️ Server: ${serverAudioUrl}`);
-                  console.warn(`⚠️ This might be OK if server uses S3 keys vs URLs`);
-                  // Don't fail - if server has an audioUrl, it's linked
-                }
-                
-                console.log(`✅ Audio upload VERIFIED - server response has audioUrl: ${serverAudioUrl}`);
-                console.log(`✅ Audio is properly linked to response ${responseId}`);
+                console.log(`✅ Audio upload VERIFIED - server confirms audio is linked`);
+                console.log(`✅ Audio is properly linked to response ${responseId || verifyResult.responseId || verifyResult.mongoId}`);
+                console.log(`✅ Uploaded audioUrl: ${audioUrl}`);
               } catch (verifyError: any) {
                 console.error('❌ Audio verification FAILED:', verifyError.message);
                 console.error('❌ This means audio may not be linked to the response');
@@ -1294,45 +1386,59 @@ class SyncService {
         throw new Error('Audio file exists but upload failed - audioUrl is empty. Sync cannot complete.');
       }
       
-      // Final verification: Fetch response from server to confirm audio is linked
-      // Use lean query to avoid memory overhead (only fetch what we need)
+      // Final verification: Use verifyInterviewSync endpoint to confirm audio is linked
+      // This endpoint properly verifies data integrity even for abandoned responses
       try {
         const { apiService } = await import('./api');
         
         // Try UUID first (preferred), then MongoDB _id
         let verifyResult;
         if (uuidResponseId) {
-          verifyResult = await apiService.getSurveyResponseById(uuidResponseId);
+          verifyResult = await apiService.verifyInterviewSync(uuidResponseId, undefined);
+          
           if (!verifyResult.success && mongoId) {
-            verifyResult = await apiService.getSurveyResponseById(mongoId);
+            verifyResult = await apiService.verifyInterviewSync(undefined, mongoId);
           }
         } else {
-          verifyResult = await apiService.getSurveyResponseById(responseId);
+          verifyResult = await apiService.verifyInterviewSync(undefined, responseId);
         }
         
-        if (!verifyResult.success || !verifyResult.response) {
-          const errorMsg = verifyResult.error || 'Unknown error';
-          console.error(`❌ CRITICAL: Failed to fetch response for final verification`);
+        // CRITICAL: Only continue if verification succeeded
+        if (!verifyResult || !verifyResult.success || !verifyResult.verified) {
+          const errorMsg = verifyResult?.error || 'Verification failed';
+          console.error(`❌ CRITICAL: Final verification failed`);
           console.error(`❌ Error: ${errorMsg}`);
-          throw new Error(`Final verification failed: ${errorMsg}`);
+          console.error(`❌ Verified: ${verifyResult?.verified || false}`);
+          console.error(`❌ Has Responses: ${verifyResult?.hasResponses || false}`);
+          console.error(`❌ Has Audio: ${verifyResult?.hasAudio || false}`);
+          throw new Error(`Final verification failed: ${errorMsg}. Interview will remain in verifying state.`);
         }
         
-        const serverResponse = verifyResult.response;
-        const serverAudioUrl = serverResponse?.audioRecording?.audioUrl || 
-                              serverResponse?.audioUrl ||
-                              null;
+        // Verification succeeded - log details
+        console.log(`✅ Final verification succeeded:`);
+        console.log(`   - Verified: ${verifyResult.verified}`);
+        console.log(`   - Audio Verified: ${verifyResult.audioVerified}`);
+        console.log(`   - Has Responses: ${verifyResult.hasResponses}`);
+        console.log(`   - Has Audio: ${verifyResult.hasAudio}`);
+        console.log(`   - Status: ${verifyResult.status}`);
+        console.log(`   - ResponseId: ${verifyResult.responseId || 'N/A'}`);
+        console.log(`   - MongoId: ${verifyResult.mongoId || 'N/A'}`);
         
-        if (!serverAudioUrl || serverAudioUrl.trim() === '') {
+        // CRITICAL FIX: verifyInterviewSync doesn't return full response object
+        // It only returns verification status fields
+        // Since audioVerified and hasAudio are both true, audio is confirmed to be linked
+        if (!verifyResult.audioVerified || !verifyResult.hasAudio) {
           // CRITICAL: Audio file exists locally but not on server - fail sync
           console.error(`❌ CRITICAL DATA LOSS PREVENTION: Audio file exists locally but NOT on server!`);
           console.error(`❌ ResponseId: ${responseId}`);
           console.error(`❌ Local audio path: ${audioPath}`);
-          console.error(`❌ Server audioUrl: ${serverAudioUrl || 'MISSING'}`);
+          console.error(`❌ Audio Verified: ${verifyResult.audioVerified}`);
+          console.error(`❌ Has Audio: ${verifyResult.hasAudio}`);
           console.error(`❌ Failing sync to prevent data loss - interview will retry on next sync`);
           throw new Error('Audio file exists locally but not found on server - data loss prevented. Sync will retry.');
         }
         
-        console.log(`✅ FINAL VERIFICATION PASSED: Audio confirmed on server: ${serverAudioUrl}`);
+        console.log(`✅ FINAL VERIFICATION PASSED: Audio confirmed on server`);
         console.log(`✅ Interview synced WITH audio: ${audioUrl}`);
       } catch (verifyError: any) {
         // Verification failed - fail sync to prevent data loss
@@ -1504,23 +1610,55 @@ class SyncService {
 
     // CRITICAL: Check if already synced using serverResponseId (idempotency)
     // This ensures backward compatibility - old interviews without serverResponseId will still sync
+    // CRITICAL: Verify it's actually complete on server before marking as synced
     if (interview.serverResponseId || interview.serverMongoId) {
       const responseIdToCheck = interview.serverResponseId || interview.serverMongoId;
-      console.log(`✅ Interview ${interview.id} already has responseId: ${responseIdToCheck} - checking if synced...`);
+      console.log(`✅ Interview ${interview.id} already has responseId: ${responseIdToCheck} - verifying if complete...`);
       
-      // Try to verify if this response exists on server using getSurveyResponseById
       try {
-        // CRITICAL: Ensure method exists before calling
-        if (apiService && typeof apiService.getSurveyResponseById === 'function') {
-          const verifyResult = await apiService.getSurveyResponseById(responseIdToCheck!);
-          if (verifyResult && verifyResult.success && verifyResult.response) {
-            console.log(`✅ Interview ${interview.id} already verified on server - skipping sync`);
-            // Update progress to 100% and mark as synced
-            await offlineStorage.updateInterviewSyncProgress(interview.id, 100, 'synced');
-            return; // Already synced, exit early
+        // CRITICAL: Use verifyInterviewSync to check if interview is complete on server
+        const { apiService } = await import('./api');
+        const verifyResult = await apiService.verifyInterviewSync(
+          interview.serverResponseId || undefined,
+          interview.serverMongoId || undefined
+        );
+        
+        if (verifyResult && verifyResult.success && verifyResult.verified && verifyResult.hasResponses) {
+          // Interview is complete on server - safe to delete from local storage
+          console.log(`✅ Interview verified on server - complete and synced`);
+          console.log(`   - Verified: ${verifyResult.verified}`);
+          console.log(`   - Audio Verified: ${verifyResult.audioVerified}`);
+          console.log(`   - Has Responses: ${verifyResult.hasResponses}`);
+          console.log(`   - Has Audio: ${verifyResult.hasAudio}`);
+          console.log(`   - Status: ${verifyResult.status}`);
+          
+          // Update progress to 100%
+          await offlineStorage.updateInterviewSyncProgress(interview.id, 100, 'synced');
+          console.log(`📊 [${interview.id}] Progress: 100% - Verified and synced`);
+          
+          // CRITICAL: Delete from local storage since it's verified complete on server
+          console.log(`🗑️ Deleting verified interview from local storage: ${interview.id}`);
+          await offlineStorage.deleteSyncedInterview(interview.id);
+          
+          // Delete audio file if it exists and was verified uploaded
+          const hasAudioFile = interview.audioOfflinePath || interview.audioUri;
+          if (hasAudioFile && verifyResult.hasAudio) {
+            const audioPath = interview.audioOfflinePath || interview.audioUri;
+            if (audioPath) {
+              console.log(`🗑️ Deleting verified audio file: ${audioPath}`);
+              await offlineStorage.deleteAudioFileFromOfflineStorage(audioPath);
+            }
           }
+          
+          console.log(`✅ Interview deleted from local storage - fully synced and verified`);
+          return; // Exit early - interview is verified and deleted
         } else {
-          console.warn(`⚠️ getSurveyResponseById not available - skipping verification check, proceeding with sync`);
+          // Verification failed - response doesn't exist or incomplete
+          console.warn(`⚠️ Interview has responseId but verification failed - will retry sync`);
+          console.warn(`   - Verified: ${verifyResult?.verified || false}`);
+          console.warn(`   - Has Responses: ${verifyResult?.hasResponses || false}`);
+          console.warn(`   - Error: ${verifyResult?.error || 'Unknown error'}`);
+          // Continue with sync if verification fails
         }
       } catch (verifyError: any) {
         console.log(`⚠️ Verification check failed, proceeding with sync: ${verifyError?.message || verifyError}`);
@@ -1779,61 +1917,87 @@ class SyncService {
         // CATI responses might take a moment to be fully indexed/available
         await new Promise(resolve => setTimeout(resolve, 2000));
         
-        // Verify response exists on server with retry logic
+        // CRITICAL FIX: Use verifyInterviewSync endpoint instead of getSurveyResponseById
+        // This endpoint works even for abandoned responses and properly verifies data integrity
         let verifyResult = null;
         let retryCount = 0;
-        const maxRetries = 3;
+        const maxRetries = 5; // More retries since backend might need time to process
         
-        while (retryCount < maxRetries && !verifyResult?.success) {
+        // Determine which ID to use (prefer responseId, fallback to mongoId)
+        const uuidResponseId = serverResponseId || null;
+        const mongoIdForVerification = serverMongoId || null;
+        
+        while (retryCount < maxRetries && (!verifyResult?.success || !verifyResult?.verified)) {
           try {
-            // Explicitly call the method to avoid any dynamic resolution issues
-            verifyResult = await apiService.getSurveyResponseById(responseIdForVerification);
-            if (verifyResult && verifyResult.success && verifyResult.response) {
+            // Use the proper verification endpoint that works for all response statuses
+            verifyResult = await apiService.verifyInterviewSync(uuidResponseId || undefined, mongoIdForVerification || undefined);
+            
+            // Check if verification succeeded
+            if (verifyResult && verifyResult.success && verifyResult.verified) {
+              console.log(`✅ Interview verified on server - verified: ${verifyResult.verified}, audioVerified: ${verifyResult.audioVerified}`);
               break; // Success, exit retry loop
+            } else if (verifyResult && verifyResult.success && !verifyResult.verified) {
+              // Response exists but verification failed (e.g., no responses)
+              console.warn(`⚠️ Response exists but verification failed - verified: ${verifyResult.verified}, hasResponses: ${verifyResult.hasResponses}`);
+              // Continue retrying - might be a timing issue
             }
           } catch (retryError: any) {
             retryCount++;
             console.log(`⏳ Verification attempt ${retryCount}/${maxRetries} error:`, retryError?.message || retryError);
+            
+            // Don't retry on 404 - response doesn't exist
+            if (retryError?.response?.status === 404) {
+              console.error(`❌ Response not found on server (404) - cannot verify`);
+              break; // Stop retrying - response doesn't exist
+            }
+            
             if (retryCount < maxRetries) {
-              console.log(`⏳ Retrying in 1s...`);
-              await new Promise(resolve => setTimeout(resolve, 1000));
+              // Exponential backoff: 2s, 4s, 8s, 16s, 32s
+              const delay = Math.min(2000 * Math.pow(2, retryCount - 1), 32000);
+              console.log(`⏳ Retrying in ${delay}ms...`);
+              await new Promise(resolve => setTimeout(resolve, delay));
             }
           }
         }
         
-        if (verifyResult && verifyResult.success && verifyResult.response) {
-          const serverResponse = verifyResult.response;
-          console.log(`✅ CATI interview verified on server - response exists (responseId: ${responseIdForVerification})`);
+        // CRITICAL: Only mark as synced if verification succeeded
+        if (verifyResult && verifyResult.success && verifyResult.verified) {
+          console.log(`✅ CATI interview verified on server - response exists and verified (responseId: ${responseIdForVerification})`);
+          console.log(`   - Verified: ${verifyResult.verified}`);
+          console.log(`   - Audio Verified: ${verifyResult.audioVerified}`);
+          console.log(`   - Has Responses: ${verifyResult.hasResponses}`);
+          console.log(`   - Has Audio: ${verifyResult.hasAudio}`);
+          console.log(`   - Status: ${verifyResult.status}`);
           await offlineStorage.updateInterviewSyncProgress(interview.id, 100, 'synced');
           notifyProgress(100, 'synced');
           console.log(`✅ Stage 3 complete: Interview verified and fully synced (100%)`);
         } else {
-          // Response not found after retries - but don't fail if we have responseId
-          // The backend might have processed it but it's not immediately queryable
-          // Since completeCatiInterview succeeded, we trust that the response was created
-          console.warn(`⚠️ Response verification failed after ${maxRetries} attempts, but interview was successfully created`);
-          console.warn(`⚠️ ResponseId: ${responseIdForVerification} - marking as synced (backend may still be processing)`);
-          await offlineStorage.updateInterviewSyncProgress(interview.id, 100, 'synced');
-          console.log(`✅ Stage 3 complete: Interview synced (verification skipped - responseId confirmed)`);
+          // Verification failed - don't mark as synced to prevent data loss
+          const errorMsg = verifyResult?.error || 'Verification failed';
+          console.error(`❌ Interview verification failed after ${maxRetries} attempts`);
+          console.error(`❌ Error: ${errorMsg}`);
+          console.error(`❌ ResponseId: ${responseIdForVerification}`);
+          console.error(`❌ Verified: ${verifyResult?.verified || false}`);
+          console.error(`❌ Has Responses: ${verifyResult?.hasResponses || false}`);
+          
+          // Keep interview in "verifying" state - will retry on next sync
+          await offlineStorage.updateInterviewSyncProgress(interview.id, 95, 'verifying');
+          notifyProgress(95, 'verifying');
+          throw new Error(`Interview verification failed: ${errorMsg}. Will retry on next sync.`);
         }
       } catch (verifyError: any) {
         const errorMessage = verifyError?.message || String(verifyError) || 'Unknown error';
         console.error(`❌ Verification error: ${errorMessage}`);
         
-        // CRITICAL: Don't fail sync if verification fails - response was successfully created
-        // The verification is just a safety check to ensure data integrity
-        // If completeCatiInterview succeeded, we have a responseId, so trust that it was created
-        console.warn(`⚠️ Verification check failed but response was created successfully`);
-        console.warn(`⚠️ ResponseId: ${responseIdForVerification} - marking as synced`);
-        console.warn(`⚠️ Error details: ${errorMessage}`);
+        // CRITICAL: Don't mark as synced if verification fails - prevent data loss
+        // Keep interview in "verifying" state - will retry on next sync
+        console.error(`❌ Interview verification failed - keeping in verifying state`);
+        console.error(`❌ ResponseId: ${responseIdForVerification}`);
+        console.error(`❌ Will retry verification on next sync`);
         
-        // Mark as synced anyway since the response was successfully created
-        // The verification is just a safety check
-        await offlineStorage.updateInterviewSyncProgress(interview.id, 100, 'synced');
-        console.log(`✅ Stage 3 complete: Interview synced (verification skipped due to error)`);
-        
-        // DON'T throw - allow sync to complete successfully
-        // The response was already created on the server, verification is just a safety check
+        await offlineStorage.updateInterviewSyncProgress(interview.id, 95, 'verifying');
+        notifyProgress(95, 'verifying');
+        throw verifyError; // Re-throw to prevent marking as synced
       }
     } else {
       // No responseId available - this shouldn't happen if sync was successful

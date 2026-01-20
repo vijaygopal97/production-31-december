@@ -25,6 +25,9 @@ require('dotenv').config({ path: require('path').join(__dirname, '../.env') });
 const REFERENCE_USER_ID = '68ebf124ab86ea29f3c0f1f8';
 const SURVEY_ID = '68fd1915d41841da463f0d46';
 const COMPANY_CODE = 'TEST001';
+const DEFAULT_ASSIGNED_ACS = ['Darjeeling'];
+const DEFAULT_SELECTED_STATE = 'West Bengal';
+const DEFAULT_SELECTED_COUNTRY = 'India';
 
 // ============================================================================
 // ADD INTERVIEWER DETAILS HERE
@@ -191,7 +194,12 @@ const interviewersToAdd = [
     phone: '8391845069',
     memberId: '526',
     email: 'cati526@gmail.com'
-  }
+  },
+  // New Darjeeling CATI interviewers (memberId will be auto-generated if omitted)
+  { name: 'Sushana lepcha', phone: '9382562737' },
+  { name: 'SAJINA TAMANG', phone: '7047021843' },
+  { name: 'Sanjana lepcha', phone: '8597061003' },
+  { name: 'Samina', phone: '9883738613' }
 ];
 
 // ============================================================================
@@ -421,6 +429,20 @@ const createInterviewer = async (userData, referenceUser, assignedBy) => {
   }
 };
 
+const getNextAvailableMemberIds = async (count) => {
+  // We generate sequential numeric member IDs after the current max numeric memberId
+  // within the same companyCode to avoid collisions.
+  const [maxDoc] = await User.aggregate([
+    { $match: { companyCode: COMPANY_CODE, memberId: { $type: 'string', $regex: '^\\d+$' } } },
+    { $addFields: { memberIdNum: { $toInt: '$memberId' } } },
+    { $sort: { memberIdNum: -1 } },
+    { $limit: 1 }
+  ]);
+
+  const start = (maxDoc?.memberIdNum || 0) + 1;
+  return Array.from({ length: count }, (_, i) => String(start + i));
+};
+
 const assignToSurvey = async (interviewerId, assignedById) => {
   try {
     const survey = await Survey.findById(SURVEY_ID);
@@ -445,6 +467,9 @@ const assignToSurvey = async (interviewerId, assignedById) => {
       interviewer: interviewerId,
       assignedBy: assignedById,
       assignedAt: new Date(),
+      assignedACs: DEFAULT_ASSIGNED_ACS,
+      selectedState: DEFAULT_SELECTED_STATE,
+      selectedCountry: DEFAULT_SELECTED_COUNTRY,
       status: 'assigned',
       maxInterviews: 0,
       completedInterviews: 0
@@ -484,6 +509,21 @@ const main = async () => {
       status: 'active'
     });
     const assignedBy = companyAdmin ? companyAdmin._id : referenceUser._id;
+
+    // Auto-assign memberIds to entries missing memberId
+    const withoutMemberId = interviewersToAdd.filter(i => !i.memberId);
+    if (withoutMemberId.length > 0) {
+      console.log(`🧾 Auto-assigning ${withoutMemberId.length} new unique memberId(s) (companyCode=${COMPANY_CODE})...`);
+      const newIds = await getNextAvailableMemberIds(withoutMemberId.length);
+      let idx = 0;
+      for (const interviewer of interviewersToAdd) {
+        if (!interviewer.memberId) {
+          interviewer.memberId = newIds[idx++];
+          interviewer.email = interviewer.email || `cati${interviewer.memberId}@gmail.com`;
+        }
+      }
+      console.log(`✅ Assigned memberIds: ${newIds.join(', ')}\n`);
+    }
 
     console.log('🔍 Checking for existing member IDs...\n');
     const existingMembers = [];

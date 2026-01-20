@@ -222,6 +222,11 @@ const updateProviderConfig = async (req, res) => {
       return res.status(404).json({ success: false, message: 'Company not found' });
     }
 
+    // CRITICAL: Clear provider cache when configuration changes
+    // This ensures the new provider selection is used immediately
+    ProviderFactory.clearCache();
+    console.log(`✅ Cleared provider cache after config update for company ${companyId}`);
+
     return res.status(200).json({
       success: true,
       message: 'CATI provider configuration updated',
